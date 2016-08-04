@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Plugin.Toasts;
+using Xamarin.Forms;
 
 namespace PriceCollector.Droid
 {
@@ -18,6 +20,9 @@ namespace PriceCollector.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            DependencyService.Register<ToastNotificatorImplementation>(); // Register your dependency
+            ToastNotificatorImplementation.Init(this); //you can pass additional parameters here
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());

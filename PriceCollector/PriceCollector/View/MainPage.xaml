@@ -2,9 +2,26 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PriceCollector.View.MainPage">
-
-  <Label Text="Welcome to Xamarin Forms!"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
-
+  <ScrollView>
+    <StackLayout>
+      <Label Text="Produtos para coletar o preço." HorizontalOptions="Center" FontSize="15"/>
+    <ListView x:Name="list" ItemsSource="{Binding CatalogPriceGroup,Mode=TwoWay}"  HasUnevenRows="True">
+				<!--GroupShortNameBinding="{Binding Key}"-->
+				<ListView.Header>
+					<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+						<Image x:Name="AdOfferImage" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+					</StackLayout>
+				</ListView.Header>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout Padding="10">
+								<Label Text="{Binding }" TextColor="Black" FontSize="15" />
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+    </StackLayout>
+  </ScrollView>
 </ContentPage>

@@ -59,7 +59,7 @@ namespace PriceCollector.ViewModel
             {
                 Application.Current.Properties["IsLoggedIn"] = true;
                 _ilm.ShowMainPage();
-                await _notificator.Notify(ToastNotificationType.Success, Constants.AppName, "Login efetuado com sucesso", TimeSpan.FromSeconds(3));
+               // await _notificator.Notify(ToastNotificationType.Success, Constants.AppName, "Login efetuado com sucesso", TimeSpan.FromSeconds(3));
             }
         }
 

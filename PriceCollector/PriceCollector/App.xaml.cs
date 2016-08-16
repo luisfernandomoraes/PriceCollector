@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Api.WebAPI.User;
 using PriceCollector.Utils;
 using PriceCollector.View.SliderMenu;
@@ -17,6 +18,8 @@ namespace PriceCollector
         public App()
         {
             DependencyService.Register<IUserApi, UserApi>();
+            DependencyService.Register<IProductApi, ProductApi>();
+
 
             InitializeComponent();
             InitializeConfigurations();

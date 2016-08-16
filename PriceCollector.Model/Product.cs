@@ -18,10 +18,11 @@ namespace PriceCollector.Model
         public int ID { get; set; }
         public string Name { get; set; }
         public string BarCode { get; set; }
-        public double PriceCurrent { get; set; }
-        public double PriceCollected { get; set; }
+        public decimal PriceCurrent { get; set; }
+        public decimal PriceCollected { get; set; }
         public Category CategoryProduct { get; set; }
-   
+        public string ImageProduct { get; set; }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

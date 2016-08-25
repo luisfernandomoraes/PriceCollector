@@ -1,0 +1,15 @@
+#Requisitos Funcionais
+-> Primeira pagina contara com produtos a serem coletados, 
+esses produtos serão informados a partir do site admistrativo. 
+
+-> Na primeira pagina tera um botão de atalho para capturar quaisquer outros produtos. 
+
+-> As informações sobre como estãos os preços em relação ao concorrente serão geradas no site adm, a partir do cruzamento das informações coletadas 
+e das informações fornecidas pelo cliente.
+
+#Requisitos não funcionais.
+-> O applicativo pode validar via geoposicionamento, se o operador está na loja correta para coletar os preços. 
+
+
+//TODO:
+-> Pesquisar mais video de coletores de dados, compreender funcionamento mais a fundo.

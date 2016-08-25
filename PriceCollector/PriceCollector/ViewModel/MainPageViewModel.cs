@@ -22,8 +22,13 @@ namespace PriceCollector.ViewModel
         private ObservableCollection<Product> _products;
         private readonly IToastNotificator _notificator;
         public event PropertyChangedEventHandler PropertyChanged;
+        private bool _isBusy;
 
+        #endregion
 
+        #region Commands
+
+                        
         #endregion
 
 
@@ -31,13 +36,15 @@ namespace PriceCollector.ViewModel
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
+            _isBusy = false;
             Task.Run(LoadProducts);
         }
-
+                
         private async Task LoadProducts()
         {
             try
             {
+                IsBusy = true;
                 var result = await _productApi.GetProductsToCollect("http://www.acats.scannprice.srv.br/api/");
                 if (result.Success)
                 {
@@ -52,7 +59,7 @@ namespace PriceCollector.ViewModel
                     }
 
                     Products = new ObservableCollection<Product>(result.CollectionResult);
-
+                    IsBusy = false;
                 }
             }
             catch (Exception e)
@@ -60,9 +67,13 @@ namespace PriceCollector.ViewModel
                 await _notificator.Notify(ToastNotificationType.Error, @"PriceCollector","Houve um erro ao carregar os produtos", TimeSpan.FromSeconds(3));
                 Debug.WriteLine(e);
             }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
-
+        
         public ObservableCollection<Product> Products
         {
             get { return _products; }
@@ -74,6 +85,16 @@ namespace PriceCollector.ViewModel
             }
         }
 
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (Equals(value, _isBusy)) return;
+                _isBusy = value;
+                OnPropertyChanged();
+            }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

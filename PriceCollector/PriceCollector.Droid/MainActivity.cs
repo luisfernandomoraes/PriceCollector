@@ -8,6 +8,12 @@ using Android.Widget;
 using Android.OS;
 using Plugin.Toasts;
 using Xamarin.Forms;
+using XLabs.Ioc;
+using TinyIoC;
+using Tesseract;
+using Tesseract.Droid;
+using XLabs.Ioc.TinyIOC;
+using ZXing.Mobile;
 
 namespace PriceCollector.Droid
 {
@@ -25,6 +31,12 @@ namespace PriceCollector.Droid
             ToastNotificatorImplementation.Init(this); //you can pass additional parameters here
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            DependencyService.Register<ToastNotificatorImplementation>(); // Register your dependency
+            ToastNotificatorImplementation.Init(this); //you can pass additional parameters here
+            MobileBarcodeScanner.Initialize(Application);
+
+            
             LoadApplication(new App());
         }
     }

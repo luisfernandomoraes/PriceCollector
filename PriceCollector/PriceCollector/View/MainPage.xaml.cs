@@ -5,7 +5,9 @@ using Xamarin.Forms;
 using Plugin.Toasts;
 using System.Diagnostics;
 using ZXing.Mobile;
+using Xamarin.Forms.Xaml;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PriceCollector.View
 {
     public partial class MainPage : ContentPage
@@ -30,6 +32,7 @@ namespace PriceCollector.View
             if (product == null)
                 return;
 
+            _notificator.HideAll();
 
             list.SelectedItem = null;
             // Primeira verificação,
@@ -40,16 +43,17 @@ namespace PriceCollector.View
             //Caso sim, prosseguimos com a coleta de preço.
             if (barcode == product.BarCode)
             {
-                //var priceCollected = await StartPriceScannerAsync();
-
-                //Apresentar dados para confirmação
-                
-
+                await _notificator.Notify(ToastNotificationType.Success,nameof(PriceCollector),$"Produto {product.Name} coletado",TimeSpan.FromSeconds(3));
             }
             else
             {
                 await _notificator.Notify(ToastNotificationType.Warning, nameof(PriceCollector), "O código de barras não bate com o produto selecionado.", TimeSpan.FromSeconds(3));
             }
+
+        }
+
+        private async void OnStartScann(object sender, EventArgs evt)
+        {
 
         }
 

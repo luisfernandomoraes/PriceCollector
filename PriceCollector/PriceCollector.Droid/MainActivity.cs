@@ -10,8 +10,6 @@ using Plugin.Toasts;
 using Xamarin.Forms;
 using XLabs.Ioc;
 using TinyIoC;
-using Tesseract;
-using Tesseract.Droid;
 using XLabs.Ioc.TinyIOC;
 using ZXing.Mobile;
 

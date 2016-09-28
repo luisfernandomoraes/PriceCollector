@@ -4,7 +4,14 @@
 						 x:Class="PriceCollector.View.MainPage"
 						 Title="PriceCollector"
 						 BackgroundColor="White">
-
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="Pesquisar" Clicked="OnStartScann" Order="Primary" IsDestructive="true">
+			<ToolbarItem.Icon>
+				<OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_18dp.png" />
+			</ToolbarItem.Icon>
+		</ToolbarItem>
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
 	<ScrollView>
 		<StackLayout>
 			<StackLayout Padding="15">
@@ -55,4 +62,5 @@
 			</ListView>
 		</StackLayout>
 	</ScrollView>
+</ContentPage.Content>    
 </ContentPage>

@@ -1,4 +1,4 @@
-﻿namespace PriceSpy.Model
+﻿namespace PriceCollector.Model
 {
     public interface IModel
     {

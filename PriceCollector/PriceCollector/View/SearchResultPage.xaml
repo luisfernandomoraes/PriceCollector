@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceCollector.View.SearchResultPage"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
+  <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" WidthRequest="250">
+    <Label Text="{Binding Name,Mode=TwoWay}" FontSize="18"/>
+    <Label Text="{Binding Barcode,Mode=TwoWay}" FontSize="12"/>
+    <Image Aspect="AspectFit" Source="{Binding ImageProduct}"/>
+    <Entry Placeholder="Preço" Text="{Binding PriceCollected,Mode=TwoWay}" Keyboard="Numeric" WidthRequest="80"/>
+  </StackLayout>
+</pages:PopupPage>

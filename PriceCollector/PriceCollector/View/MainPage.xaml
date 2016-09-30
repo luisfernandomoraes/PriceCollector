@@ -7,7 +7,7 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Name="Pesquisar" Clicked="OnStartScann" Order="Primary" IsDestructive="true">
 			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_18dp.png" />
+				<OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_24dp.png" />
 			</ToolbarItem.Icon>
 		</ToolbarItem>
 	</ContentPage.ToolbarItems>

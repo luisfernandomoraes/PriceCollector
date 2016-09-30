@@ -88,6 +88,40 @@ namespace PriceCollector.Api.WebAPI.Products
                 return result;
             }
         }
+        public async Task<ProductResponse> GetProduct(string url, string barcode)
+        {
+            ProductResponse result = new ProductResponse();
+            try
+            {
+                var qrcode = "Acats01_36256202000146";
+                var matrixdb = "Acats01";
+
+                var resourcePath = $"products/{barcode}/{qrcode}/{matrixdb}";
+                var uri = new Uri(string.Concat(url, resourcePath));
+
+                var response = await _client.GetAsync(uri);
+
+                result.Success = response.IsSuccessStatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    Product product = new Product();
+                    var content = await response.Content.ReadAsStringAsync();
+                    result.HttpStatusCode = HttpStatusCode.OK;
+                    JObject jObject = JObject.Parse(content);
+                    product.Name = jObject["ProductName"].ToString();
+                    result.Result = JsonConvert.DeserializeObject<Model.Product>(content);
+                }
+                result.HttpStatusCode = response.StatusCode;
+                result.ErrorMessage = response.ReasonPhrase;
+                return result;
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                return result;
+            }
+        }
 
         public async Task<bool> HasImage(string url)
         {

@@ -1,6 +1,6 @@
 ﻿namespace PriceCollector.Api.WebAPI.Responses
 {
-    public class UserResponse:ApiResponse<PriceSpy.Model.User>
+    public class UserResponse:ApiResponse<Model.User>
     {
          
     }

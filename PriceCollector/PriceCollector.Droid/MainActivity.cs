@@ -25,16 +25,13 @@ namespace PriceCollector.Droid
 
             base.OnCreate(bundle);
 
-            DependencyService.Register<ToastNotificatorImplementation>(); // Register your dependency
-            ToastNotificatorImplementation.Init(this); //you can pass additional parameters here
-
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             DependencyService.Register<ToastNotificatorImplementation>(); // Register your dependency
             ToastNotificatorImplementation.Init(this); //you can pass additional parameters here
             MobileBarcodeScanner.Initialize(Application);
 
-            
+
             LoadApplication(new App());
         }
     }

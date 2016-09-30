@@ -1,5 +1,4 @@
-﻿using PriceSpy.Model;
-
+﻿
 namespace PriceCollector.Model
 {
     public class Category:IModel

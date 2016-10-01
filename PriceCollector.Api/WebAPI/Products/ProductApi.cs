@@ -73,6 +73,7 @@ namespace PriceCollector.Api.WebAPI.Products
                         Name = obj["ProductName"].ToString(),
                         BarCode = obj["Barcod"].ToString(),
                         PriceCurrent = Convert.ToDecimal(obj["Value"].ToString())
+                        
                     };
 
                     products.Add(product);
@@ -109,7 +110,9 @@ namespace PriceCollector.Api.WebAPI.Products
                     result.HttpStatusCode = HttpStatusCode.OK;
                     JObject jObject = JObject.Parse(content);
                     product.Name = jObject["ProductName"].ToString();
-                    result.Result = JsonConvert.DeserializeObject<Model.Product>(content);
+                    product.BarCode = barcode;
+                    product.PriceCurrent = Convert.ToDecimal(jObject["Value"].ToString());
+                    result.Result = product;
                 }
                 result.HttpStatusCode = response.StatusCode;
                 result.ErrorMessage = response.ReasonPhrase;

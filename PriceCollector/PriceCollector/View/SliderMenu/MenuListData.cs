@@ -7,22 +7,22 @@ namespace PriceCollector.View.SliderMenu
         public MenuListData()
         {
             this.Add(new MenuItem()
-                {
-                    Titulo = "Lista de Compras",
-                    TargetType = typeof(object)
-                });
+            {
+                Titulo = "Produtos Alvo",
+                TargetType = typeof(MainPage)
+            });
 
-            //this.Add(new MenuItem()
-            //    {
-            //        Titulo = "Consulta de Preços",
-            //        TargetType = typeof(SearchProduct)
-            //    });
+            this.Add(new MenuItem()
+            {
+                Titulo = "Produtos Coletados",
+                TargetType = typeof(CollectedProducts)
+            });
 
-            //this.Add(new MenuItem()
-            //    {
-            //        Titulo = "Carrinho de Compras",
-            //        TargetType = typeof(View.Cart)
-            //    });
+            this.Add(new MenuItem()
+            {
+                Titulo = "Cadastros de Supermercados",
+                TargetType = typeof(SupermarketsCompetitors)
+            });
 
             //this.Add(new MenuItem()
             //    {

@@ -2,11 +2,35 @@
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PriceCollector.View.SearchResultPage"
+             xmlns:local="clr-namespace:PriceCollector.Converts;assembly=PriceCollector"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
-  <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" WidthRequest="250">
-    <Label Text="{Binding Name,Mode=TwoWay}" FontSize="18"/>
-    <Label Text="{Binding Barcode,Mode=TwoWay}" FontSize="12"/>
-    <Image Aspect="AspectFit" Source="{Binding ImageProduct}"/>
-    <Entry Placeholder="Preço" Text="{Binding PriceCollected,Mode=TwoWay}" Keyboard="Numeric" WidthRequest="80"/>
+  <pages:PopupPage.Resources>
+    <ResourceDictionary>
+      <local:DoubleToStringConvert x:Key="ConverterZeroToStrEpt"></local:DoubleToStringConvert>
+    </ResourceDictionary>
+  </pages:PopupPage.Resources>
+
+  <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" BackgroundColor="White" WidthRequest="300" HeightRequest="250">
+    <StackLayout BackgroundColor="#2196F3">
+      <Label Text="{Binding Name,Mode=TwoWay}" TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalTextAlignment="Center"/>
+    </StackLayout>
+    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+      <Label Text="Código de barras: "/>
+      <Label Text="{Binding Barcode,Mode=TwoWay}" FontSize="15" HorizontalTextAlignment="Center"/>
+    </StackLayout>
+    <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+
+      <StackLayout ClassId="DivEsquerda"  HorizontalOptions="FillAndExpand" >
+        <Image Aspect="AspectFill" Source="{Binding ImageProduct,Mode=TwoWay}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+      </StackLayout>
+
+      <StackLayout ClassId="DivDireita" HorizontalOptions="FillAndExpand" WidthRequest="150">
+        <Label Text="Preço:" FontSize="15" HorizontalTextAlignment="Center" TextColor="Black"/>
+        <StackLayout WidthRequest="50">
+          <Entry Placeholder="0.000,00" Text="{Binding PriceCollected,Mode=TwoWay, Converter={StaticResource ConverterZeroToStrEpt}}" Keyboard="Numeric" HorizontalOptions="Center" TextColor="Black" HorizontalTextAlignment="Center"/>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+    <Button Text="Salvar" TextColor="White" BackgroundColor="#5EC65E" Command="{Binding SaveCommand}" VerticalOptions="EndAndExpand"/>
   </StackLayout>
 </pages:PopupPage>

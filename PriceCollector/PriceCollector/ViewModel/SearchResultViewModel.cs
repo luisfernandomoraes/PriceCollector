@@ -31,15 +31,12 @@ namespace PriceCollector.ViewModel
 
         public SearchResultViewModel(string barcode)
         {
-            Barcode = barcode;
             _productApi = DependencyService.Get<IProductApi>();
-            Task.Run(LoadProduct);
+            Task.Run(()=>LoadProduct(barcode));
         }
 
         #endregion
-
-
-
+        
 
         #region Properties
 
@@ -59,7 +56,6 @@ namespace PriceCollector.ViewModel
             get { return _name; }
             set
             {
-                if (value == _name) return;
                 _name = value;
                 OnPropertyChanged();
             }
@@ -128,17 +124,24 @@ namespace PriceCollector.ViewModel
         #region Methods
 
 
-        private async Task LoadProduct()
+        private async Task LoadProduct(string barcode)
         {
             try
             {
-                var productApiResponse = await _productApi.GetProduct("http://www.acats.scannprice.srv.br/api/",Barcode);
+                var productApiResponse = await _productApi.GetProduct("http://www.acats.scannprice.srv.br/api/",barcode);
                 if(!productApiResponse.Success)
                     return;
                 var p = productApiResponse.Result;
                 Name = p.Name;
                 Barcode = p.BarCode;
                 PriceCurrent = p.PriceCurrent;
+
+                var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
+                if (await _productApi.HasImage(urlImage))
+                    ImageProduct = "NoImagemTarge.png";
+                else
+                    ImageProduct = urlImage;
+
                 
             }
             catch (Exception ex)

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 						 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 						 x:Class="PriceCollector.View.MainPage"
-						 Title="PriceCollector"
+						 Title="Produtos Alvo"
 						 BackgroundColor="White">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Name="Pesquisar" Clicked="OnStartScann" Order="Primary" IsDestructive="true">

@@ -10,18 +10,11 @@ namespace PriceCollector.View.SliderMenu
 		{
 			Title = "menu";
             BackgroundColor = Color.Default;
-			Icon = "ic_menu_black_24dp.png";
 			Menu = new MenuListView ();
             
             
             var menuLabel = new Image {
-                Source = "CabACATSMenu.png"
-                /*Padding = new Thickness(10, 36, 0, 5),
-                Content = new Label {
-                    TextColor = Color.Black,
-					Text = "Menu",
-                    FontSize = 20
-				}*/
+                Source = "back_ground_menu.jpg"
 
             };
 

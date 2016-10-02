@@ -18,7 +18,6 @@ namespace PriceCollector.Model
         public string Name { get; set; }
         public string BarCode { get; set; }
         public decimal PriceCurrent { get; set; }
-        public decimal PriceCollected { get; set; }
         public Category CategoryProduct { get; set; }
         public string ImageProduct { get; set; }
 

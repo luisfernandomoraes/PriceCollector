@@ -45,7 +45,7 @@ namespace PriceCollector.View
             {
                 await _notificator.Notify(ToastNotificationType.Success, nameof(PriceCollector), $"Produto {product.Name} coletado", TimeSpan.FromSeconds(3));
             }
-            else if(!string.IsNullOrEmpty(barcode))
+            else if (!string.IsNullOrEmpty(barcode))
             {
                 await _notificator.Notify(ToastNotificationType.Warning, nameof(PriceCollector), "O código de barras não bate com o produto selecionado.", TimeSpan.FromSeconds(3));
             }
@@ -57,18 +57,25 @@ namespace PriceCollector.View
             try
             {
                 var barcode = await _mainPageViewModel.StartBarCodeScannerAsync();
-                if(string.IsNullOrEmpty(barcode))
+                if (string.IsNullOrEmpty(barcode))
                     return;
 
                 var searchResultPage = new SearchResultPage(barcode);
+                searchResultPage.Disappearing += SearchResultPage_Disappearing;
                 await PopupNavigation.PushAsync(searchResultPage);
+                
             }
             catch (Exception ex)
             {
-                throw;
+                Debug.WriteLine(ex);
             }
         }
 
-
+        private async void SearchResultPage_Disappearing(object sender, EventArgs e)
+        {
+            var searchResultPage = sender as SearchResultPage;
+            if (searchResultPage?.SearchResultViewModel.ProductCollected != null)
+                await _mainPageViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
+        }
     }
 }

@@ -11,17 +11,13 @@ namespace PriceCollector.View
 {
     public partial class SearchResultPage: PopupPage
     {
-        private SearchResultViewModel _searchResultViewModel;
+        public SearchResultViewModel SearchResultViewModel { get; }
+
         public SearchResultPage(string barcode)
         {
             InitializeComponent();
-            _searchResultViewModel = new SearchResultViewModel(barcode);
-
-            Task.Run(async () => {
-                await _searchResultViewModel.InitializationAsync();
-            });
-
-            BindingContext = _searchResultViewModel;
+            SearchResultViewModel = new SearchResultViewModel(barcode);
+            BindingContext = SearchResultViewModel;
         }
     }
 }

@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace PriceCollector.View
 {
-    public partial class SupermarketsCompetitors : ContentPage
+    public partial class SupermarketsCompetitorsPage : ContentPage
     {
-        public SupermarketsCompetitors()
+        public SupermarketsCompetitorsPage()
         {
             InitializeComponent();
         }

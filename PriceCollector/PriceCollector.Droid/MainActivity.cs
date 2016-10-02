@@ -8,9 +8,6 @@ using Android.Widget;
 using Android.OS;
 using Plugin.Toasts;
 using Xamarin.Forms;
-using XLabs.Ioc;
-using TinyIoC;
-using XLabs.Ioc.TinyIOC;
 using ZXing.Mobile;
 
 namespace PriceCollector.Droid

@@ -6,8 +6,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.Products;
+using PriceCollector.Model;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
@@ -24,7 +28,7 @@ namespace PriceCollector.ViewModel
         private decimal _priceCollected;
         private string _imageProduct;
         private bool _canShowProductImage;
-
+        private IToastNotificator _notificator;
         #endregion
 
         #region Ctor
@@ -32,11 +36,48 @@ namespace PriceCollector.ViewModel
         public SearchResultViewModel(string barcode)
         {
             _productApi = DependencyService.Get<IProductApi>();
-            Task.Run(()=>LoadProduct(barcode));
+            _notificator = DependencyService.Get<IToastNotificator>();
+            Task.Run(() => LoadProduct(barcode));
         }
 
         #endregion
+
+        #region Commands
+
+        public ICommand SaveCommand => new Command(Save);
+
+        private async void Save(object obj)
+        {
+            try
+            {
+                if (!IsValid())
+                {
+                    await _notificator.Notify(ToastNotificationType.Warning, Utils.Constants.AppName,
+                        "Atenção, o preencha o preço do produto.", TimeSpan.FromSeconds(3));
+                    return;
+                }
+                var productCollected = new ProductCollected();
+                productCollected.PriceCurrent = PriceCurrent;
+                productCollected.BarCode = Barcode;
+                productCollected.CollectDate = DateTime.Now;
+                productCollected.IDSupermarket = 0;//TODO
+                productCollected.PriceCollected = PriceCollected;
+                productCollected.ProductName = Name;
+                ProductCollected = productCollected;
+                DB.DBContext.ProductCollectedDataBase.SaveItem(productCollected);
+                await PopupNavigation.PopAsync();
+                await _notificator.Notify(ToastNotificationType.Success, Utils.Constants.AppName, "Coleta realizada com sucesso!", TimeSpan.FromSeconds(3));
+            }
+            catch (Exception)
+            {
+                await _notificator.Notify(ToastNotificationType.Error, Utils.Constants.AppName,"Ocorreu um erro, por favor tente novamente mais tarde.",TimeSpan.FromSeconds(3));
+
+            }
+        }
+
         
+
+        #endregion
 
         #region Properties
 
@@ -119,6 +160,8 @@ namespace PriceCollector.ViewModel
 
             }
         }
+
+        public ProductCollected ProductCollected { get; private set; }
         #endregion
 
         #region Methods
@@ -150,13 +193,11 @@ namespace PriceCollector.ViewModel
             }
         }
 
-        public async Task InitializationAsync()
+        private bool IsValid()
         {
-            CanShowProductImage = await _productApi.HasImage(ImageProduct);
-            if (!CanShowProductImage)
-            {
-                ImageProduct = "NoImagemTarge.png";
-            }
+            if (PriceCollected == 0)
+                return false;
+            return true;
         }
 
         #endregion

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceCollector.View.TargetProductsPage"
+             Title="Produtos Alvo"
+             BackgroundColor="White">
+    <ScrollView>
+      <StackLayout>
+        <StackLayout Padding="15">
+          <Label Text="Produtos para coletar o preço" HorizontalOptions="Center" FontSize="25" TextColor="Black"/>
+        </StackLayout>
+        <ActivityIndicator IsRunning="True" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="50" HeightRequest="50" IsVisible="{Binding IsBusy,Mode=TwoWay}"/>
+        <ListView x:Name="list" ItemsSource="{Binding Products,Mode=TwoWay}"  HasUnevenRows="True" ItemTapped="OnItemSelected">
+          <!--GroupShortNameBinding="{Binding Key}"-->
+          <ListView.Header>
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+              <Image x:Name="AdOfferImage" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="preencher"/>
+            </StackLayout>
+          </ListView.Header>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <Grid Padding="5,0,0,0">
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto">
+                    </RowDefinition>
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200">
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="Auto">
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="*">
+                    </ColumnDefinition>
+                  </Grid.ColumnDefinitions>
+                  <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
+                    <Label Text="{Binding Name}" VerticalOptions="FillAndExpand">
+                      <Label.LineBreakMode>
+                        <OnPlatform x:TypeArguments="LineBreakMode" Android="WordWrap" iOS="WordWrap" />
+                      </Label.LineBreakMode>
+                    </Label>
+                  </StackLayout>
+                  <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
+                    <Label Text="R$" VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" />
+                    <Label VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" Text="{Binding PriceCurrent, StringFormat='{0:###0.00}'}" FontSize="17" FontAttributes="Bold" TextColor="Red" />
+                  </StackLayout>
+                  <StackLayout Grid.Column="2" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+                    <Image Source="{Binding ImageProduct}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFit" />
+                  </StackLayout>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+    </ScrollView>
+</ContentPage>

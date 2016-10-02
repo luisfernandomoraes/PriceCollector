@@ -8,20 +8,21 @@ using Xamarin.Forms;
 
 namespace PriceCollector.Converts
 {
-    public class DoubleToStringConvert: IValueConverter
+    public class DoubleToStringConvert : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((decimal) value > 0)
+            if ((decimal)value > 0)
                 return value;
             return string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string)
+            if (value.ToString() == string.Empty)
                 return 0;
-            return value; 
+            return value;
+
         }
     }
 }

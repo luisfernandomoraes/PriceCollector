@@ -6,22 +6,23 @@ namespace PriceCollector.View.SliderMenu
     {
         public MenuListData()
         {
-            this.Add(new MenuItem()
-            {
-                Titulo = "Produtos Alvo",
-                TargetType = typeof(MainPage)
-            });
 
             this.Add(new MenuItem()
             {
                 Titulo = "Produtos Coletados",
-                TargetType = typeof(CollectedProducts)
+                TargetType = typeof(MainPage)
             });
-
+            
+            this.Add(new MenuItem()
+            {
+                Titulo = "Produtos Alvo",
+                TargetType = typeof(TargetProductsPage)
+            });
+            
             this.Add(new MenuItem()
             {
                 Titulo = "Cadastros de Supermercados",
-                TargetType = typeof(SupermarketsCompetitors)
+                TargetType = typeof(SupermarketsCompetitorsPage)
             });
 
             //this.Add(new MenuItem()

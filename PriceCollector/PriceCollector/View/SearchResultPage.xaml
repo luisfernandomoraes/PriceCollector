@@ -24,9 +24,10 @@
         <Image Aspect="AspectFill" Source="{Binding ImageProduct,Mode=TwoWay}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
       </StackLayout>
 
-      <StackLayout ClassId="DivDireita" HorizontalOptions="FillAndExpand" WidthRequest="150">
-        <Label Text="Preço:" FontSize="15" HorizontalTextAlignment="Center" TextColor="Black"/>
-        <StackLayout WidthRequest="50">
+      <StackLayout ClassId="DivDireita" HorizontalOptions="FillAndExpand" WidthRequest="150" VerticalOptions="FillAndExpand">
+        <Label HorizontalTextAlignment="Center" Text="{Binding PriceCurrent, StringFormat='Preço: {0:N}'}"/>
+        <Label Text="Preço Coletado:" FontSize="15" HorizontalTextAlignment="Center" VerticalOptions="Center" TextColor="Black"/>
+        <StackLayout WidthRequest="50" VerticalOptions="End">
           <Entry Placeholder="0.000,00" Text="{Binding PriceCollected,Mode=TwoWay, Converter={StaticResource ConverterZeroToStrEpt}}" Keyboard="Numeric" HorizontalOptions="Center" TextColor="Black" HorizontalTextAlignment="Center"/>
         </StackLayout>
       </StackLayout>

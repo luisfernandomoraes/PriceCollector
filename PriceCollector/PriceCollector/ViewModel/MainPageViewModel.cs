@@ -202,6 +202,7 @@ namespace PriceCollector.ViewModel
                 productCollected.ImageProduct = urlImage;
 
             Products.Add(productCollected);
+            IsEmpty = false;
         }
     }
 }

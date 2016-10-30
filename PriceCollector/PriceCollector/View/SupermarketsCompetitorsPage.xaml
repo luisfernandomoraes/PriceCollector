@@ -1,7 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 						 Title="Supermercados Concorrentes"
-             x:Class="PriceCollector.View.SupermarketsCompetitorsPage">
-  <Label Text="Supermercados Concorrentes" VerticalOptions="Center" HorizontalOptions="Center" />
+						 xmlns:controls="clr-namespace:PriceCollector.Controls;assembly=PriceCollector"
+						 x:Class="PriceCollector.View.SupermarketsCompetitorsPage">
+	<ScrollView>
+		<StackLayout Spacing="{DynamicResource CardSpacing}" 
+								 Padding="{DynamicResource CardPadding}">
+			
+			<controls:CardView>
+				<StackLayout Spacing="0">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="34"/>
+						</Grid.ColumnDefinitions>
+						<controls:LabelSection Text="Announcements"/>
+					</Grid>
+					<controls:HeaderDivider/>
+					
+
+					<StackLayout IsVisible="{Binding LoadingNotifications}"
+															 HorizontalOptions="FillAndExpand"
+															 VerticalOptions="Center"
+															 BackgroundColor="White"
+															 Padding="{StaticResource StandardPadding}">
+						<ActivityIndicator IsRunning="{Binding LoadingNotifications}">
+							<ActivityIndicator.Color>
+								<OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+							</ActivityIndicator.Color>
+						</ActivityIndicator>
+						<Label Text="{Binding Name}"
+									 HorizontalOptions="Center"
+									 Style="{DynamicResource EvolveListItemTextStyle}"/>
+					</StackLayout>
+					
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Label Text="{Binding Street,StringFormat='Cidade: {0}'}" Grid.Column="0" Grid.Row="0"/>
+						<Label Text="{Binding Number,StringFormat='Número: {0}'}" Grid.Column="1" Grid.Row="0"/>
+						<Label Text="{Binding Neighborhood,StringFormat='Bairro: {0}'}" Grid.Column="0" Grid.Row="1"/>
+						<Label Text="{Binding City,StringFormat='Cidade: {0}'}" Grid.Column="1" Grid.Row="1"/>
+					</Grid>
+					
+				</StackLayout>
+			</controls:CardView>      
+
+		</StackLayout>
+	</ScrollView>
 </ContentPage>

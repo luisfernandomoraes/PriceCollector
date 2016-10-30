@@ -7,6 +7,9 @@ namespace PriceCollector.Model
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
+        public string Street { get; set; }
+        public string Number { get; set; }
+        public string Neighborhood { get; set; }
+        public string City { get; set; }
     }
 }

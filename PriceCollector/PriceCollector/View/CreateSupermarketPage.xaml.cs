@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PriceCollector.ViewModel;
+
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace PriceCollector.View
 {
-    public partial class SupermarketsCompetitorsPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CreateSupermarketPage : ContentPage
     {
-        public SupermarketsCompetitorsPage()
+        public CreateSupermarketPage()
         {
             InitializeComponent();
-            BindingContext = new SupermarketsCompetitorsViewModel(this);
         }
     }
 }

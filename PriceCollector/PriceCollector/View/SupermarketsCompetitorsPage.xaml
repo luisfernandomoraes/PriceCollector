@@ -4,7 +4,14 @@
 						 Title="Supermercados Concorrentes"
 						 xmlns:controls="clr-namespace:PriceCollector.Controls;assembly=PriceCollector"
 						 x:Class="PriceCollector.View.SupermarketsCompetitorsPage">
-	<ScrollView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Pesquisar" Command="{Binding AddSupermarketCommand}" Order="Primary" IsDestructive="true">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource" Android="ic_add_white_24dp.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ScrollView>
 		<StackLayout Spacing="{DynamicResource CardSpacing}" 
 								 Padding="{DynamicResource CardPadding}">
 			

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PriceCollector.View.CreateSupermarketPage"
+             Title="Cadastro de Supermercado">
+    <ContentPage.Content>
+        <StackLayout Padding="0,20,0,0">
+            <Label Text="Preencha corretamente as informações abaixo para cadastrar um supermercado concorrente." HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Entry Placeholder="Nome" Text="{Binding Name,Mode=TwoWay}"/>
+            <Entry Placeholder="Rua" Text="{Binding Street,Mode=TwoWay}"/>
+            <Entry Placeholder="Número" Text="{Binding Number,Mode=TwoWay}"/>
+            <Entry Placeholder="Bairro" Text="{Binding Neighborhood,Mode=TwoWay}"/>
+            <Entry Placeholder="Cidade" Text="{Binding City,Mode=TwoWay}"/>
+            <StackLayout Padding="10">
+                <Button Text="Adicionar" HorizontalOptions="FillAndExpand" TextColor="White" BackgroundColor="#26A726"/></StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

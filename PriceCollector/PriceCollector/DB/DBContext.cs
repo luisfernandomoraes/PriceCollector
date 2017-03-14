@@ -13,6 +13,7 @@ namespace PriceCollector.DB
         private static AppConfig _appConfig;
         private static DatabaseSQLite<AppConfig> _appConfigurationDataBase;
         private static DatabaseSQLite<Model.ProductCollected> _productCollectedDataBase;
+        private static DatabaseSQLite<Model.SupermarketsCompetitors> _supermarketCompetitorDatabase;
 
         #endregion
 
@@ -51,6 +52,17 @@ namespace PriceCollector.DB
                     _productCollectedDataBase = new DatabaseSQLite<ProductCollected>();
                 }
                 return _productCollectedDataBase;
+            }
+        }
+        public static DatabaseSQLite<Model.SupermarketsCompetitors> SupermarketsCompetitorsDataBase
+        {
+            get
+            {
+                if (_supermarketCompetitorDatabase == null)
+                {
+                    _supermarketCompetitorDatabase = new DatabaseSQLite<SupermarketsCompetitors>();
+                }
+                return _supermarketCompetitorDatabase;
             }
         }
         #endregion

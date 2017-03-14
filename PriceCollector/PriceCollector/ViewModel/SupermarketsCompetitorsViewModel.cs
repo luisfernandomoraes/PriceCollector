@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -61,18 +62,22 @@ namespace PriceCollector.ViewModel
         {
             _supermarketsCompetitorsPage = supermarketsCompetitorsPage;
             _notificator = DependencyService.Get<IToastNotificator>();
-            LoadAsync();
+            Task.Run(async () => await LoadAsync());
         }
 
-        private void LoadAsync()
+        private async Task LoadAsync()
         {
-            SupermarketsCompetitorses = new List<SupermarketsCompetitors>()
+            try
             {
-                new SupermarketsCompetitors()
-                {
-                    Name = ""
-                }
-            };
+               SupermarketsCompetitorses =  DB.DBContext.SupermarketsCompetitorsDataBase.GetItems().ToList();
+            }
+            catch (Exception e)
+            {
+                await _notificator.Notify(ToastNotificationType.Error, "PriceCollector",
+                    "Ocorreu um erro ao carregar os supermercados concorrentes, por favor tente mais tarde.",
+                    TimeSpan.FromSeconds(3));
+                throw;
+            }
         }
 
         #region NotifyPropertyChanged

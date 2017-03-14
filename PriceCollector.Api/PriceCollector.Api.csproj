@@ -40,7 +40,10 @@
     <Compile Include="WebAPI\Products\ProductApi.cs" />
     <Compile Include="WebAPI\Responses\ApiResponse.cs" />
     <Compile Include="WebAPI\Responses\ProductResponse.cs" />
+    <Compile Include="WebAPI\Responses\SupermarketResponse.cs" />
     <Compile Include="WebAPI\Responses\UserResponse.cs" />
+    <Compile Include="WebAPI\SupermarketCompetitors\ISupermarketCompetitorApi.cs" />
+    <Compile Include="WebAPI\SupermarketCompetitors\SupermarketCompetitorApi.cs" />
     <Compile Include="WebAPI\User\IUserApi.cs" />
     <Compile Include="WebAPI\User\UserApi.cs" />
   </ItemGroup>

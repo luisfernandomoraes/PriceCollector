@@ -15,5 +15,10 @@ namespace PriceCollector.View
             InitializeComponent();
             BindingContext = new SupermarketsCompetitorsViewModel(this);
         }
+
+        private void OnItemSelected(object sender, ItemTappedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

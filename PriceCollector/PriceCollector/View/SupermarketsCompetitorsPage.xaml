@@ -12,54 +12,43 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ScrollView>
-		<StackLayout Spacing="{DynamicResource CardSpacing}" 
-								 Padding="{DynamicResource CardPadding}">
-			
-			<controls:CardView>
-				<StackLayout Spacing="0">
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="34"/>
-						</Grid.ColumnDefinitions>
-						<controls:LabelSection Text="Announcements"/>
-					</Grid>
-					<controls:HeaderDivider/>
-					
-
-					<StackLayout IsVisible="{Binding LoadingNotifications}"
-															 HorizontalOptions="FillAndExpand"
-															 VerticalOptions="Center"
-															 BackgroundColor="White"
-															 Padding="{StaticResource StandardPadding}">
-						<ActivityIndicator IsRunning="{Binding LoadingNotifications}">
-							<ActivityIndicator.Color>
-								<OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
-							</ActivityIndicator.Color>
-						</ActivityIndicator>
-						<Label Text="{Binding Name}"
-									 HorizontalOptions="Center"
-									 Style="{DynamicResource EvolveListItemTextStyle}"/>
-					</StackLayout>
-					
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*"/>
-							<RowDefinition Height="*"/>
-						</Grid.RowDefinitions>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto"/>
-							<ColumnDefinition Width="*"/>
-						</Grid.ColumnDefinitions>
-						<Label Text="{Binding Street,StringFormat='Cidade: {0}'}" Grid.Column="0" Grid.Row="0"/>
-						<Label Text="{Binding Number,StringFormat='Número: {0}'}" Grid.Column="1" Grid.Row="0"/>
-						<Label Text="{Binding Neighborhood,StringFormat='Bairro: {0}'}" Grid.Column="0" Grid.Row="1"/>
-						<Label Text="{Binding City,StringFormat='Cidade: {0}'}" Grid.Column="1" Grid.Row="1"/>
-					</Grid>
-					
-				</StackLayout>
-			</controls:CardView>      
-
-		</StackLayout>
-	</ScrollView>
+        <ListView x:Name="list" ItemsSource="{Binding SupermarketsCompetitorses,Mode=TwoWay}" SeparatorColor="Transparent" ItemTapped="OnItemSelected" HasUnevenRows="True" BackgroundColor="{DynamicResource WindowBackgroundTable}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Spacing="{DynamicResource CardSpacing}" Padding="{DynamicResource CardPadding}">
+                            <controls:CardView>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200">
+                                        </ColumnDefinition>
+                                        <ColumnDefinition Width="Auto">
+                                        </ColumnDefinition>
+                                        <ColumnDefinition Width="*">
+                                        </ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
+                                        <Label Text="{Binding Name}" VerticalOptions="FillAndExpand">
+                                            <Label.LineBreakMode>
+                                                <OnPlatform x:TypeArguments="LineBreakMode" Android="WordWrap" iOS="WordWrap" />
+                                            </Label.LineBreakMode>
+                                        </Label>
+                                        <controls:HeaderDivider />
+                                        <Label Text="{Binding Neighborhood}" FontSize="12" VerticalOptions="EndAndExpand" />
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
+                                        <Label Text="R$" VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" />
+                                        <Label VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" Text="{Binding Street}" FontSize="17" FontAttributes="Bold" TextColor="Red" />
+                                    </StackLayout>
+                                </Grid>
+                            </controls:CardView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
 </ContentPage>

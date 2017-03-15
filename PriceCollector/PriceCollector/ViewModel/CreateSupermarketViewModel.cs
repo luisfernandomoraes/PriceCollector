@@ -109,11 +109,11 @@ namespace PriceCollector.ViewModel
                 // Criação do objeto 
                 var supermarket = new Model.SupermarketsCompetitors
                 {
-                    Name = Name,
-                    City = City,
-                    Neighborhood = Neighborhood,
-                    Street = Street,
-                    Number = Number
+                    Name = Name.TrimEnd(),
+                    City = City.TrimEnd(),
+                    Neighborhood = Neighborhood.TrimEnd(),
+                    Street = Street.TrimEnd(),
+                    Number = Number.TrimEnd()
                 };
 
                 // Persistindo no banco.

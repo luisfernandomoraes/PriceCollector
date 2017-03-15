@@ -10,15 +10,24 @@ namespace PriceCollector.View
 {
     public partial class SupermarketsCompetitorsPage : ContentPage
     {
+        private SupermarketsCompetitorsViewModel _vm;
+
         public SupermarketsCompetitorsPage()
         {
             InitializeComponent();
-            BindingContext = new SupermarketsCompetitorsViewModel(this);
+            _vm = new SupermarketsCompetitorsViewModel(this);
+            BindingContext = _vm;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await _vm.LoadAsync();
         }
 
         private void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

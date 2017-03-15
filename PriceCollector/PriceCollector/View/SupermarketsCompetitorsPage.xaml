@@ -22,26 +22,18 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="200">
-                                        </ColumnDefinition>
-                                        <ColumnDefinition Width="Auto">
-                                        </ColumnDefinition>
-                                        <ColumnDefinition Width="*">
-                                        </ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
                                     <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
-                                        <Label Text="{Binding Name}" VerticalOptions="FillAndExpand">
+                                        <Label Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="FillAndExpand" FontAttributes="Bold" FontSize="Large">
                                             <Label.LineBreakMode>
                                                 <OnPlatform x:TypeArguments="LineBreakMode" Android="WordWrap" iOS="WordWrap" />
                                             </Label.LineBreakMode>
                                         </Label>
                                         <controls:HeaderDivider />
-                                        <Label Text="{Binding Neighborhood}" FontSize="12" VerticalOptions="EndAndExpand" />
-                                    </StackLayout>
-                                    <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
-                                        <Label Text="R$" VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" />
-                                        <Label VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" Text="{Binding Street}" FontSize="17" FontAttributes="Bold" TextColor="Red" />
+                                        <Label Text="{Binding Neighborhood,StringFormat='Bairro: {0:N}'}" HorizontalOptions="Center" FontSize="16" VerticalOptions="EndAndExpand" />
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
+                                            <Label Text="{Binding Street,StringFormat='Rua: {0:N}'}" HorizontalOptions="Center" FontSize="16" VerticalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding Number,StringFormat=', {0:N}'}" FontSize="16" HorizontalOptions="Center" VerticalOptions="EndAndExpand" />
+                                        </StackLayout>
                                     </StackLayout>
                                 </Grid>
                             </controls:CardView>

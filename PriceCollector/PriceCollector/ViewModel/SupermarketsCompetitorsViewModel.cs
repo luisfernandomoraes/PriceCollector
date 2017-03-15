@@ -65,7 +65,7 @@ namespace PriceCollector.ViewModel
             Task.Run(async () => await LoadAsync());
         }
 
-        private async Task LoadAsync()
+        public async Task LoadAsync()
         {
             try
             {

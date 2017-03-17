@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.SupermarketCompetitors;
@@ -26,6 +27,26 @@ namespace PriceCollector.ViewModel
         private ISupermarketCompetitorApi _supermarketApi;
         private IToastNotificator _notificator;
         private ManageSupermarketPage _manageSupermarketPage;
+
+        #endregion
+
+        #region Commands
+
+        public ICommand SaveCommand => new Command(Save);
+
+        private async void Save(object obj)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                await _notificator.Notify(ToastNotificationType.Error, ":(",
+                    "Ocorreu um erro ao salvar o registro, porfavor tente mais tarde.", TimeSpan.FromSeconds(3));
+            }
+        }
 
         #endregion
 
@@ -98,6 +119,9 @@ namespace PriceCollector.ViewModel
         }
 
         #endregion
+
+        #region Ctor
+
         public ManageSupermarketViewModel(Model.SupermarketsCompetitors supermarketsCompetitors, View.ManageSupermarketPage manageSupermarketPage)
         {
             Task.Run(async () => { await LoadAsync(supermarketsCompetitors); });
@@ -106,6 +130,10 @@ namespace PriceCollector.ViewModel
             _notificator = DependencyService.Get<IToastNotificator>();
         }
 
+        #endregion
+
+        #region Methods
+        
         private async Task LoadAsync(SupermarketsCompetitors market)
         {
             try
@@ -125,6 +153,8 @@ namespace PriceCollector.ViewModel
                 await _manageSupermarketPage.Navigation.PopAsync();
             }
         }
+
+        #endregion
 
         #region INotifyPropertyChangeImpl
 

@@ -27,7 +27,11 @@ namespace PriceCollector.View
 
         private void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
-            //throw new NotImplementedException();
+            var market = e.Item as Model.SupermarketsCompetitors;
+            if (market == null)
+                return;
+
+            Navigation.PushAsync(new ManageSupermarketPage(market));
         }
     }
 }

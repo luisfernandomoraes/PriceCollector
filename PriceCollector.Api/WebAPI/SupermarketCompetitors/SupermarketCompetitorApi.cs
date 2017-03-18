@@ -62,5 +62,28 @@ namespace PriceCollector.Api.WebAPI.SupermarketCompetitors
                 return supermarketResponse;
             }
         }
+
+        public async Task<SupermarketResponse> Put(string url, SupermarketsCompetitors supermarkets)
+        {
+            SupermarketResponse supermarketResponse = new SupermarketResponse();
+            supermarketResponse.Success = true;
+            return supermarketResponse;
+            try
+            {
+                
+                var json = JsonConvert.SerializeObject(supermarkets, Formatting.None);
+                using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
+                {
+                    var urlFormated = $"{url}Clients/{supermarkets.IDSupermarket}";
+                    var result = await _client.PutAsync(urlFormated, content);
+                    supermarketResponse.Success = result.IsSuccessStatusCode;
+                    return supermarketResponse;
+                }
+            }
+            catch (Exception)
+            {
+                return supermarketResponse;
+            }
+        }
     }
 }

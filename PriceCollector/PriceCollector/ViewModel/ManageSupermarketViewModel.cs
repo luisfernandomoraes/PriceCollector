@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.SupermarketCompetitors;
+using PriceCollector.DB;
 using PriceCollector.Model;
 using PriceCollector.View;
 using Xamarin.Forms;
@@ -27,10 +28,31 @@ namespace PriceCollector.ViewModel
         private ISupermarketCompetitorApi _supermarketApi;
         private IToastNotificator _notificator;
         private ManageSupermarketPage _manageSupermarketPage;
+        private int _idSupermarket;
 
         #endregion
 
         #region Commands
+
+        public ICommand DeleteCommand => new Command(Delete);
+
+        private async void Delete(object obj)
+        {
+            try
+            {
+                var result = await App.ShowQuestion("PriceCollector", "Deseja realmente deletar o supermercado?", "Sim", "Não");
+                if (result)
+                {
+                    DBContext.SupermarketsCompetitorsDataBase.DeleteItem(ID);
+                    await _manageSupermarketPage.Navigation.PopAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                await _notificator.Notify(ToastNotificationType.Error, ":(", "Ocorreu um erro inesperado ao deletar o registro, porfavor tente mais tarde.", TimeSpan.FromSeconds(3));
+            }
+        }
 
         public ICommand SaveCommand => new Command(Save);
 
@@ -38,7 +60,26 @@ namespace PriceCollector.ViewModel
         {
             try
             {
+                var market = DB.DBContext.SupermarketsCompetitorsDataBase.GetItem(ID);
 
+                market.IDSupermarket = IDSupermarket;
+                market.Name = Name;
+                market.Street = Street;
+                market.Number = Number;
+                market.Neighborhood = Neighborhood;
+                market.City = City;
+
+
+                var result = await _supermarketApi.Put(DB.DBContext.CurrentAppConfiguration.WebApiAddress, market);
+                if (!result.Success)
+                {
+                    await _notificator.Notify(ToastNotificationType.Error, ":(",
+                        "Ocorreu um erro inesperado ao salvar suas alterações, porfavor tente mais tarde.", TimeSpan.FromSeconds(3));
+                    return;
+                }
+
+                DB.DBContext.SupermarketsCompetitorsDataBase.Update(market);
+                await _manageSupermarketPage.Navigation.PopAsync();
             }
             catch (Exception e)
             {
@@ -59,6 +100,17 @@ namespace PriceCollector.ViewModel
             {
                 if (value == _id) return;
                 _id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int IDSupermarket
+        {
+            get { return _idSupermarket; }
+            set
+            {
+                if (value == _idSupermarket) return;
+                _idSupermarket = value;
                 OnPropertyChanged();
             }
         }
@@ -133,7 +185,7 @@ namespace PriceCollector.ViewModel
         #endregion
 
         #region Methods
-        
+
         private async Task LoadAsync(SupermarketsCompetitors market)
         {
             try

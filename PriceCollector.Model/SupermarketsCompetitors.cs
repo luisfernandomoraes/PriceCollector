@@ -1,4 +1,4 @@
-﻿using SQLite;
+﻿using SQLite.Net.Attributes;
 
 namespace PriceCollector.Model
 {
@@ -6,6 +6,7 @@ namespace PriceCollector.Model
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public int IDSupermarket { get; set; }
         public string Name { get; set; }
         public string Street { get; set; }
         public string Number { get; set; }

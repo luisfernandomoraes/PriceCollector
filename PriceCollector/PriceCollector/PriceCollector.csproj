@@ -59,6 +59,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ManageSupermarketViewModel.cs" />
+    <Compile Include="ViewModel\PickSupermarketViewModel.cs" />
     <Compile Include="ViewModel\SearchResultViewModel.cs" />
     <Compile Include="ViewModel\SupermarketsCompetitorsViewModel.cs" />
     <Compile Include="ViewModel\TargetProductsViewModel.cs" />
@@ -76,6 +77,9 @@
     </Compile>
     <Compile Include="View\ManageSupermarketPage.xaml.cs">
       <DependentUpon>ManageSupermarketPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PickSupermarketPage.xaml.cs">
+      <DependentUpon>PickSupermarketPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SearchResultPage.xaml.cs">
       <DependentUpon>SearchResultPage.xaml</DependentUpon>
@@ -228,6 +232,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\ManageSupermarketPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\PickSupermarketPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -9,23 +9,41 @@ using System.Windows.Input;
 using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Model;
+using PriceCollector.Utils;
 using PriceCollector.View;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
 {
-    public class SupermarketsCompetitorsViewModel : INotifyPropertyChanged
+    public class PickSupermarketViewModel:INotifyPropertyChanged
     {
-        private ICollection<SupermarketsCompetitors> _supermarketsCompetitorses;
-        private CreateSupermarketPage _createSupermarketPage;
-        private IToastNotificator _notificator;
-        private SupermarketsCompetitorsPage _supermarketsCompetitorsPage;
+        #region Fields
 
-        private CreateSupermarketPage SupermarketPage
+        private PickSupermarketPage _page;
+        private IToastNotificator _notificator;
+        private CreateSupermarketPage _createSupermarketPage;
+        private ICollection<SupermarketsCompetitors> _supermarketsCompetitors;
+        private ILoginManager _ilm;
+
+        #endregion
+
+        #region Properties
+
+        private CreateSupermarketPage SupermarketPage => _createSupermarketPage ?? (_createSupermarketPage = new CreateSupermarketPage());
+
+        public ICollection<Model.SupermarketsCompetitors> SupermarketsCompetitors
         {
-            get { return _createSupermarketPage ?? (_createSupermarketPage = new CreateSupermarketPage()); }
-            set { _createSupermarketPage = value; }
+            get { return _supermarketsCompetitors; }
+            set
+            {
+                _supermarketsCompetitors = value;
+                OnPropertyChanged();
+            }
         }
+
+        #endregion
+
+        #region Commands
 
         public ICommand AddSupermarketCommand => new Command(AddSupermarke);
 
@@ -33,7 +51,7 @@ namespace PriceCollector.ViewModel
         {
             try
             {
-                await _supermarketsCompetitorsPage.Navigation.PushAsync(SupermarketPage);
+                await _page.Navigation.PushAsync(SupermarketPage);
             }
             catch (Exception e)
             {
@@ -42,40 +60,44 @@ namespace PriceCollector.ViewModel
             }
         }
 
-        public ICollection<SupermarketsCompetitors> SupermarketsCompetitorses
+        #endregion
+        #region Ctor
+
+        public PickSupermarketViewModel(PickSupermarketPage page, ILoginManager ilm)
         {
-            get { return _supermarketsCompetitorses; }
-            set
-            {
-                if (Equals(value, _supermarketsCompetitorses)) return;
-                _supermarketsCompetitorses = value;
-                OnPropertyChanged();
-            }
+            _page = page;
+            _notificator = DependencyService.Get<IToastNotificator>();
+            _ilm = ilm;
+            //Task.Run(async () => await LoadAsync());
         }
 
-        public SupermarketsCompetitorsViewModel(SupermarketsCompetitorsPage supermarketsCompetitorsPage)
-        {
-            _supermarketsCompetitorsPage = supermarketsCompetitorsPage;
-            _notificator = DependencyService.Get<IToastNotificator>();
-            Task.Run(async () => await LoadAsync());
-        }
+        #endregion
+
+        #region Methods
 
         public async Task LoadAsync()
         {
             try
             {
-                SupermarketsCompetitorses = DB.DBContext.SupermarketsCompetitorsDataBase.GetItems().ToList();
+                SupermarketsCompetitors = DB.DBContext.SupermarketsCompetitorsDataBase.GetItems().ToList();
             }
             catch (Exception e)
             {
                 await _notificator.Notify(ToastNotificationType.Error, "PriceCollector",
                     "Ocorreu um erro ao carregar os supermercados concorrentes, por favor tente mais tarde.",
                     TimeSpan.FromSeconds(3));
-                throw;
+                Debug.WriteLine(e);
             }
         }
 
-        #region NotifyPropertyChanged
+        public void SetSupermarketToWillCollectedProdutcs(SupermarketsCompetitors market)
+        {
+            Application.Current.Properties[nameof(Model.SupermarketsCompetitors)] = market;
+            _ilm.ShowMainPage();
+        }
+        #endregion
+
+        #region INotifyPropertyChangedImpl
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -86,5 +108,7 @@ namespace PriceCollector.ViewModel
         }
 
         #endregion
+
+       
     }
 }

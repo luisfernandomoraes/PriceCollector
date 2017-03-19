@@ -31,13 +31,13 @@ namespace PriceCollector
             InitializeConfigurations();
             CurrentApp = this;
 
-            MainPage = new NavigationPage(new LoginModalPage(this));
+            MainPage = new NavigationPage(new LoginModalPage(this) { Title = "Autenticação de Usuário" });
         }
 
 
         private void InitializeConfigurations()
         {
-            Application.Current.Properties["IsLoggedIn"] = false;
+            App.Current.Properties["IsLoggedIn"] = false;
         }
 
 

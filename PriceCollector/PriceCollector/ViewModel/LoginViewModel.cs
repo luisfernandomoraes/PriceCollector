@@ -22,7 +22,7 @@ namespace PriceCollector.ViewModel
 
         public ICommand LoginCommand => new Command(Login);
 
-        public string UserName
+        private string UserName
         {
             get { return _userName; }
             set
@@ -33,7 +33,7 @@ namespace PriceCollector.ViewModel
             }
         }
 
-        public string Password
+        private string Password
         {
             get { return _password; }
             set
@@ -58,8 +58,10 @@ namespace PriceCollector.ViewModel
             if (userResponse.Success && userResponse.HttpStatusCode == HttpStatusCode.OK)
             {
                 Application.Current.Properties["IsLoggedIn"] = true;
-                _ilm.ShowMainPage();
-               // await _notificator.Notify(ToastNotificationType.Success, Constants.AppName, "Login efetuado com sucesso", TimeSpan.FromSeconds(3));
+                
+                await Application.Current.MainPage.Navigation.PushAsync(new View.PickSupermarketPage(_ilm));
+                //_ilm.ShowMainPage();
+                // await _notificator.Notify(ToastNotificationType.Success, Constants.AppName, "Login efetuado com sucesso", TimeSpan.FromSeconds(3));
             }
         }
 

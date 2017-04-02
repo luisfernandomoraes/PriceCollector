@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pcl="clr-namespace:Rb.Forms.Barcode.Pcl;assembly=Rb.Forms.Barcode.Pcl"
+             xmlns:viewModel="clr-namespace:PriceCollector.ViewModel;assembly=PriceCollector"
+             xmlns:converts="clr-namespace:PriceCollector.Converts;assembly=PriceCollector"
+             x:Class="PriceCollector.View.ScannerPage"
+             Title="Aproxime o Código de Barras">
+
+    <ContentPage.BindingContext>
+        <viewModel:ScannerViewModel />
+    </ContentPage.BindingContext>
+
+    <RelativeLayout>
+        <pcl:BarcodeScanner x:Name="BarcodeScanner"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
+            PreviewActivatedCommand="{Binding PreviewActivatedCommand}"
+            BarcodeChangedCommand="{Binding BarcodeChangedCommand}"
+            BarcodeDecodedCommand="{Binding BarcodeDecodedCommand}"
+            PreviewActive="{Binding Preview}"
+            Torch="{Binding Torch}"
+            IsEnabled="{Binding IsEnable,Mode=TwoWay}"
+            BarcodeDecoder="{Binding Decoder}" />
+
+        <BoxView Color="Transparent"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
+        />
+
+        <BoxView x:Name="flash" Color="White" Opacity="0"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
+        />
+
+        <ActivityIndicator IsRunning="{Binding Initialized, Converter={converts:NegateBooleanConverter}}"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-25}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5, Constant=-25}"
+        />
+
+        <BoxView Color="Red" HeightRequest="1" IsVisible="{Binding Initialized}"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5, Constant=-1}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
+        />
+
+        <Label TextColor="Red" FontSize="17" XAlign="Center" 
+            Text="{Binding Barcode}"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5, Constant=20}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+        />
+
+    </RelativeLayout>
+    
+</ContentPage>

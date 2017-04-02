@@ -15,6 +15,11 @@ namespace PriceCollector
 {
     public partial class App : Application, ILoginManager
     {
+        public const string MessageOnStart = "OnStart";
+        public const string MessageOnSleep = "OnSleep";
+        public const string MessageOnResume = "OnResume";
+
+
         public static App CurrentApp;
 
         public App()
@@ -73,17 +78,22 @@ namespace PriceCollector
         protected override void OnStart()
         {
             // Handle when your app starts
+            MessagingCenter.Send<App>(this, MessageOnStart);
         }
 
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            MessagingCenter.Send<App>(this, MessageOnSleep);
+
         }
 
         protected override void OnResume()
         {
             // Handle when your app resumes
+            MessagingCenter.Send<App>(this, MessageOnResume);
+
         }
-        
+
     }
 }

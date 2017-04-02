@@ -7,6 +7,8 @@ using System.Diagnostics;
 using ZXing.Mobile;
 using Xamarin.Forms.Xaml;
 using System.Threading;
+using PriceCollector.Controls;
+using Rb.Forms.Barcode.Pcl;
 using Rg.Plugins.Popup.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -16,6 +18,9 @@ namespace PriceCollector.View
     {
         private MainPageViewModel _mainPageViewModel;
         private readonly IToastNotificator _notificator;
+        private ScannerPage _scannerPage;
+        private bool _isToShowScanner;
+        private CancellationTokenSource _cancellationTokenSourceTask;
 
         public MainPage()
         {
@@ -52,18 +57,83 @@ namespace PriceCollector.View
 
         }
 
+
+        private async Task StartScannAsync()
+        {
+            try
+            {
+                _scannerPage = ScannerPageControl.Instance.CreateScannerPage();
+                _scannerPage.BarcodeScannerPage.BarcodeChanged += BarcodeScannerPageOnBarcodeChanged;
+                await Navigation.PushAsync(_scannerPage);
+
+                await StartTimeout();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        private async Task StartTimeout()
+        {
+            _cancellationTokenSourceTask = new CancellationTokenSource();
+
+            var cancellationToken = _cancellationTokenSourceTask.Token;
+            await Task.Factory.StartNew(async () =>
+            {
+                // Were we already canceled?
+                cancellationToken.ThrowIfCancellationRequested();
+
+                await Task.Delay(TimeSpan.FromSeconds(15), cancellationToken); // Timeout
+
+                if (!cancellationToken.IsCancellationRequested && _scannerPage.BarcodeScannerPage.IsEnabled)
+                {
+                    BarcodeScannerPageOnBarcodeChanged(new BarcodeScanner { Barcode = null }, null); //Not found or cant read the barcode.
+                }
+            }, _cancellationTokenSourceTask.Token);
+        }
+
+        private async void BarcodeScannerPageOnBarcodeChanged(object sender, BarcodeEventArgs e)
+        {
+            try
+            {
+
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await Navigation.PopAsync();
+                });
+
+                var barcode = string.Empty;
+                var barcodeScanner = (BarcodeScanner)sender;
+
+                if (barcodeScanner.Barcode == null)
+                {
+                    await _notificator.Notify(ToastNotificationType.Error, nameof(PriceCollector), "Ocorreu um erro ao ralizar o scanneamento.", TimeSpan.FromSeconds(3));
+
+                }
+                else
+                {
+                    _cancellationTokenSourceTask.Cancel();
+
+                    barcode = barcodeScanner.Barcode.Result;
+
+                    var searchResultPage = new SearchResultPage(barcode);
+                    await PopupNavigation.PushAsync(searchResultPage);
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception);
+            }
+        }
+
         private async void OnStartScann(object sender, EventArgs evt)
         {
             try
             {
-                var barcode = await _mainPageViewModel.StartBarCodeScannerAsync();
-                if (string.IsNullOrEmpty(barcode))
-                    return;
-
-                var searchResultPage = new SearchResultPage(barcode);
-                searchResultPage.Disappearing += SearchResultPage_Disappearing;
-                await PopupNavigation.PushAsync(searchResultPage);
-                
+                await StartScannAsync();
             }
             catch (Exception ex)
             {

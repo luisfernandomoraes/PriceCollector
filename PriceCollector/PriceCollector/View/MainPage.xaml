@@ -5,7 +5,7 @@
 						 Title="Produtos Coletados"
 						 BackgroundColor="White">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Pesquisar" Clicked="OnStartScann" Order="Primary" IsDestructive="true">
+		<ToolbarItem Text="Pesquisar" Clicked="OnStartScann" Order="Primary" IsDestructive="true">
 			<ToolbarItem.Icon>
 				<OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_24dp.png" />
 			</ToolbarItem.Icon>

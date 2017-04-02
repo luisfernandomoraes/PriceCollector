@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Plugin.Toasts;
+using Rb.Forms.Barcode.Droid;
 using Xamarin.Forms;
 using ZXing.Mobile;
 
@@ -26,8 +27,16 @@ namespace PriceCollector.Droid
 
             DependencyService.Register<ToastNotificatorImplementation>(); // Register your dependency
             ToastNotificatorImplementation.Init(this); //you can pass additional parameters here
-            MobileBarcodeScanner.Initialize(Application);
+                                                       //MobileBarcodeScanner.Initialize(Application);
+                                                       //MobileBarcodeScanner.Initialize(this.Application);
+            var configBarcodeScanner = new Configuration
+            {
+                // Some devices, mostly samsung, stop auto focusing as soon as one of the advanced features is enabled.
+                CompatibilityMode = Build.Manufacturer.Contains("samsung"),
+                Zoom = 5
+            };
 
+            BarcodeScannerRenderer.Init(configBarcodeScanner);
 
             LoadApplication(new App());
         }

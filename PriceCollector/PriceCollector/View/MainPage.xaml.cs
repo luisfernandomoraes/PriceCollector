@@ -93,40 +93,42 @@ namespace PriceCollector.View
             }, _cancellationTokenSourceTask.Token);
         }
 
-        private async void BarcodeScannerPageOnBarcodeChanged(object sender, BarcodeEventArgs e)
+        private void BarcodeScannerPageOnBarcodeChanged(object sender, BarcodeEventArgs e)
         {
-            try
-            {
-
-                Device.BeginInvokeOnMainThread(async () =>
+            Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await Navigation.PopAsync();
+                    try
+                    {
+
+
+                        await Navigation.PopAsync();
+
+
+                        var barcode = string.Empty;
+                        var barcodeScanner = (BarcodeScanner)sender;
+
+                        if (barcodeScanner.Barcode == null)
+                        {
+                            await _notificator.Notify(ToastNotificationType.Error, nameof(PriceCollector), "Ocorreu um erro ao ralizar o scanneamento.", TimeSpan.FromSeconds(3));
+
+                        }
+                        else
+                        {
+                            _cancellationTokenSourceTask.Cancel();
+
+                            barcode = barcodeScanner.Barcode.Result;
+
+                            var searchResultPage = new SearchResultPage(barcode);
+                            await PopupNavigation.PushAsync(searchResultPage);
+
+                        }
+
+                    }
+                    catch (Exception exception)
+                    {
+                        Debug.WriteLine(exception);
+                    }
                 });
-
-                var barcode = string.Empty;
-                var barcodeScanner = (BarcodeScanner)sender;
-
-                if (barcodeScanner.Barcode == null)
-                {
-                    await _notificator.Notify(ToastNotificationType.Error, nameof(PriceCollector), "Ocorreu um erro ao ralizar o scanneamento.", TimeSpan.FromSeconds(3));
-
-                }
-                else
-                {
-                    _cancellationTokenSourceTask.Cancel();
-
-                    barcode = barcodeScanner.Barcode.Result;
-
-                    var searchResultPage = new SearchResultPage(barcode);
-                    await PopupNavigation.PushAsync(searchResultPage);
-
-                }
-
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception);
-            }
         }
 
         private async void OnStartScann(object sender, EventArgs evt)

@@ -13,7 +13,7 @@ namespace PriceCollector.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScannerPage : ContentPage
     {
-        public BarcodeScanner BarcodeScannerPage { get; private set; }
+        public BarcodeScanner BarcodeScannerPage { get; }
 
         public ScannerPage()
         {
@@ -70,7 +70,7 @@ namespace PriceCollector.View
             BarcodeScanner.IsEnabled = true;
         }
 
-        private async void AnimateFlash(object sender, BarcodeEventArgs e)
+        private void AnimateFlash(object sender, BarcodeEventArgs e)
         {
             Device.BeginInvokeOnMainThread(async () => {
                 await flash.FadeTo(1, 150, Easing.CubicInOut);

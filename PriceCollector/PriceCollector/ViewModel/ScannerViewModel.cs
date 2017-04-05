@@ -98,7 +98,7 @@ namespace PriceCollector.ViewModel
         {
             IsEnable = true;
             PreviewActivatedCommand = new Command(() => { Initialized = true; });
-            BarcodeChangedCommand = new Command<Barcode>(updateBarcode);
+            BarcodeChangedCommand = new Command<Barcode>(UpdateBarcode);
             BarcodeDecodedCommand = new Command<Barcode>(logBarcode);
             TogglePreviewCommand = new Command(() => { Preview = !Preview; });
             ToggleTorchCommand = new Command(() => { Torch = !Torch; });
@@ -112,7 +112,7 @@ namespace PriceCollector.ViewModel
             Debug.WriteLine("Decoded barcode [{0} - {1}]", barcode?.Result, barcode?.Format);
         }
 
-        private void updateBarcode(Barcode barcode)
+        private void UpdateBarcode(Barcode barcode)
         {
             Barcode = String.Format("Last Barcode: [{0} - {1}]", barcode?.Result, barcode?.Format);
             IsEnable = false;

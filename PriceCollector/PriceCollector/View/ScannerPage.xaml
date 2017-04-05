@@ -21,7 +21,7 @@
             PreviewActive="{Binding Preview}"
             Torch="{Binding Torch}"
             IsEnabled="{Binding IsEnable,Mode=TwoWay}"
-            BarcodeDecoder="{Binding Decoder}" />
+            BarcodeDecoder="{Binding Decoder}"/>
 
         <BoxView Color="Transparent"
             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"

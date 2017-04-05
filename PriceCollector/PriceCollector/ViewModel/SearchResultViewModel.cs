@@ -37,7 +37,7 @@ namespace PriceCollector.ViewModel
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
-            Task.Run(() => LoadProduct(barcode));
+            Task.Run(async () => await LoadProduct(barcode));
         }
 
         #endregion

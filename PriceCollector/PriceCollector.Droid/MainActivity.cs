@@ -9,7 +9,6 @@ using Android.OS;
 using Plugin.Toasts;
 using Rb.Forms.Barcode.Droid;
 using Xamarin.Forms;
-using ZXing.Mobile;
 
 namespace PriceCollector.Droid
 {

@@ -3728,12 +3728,6 @@ namespace PriceCollector.Droid
 			global::Plugin.Toasts.Resource.String.ApplicationName = global::PriceCollector.Droid.Resource.String.ApplicationName;
 			global::Plugin.Toasts.Resource.String.Hello = global::PriceCollector.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::PriceCollector.Droid.Resource.Attribute.actionBarSize;
-			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscanneractivitylayout = global::PriceCollector.Droid.Resource.Layout.zxingscanneractivitylayout;
-			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscannerfragmentlayout = global::PriceCollector.Droid.Resource.Layout.zxingscannerfragmentlayout;
-			global::ZXing.Net.Mobile.Forms.Android.Resource.String.library_name = global::PriceCollector.Droid.Resource.String.library_name;
-			global::ZXing.Mobile.Resource.Id.contentFrame = global::PriceCollector.Droid.Resource.Id.contentFrame;
-			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::PriceCollector.Droid.Resource.Layout.zxingscanneractivitylayout;
-			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::PriceCollector.Droid.Resource.Layout.zxingscannerfragmentlayout;
 		}
 		
 		public partial class Animation
@@ -6091,64 +6085,67 @@ namespace PriceCollector.Droid
 			public const int info = 2130837698;
 			
 			// aapt resource value: 0x7f0200c3
-			public const int mr_dialog_material_background_dark = 2130837699;
+			public const int Logo = 2130837699;
 			
 			// aapt resource value: 0x7f0200c4
-			public const int mr_dialog_material_background_light = 2130837700;
+			public const int mr_dialog_material_background_dark = 2130837700;
 			
 			// aapt resource value: 0x7f0200c5
-			public const int mr_ic_audiotrack_light = 2130837701;
+			public const int mr_dialog_material_background_light = 2130837701;
 			
 			// aapt resource value: 0x7f0200c6
-			public const int mr_ic_cast_dark = 2130837702;
+			public const int mr_ic_audiotrack_light = 2130837702;
 			
 			// aapt resource value: 0x7f0200c7
-			public const int mr_ic_cast_light = 2130837703;
+			public const int mr_ic_cast_dark = 2130837703;
 			
 			// aapt resource value: 0x7f0200c8
-			public const int mr_ic_close_dark = 2130837704;
+			public const int mr_ic_cast_light = 2130837704;
 			
 			// aapt resource value: 0x7f0200c9
-			public const int mr_ic_close_light = 2130837705;
+			public const int mr_ic_close_dark = 2130837705;
 			
 			// aapt resource value: 0x7f0200ca
-			public const int mr_ic_media_route_connecting_mono_dark = 2130837706;
+			public const int mr_ic_close_light = 2130837706;
 			
 			// aapt resource value: 0x7f0200cb
-			public const int mr_ic_media_route_connecting_mono_light = 2130837707;
+			public const int mr_ic_media_route_connecting_mono_dark = 2130837707;
 			
 			// aapt resource value: 0x7f0200cc
-			public const int mr_ic_media_route_mono_dark = 2130837708;
+			public const int mr_ic_media_route_connecting_mono_light = 2130837708;
 			
 			// aapt resource value: 0x7f0200cd
-			public const int mr_ic_media_route_mono_light = 2130837709;
+			public const int mr_ic_media_route_mono_dark = 2130837709;
 			
 			// aapt resource value: 0x7f0200ce
-			public const int mr_ic_pause_dark = 2130837710;
+			public const int mr_ic_media_route_mono_light = 2130837710;
 			
 			// aapt resource value: 0x7f0200cf
-			public const int mr_ic_pause_light = 2130837711;
+			public const int mr_ic_pause_dark = 2130837711;
 			
 			// aapt resource value: 0x7f0200d0
-			public const int mr_ic_play_dark = 2130837712;
+			public const int mr_ic_pause_light = 2130837712;
 			
 			// aapt resource value: 0x7f0200d1
-			public const int mr_ic_play_light = 2130837713;
+			public const int mr_ic_play_dark = 2130837713;
 			
 			// aapt resource value: 0x7f0200d2
-			public const int NoImagemTarge = 2130837714;
-			
-			// aapt resource value: 0x7f0200d6
-			public const int notification_template_icon_bg = 2130837718;
+			public const int mr_ic_play_light = 2130837714;
 			
 			// aapt resource value: 0x7f0200d3
-			public const int splash_screen = 2130837715;
+			public const int NoImagemTarge = 2130837715;
+			
+			// aapt resource value: 0x7f0200d7
+			public const int notification_template_icon_bg = 2130837719;
 			
 			// aapt resource value: 0x7f0200d4
-			public const int success = 2130837716;
+			public const int splash_screen = 2130837716;
 			
 			// aapt resource value: 0x7f0200d5
-			public const int warning = 2130837717;
+			public const int success = 2130837717;
+			
+			// aapt resource value: 0x7f0200d6
+			public const int warning = 2130837718;
 			
 			static Drawable()
 			{
@@ -6261,9 +6258,6 @@ namespace PriceCollector.Droid
 			
 			// aapt resource value: 0x7f0a0027
 			public const int collapseActionView = 2131361831;
-			
-			// aapt resource value: 0x7f0a00a3
-			public const int contentFrame = 2131361955;
 			
 			// aapt resource value: 0x7f0a0052
 			public const int contentPanel = 2131361874;
@@ -6907,12 +6901,6 @@ namespace PriceCollector.Droid
 			// aapt resource value: 0x7f030039
 			public const int Toolbar = 2130903097;
 			
-			// aapt resource value: 0x7f03003a
-			public const int zxingscanneractivitylayout = 2130903098;
-			
-			// aapt resource value: 0x7f03003b
-			public const int zxingscannerfragmentlayout = 2130903099;
-			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -6926,11 +6914,11 @@ namespace PriceCollector.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060047
-			public const int ApplicationName = 2131099719;
-			
 			// aapt resource value: 0x7f060046
-			public const int Hello = 2131099718;
+			public const int ApplicationName = 2131099718;
+			
+			// aapt resource value: 0x7f060045
+			public const int Hello = 2131099717;
 			
 			// aapt resource value: 0x7f06002e
 			public const int abc_action_bar_home_description = 2131099694;
@@ -7094,8 +7082,8 @@ namespace PriceCollector.Droid
 			// aapt resource value: 0x7f06001e
 			public const int common_signin_button_text_long = 2131099678;
 			
-			// aapt resource value: 0x7f060045
-			public const int library_name = 2131099717;
+			// aapt resource value: 0x7f060047
+			public const int library_name = 2131099719;
 			
 			// aapt resource value: 0x7f06001f
 			public const int mr_button_content_description = 2131099679;

@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.OS;
 using Android.Util;
-using ZXing.Mobile;
 
 namespace PriceCollector.Droid
 {

@@ -4,7 +4,6 @@ using PriceCollector.ViewModel;
 using Xamarin.Forms;
 using Plugin.Toasts;
 using System.Diagnostics;
-using ZXing.Mobile;
 using Xamarin.Forms.Xaml;
 using System.Threading;
 using PriceCollector.Controls;

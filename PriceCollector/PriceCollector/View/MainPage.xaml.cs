@@ -10,7 +10,6 @@ using PriceCollector.Controls;
 using Rb.Forms.Barcode.Pcl;
 using Rg.Plugins.Popup.Services;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PriceCollector.View
 {
     public partial class MainPage : ContentPage

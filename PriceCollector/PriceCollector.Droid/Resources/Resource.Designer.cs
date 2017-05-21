@@ -6085,7 +6085,7 @@ namespace PriceCollector.Droid
 			public const int info = 2130837698;
 			
 			// aapt resource value: 0x7f0200c3
-			public const int Logo = 2130837699;
+			public const int logo = 2130837699;
 			
 			// aapt resource value: 0x7f0200c4
 			public const int mr_dialog_material_background_dark = 2130837700;

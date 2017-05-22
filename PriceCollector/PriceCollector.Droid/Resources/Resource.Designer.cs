@@ -1728,6 +1728,8 @@ namespace PriceCollector.Droid
 			global::Rb.Forms.Barcode.Droid.Resource.Styleable.ViewStubCompat_android_layout = global::PriceCollector.Droid.Resource.Styleable.ViewStubCompat_android_layout;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::PriceCollector.Droid.Resource.String.ApplicationName;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::PriceCollector.Droid.Resource.String.Hello;
+			global::SQLite.Net.Platform.XamarinAndroidN.Resource.String.ApplicationName = global::PriceCollector.Droid.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroidN.Resource.String.Hello = global::PriceCollector.Droid.Resource.String.Hello;
 			global::Plugin.Toasts.Resource.Drawable.error = global::PriceCollector.Droid.Resource.Drawable.error;
 			global::Plugin.Toasts.Resource.Drawable.info = global::PriceCollector.Droid.Resource.Drawable.info;
 			global::Plugin.Toasts.Resource.Drawable.success = global::PriceCollector.Droid.Resource.Drawable.success;

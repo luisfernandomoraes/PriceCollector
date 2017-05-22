@@ -7,7 +7,7 @@
         <StackLayout HorizontalOptions="FillAndExpand" Padding="15">
             <Entry Placeholder="Usuário" Text="{Binding UserName}"/>
             <Entry Placeholder="Senha" Text="{Binding Password}" IsPassword="True"/>
-            <Button Command="{Binding LoginCommand}" Text="Login" Margin="0,15,0,0"  BackgroundColor="#FF6ED526" />
+            <Button Command="{Binding LoginCommand}" Text="Login" Margin="0,15,0,0"  BackgroundColor="#FF6ED526" TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

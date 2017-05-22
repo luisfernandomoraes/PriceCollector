@@ -14,7 +14,7 @@ namespace PriceCollector.View
 {
     public partial class MainPage : ContentPage
     {
-        private MainPageViewModel _mainPageViewModel;
+        private MainPageReloadDataViewModel _mainPageReloadDataViewModel;
         private readonly IToastNotificator _notificator;
         private ScannerPage _scannerPage;
         private bool _isToShowScanner;
@@ -22,12 +22,13 @@ namespace PriceCollector.View
 
         public MainPage()
         {
-            _mainPageViewModel = new MainPageViewModel();
+            _mainPageReloadDataViewModel = new MainPageReloadDataViewModel();
             InitializeComponent();
-            BindingContext = _mainPageViewModel;
+            BindingContext = _mainPageReloadDataViewModel;
             _notificator = DependencyService.Get<IToastNotificator>();
 
         }
+
 
         private async void OnItemSelected(object sender, ItemTappedEventArgs args)
         {
@@ -41,7 +42,7 @@ namespace PriceCollector.View
             // Primeira verificação,
 
             // Verificamos se o codigo de barras bate com o codigo de barras informado.
-            var barcode = await _mainPageViewModel.StartBarCodeScannerAsync();
+            var barcode = await _mainPageReloadDataViewModel.StartBarCodeScannerAsync();
 
             //Caso sim, prosseguimos com a coleta de preço.
             if (barcode == product.BarCode)
@@ -119,7 +120,7 @@ namespace PriceCollector.View
                     Device.BeginInvokeOnMainThread(async () =>
                     {
 
-                        var searchResultPage = new SearchResultPage(barcode);
+                        var searchResultPage = new SearchResultPage(barcode,_mainPageReloadDataViewModel);
                         await PopupNavigation.PushAsync(searchResultPage);
                     });
                 }
@@ -148,7 +149,7 @@ namespace PriceCollector.View
         {
             var searchResultPage = sender as SearchResultPage;
             if (searchResultPage?.SearchResultViewModel.ProductCollected != null)
-                await _mainPageViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
+                await _mainPageReloadDataViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
         }
     }
 }

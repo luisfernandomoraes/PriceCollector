@@ -9,11 +9,12 @@ using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Model;
+using PriceCollector.ViewModel.Interfaces;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
 {
-    public class TargetProductsViewModel:INotifyPropertyChanged
+    public class TargetProductsReloadDataViewModel:INotifyPropertyChanged,IReloadDataViewModel
     {
         #region Fields
         private IProductApi _productApi;
@@ -51,19 +52,19 @@ namespace PriceCollector.ViewModel
 
         #region Ctor
 
-        public TargetProductsViewModel()
+        public TargetProductsReloadDataViewModel()
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
             _isBusy = false;
-            Task.Run(LoadProducts);
+            Task.Run(LoadData);
         }
 
         #endregion
 
         #region Methods
 
-        private async Task LoadProducts()
+        public async Task LoadData()
         {
             try
             {

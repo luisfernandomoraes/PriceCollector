@@ -11,6 +11,7 @@ using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Model;
+using PriceCollector.ViewModel.Interfaces;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
@@ -29,14 +30,17 @@ namespace PriceCollector.ViewModel
         private string _imageProduct;
         private bool _canShowProductImage;
         private IToastNotificator _notificator;
+        private IReloadDataViewModel _reloadDataViewModelPrevious;
+
         #endregion
 
         #region Ctor
 
-        public SearchResultViewModel(string barcode)
+        public SearchResultViewModel(string barcode,IReloadDataViewModel reloadDataViewModelPreviousPrevious)
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
+            _reloadDataViewModelPrevious = reloadDataViewModelPreviousPrevious;
             Task.Run(async () => await LoadProduct(barcode));
         }
 
@@ -65,6 +69,7 @@ namespace PriceCollector.ViewModel
                 productCollected.ProductName = Name;
                 ProductCollected = productCollected;
                 DB.DBContext.ProductCollectedDataBase.SaveItem(productCollected);
+                await _reloadDataViewModelPrevious.LoadData();
                 await PopupNavigation.PopAsync();
                 await _notificator.Notify(ToastNotificationType.Success, Utils.Constants.AppName, "Coleta realizada com sucesso!", TimeSpan.FromSeconds(3));
             }

@@ -1,68 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-						 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-						 x:Class="PriceCollector.View.MainPage"
-						 Title="Produtos Coletados"
-						 BackgroundColor="White">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Pesquisar" Clicked="OnStartScann" Order="Primary" IsDestructive="true">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_24dp.png" />
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-	<ScrollView>
-		<StackLayout>
-			<StackLayout Padding="15">
-				<Label Text="Lista de produtos já coletados:" HorizontalOptions="Center" FontSize="20"/>
-			</StackLayout>
-			<ActivityIndicator IsRunning="True" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="50" HeightRequest="50" IsVisible="{Binding IsBusy,Mode=TwoWay}"/>
-			<Image Source="empty.png" IsVisible="{Binding IsEmpty,Mode=TwoWay}" HorizontalOptions="Center" VerticalOptions="Center"/>
-			<ListView x:Name="list" ItemsSource="{Binding Products,Mode=TwoWay}"  HasUnevenRows="True" ItemTapped="OnItemSelected">
-				<!--GroupShortNameBinding="{Binding Key}"-->
-				<ListView.Header>
-					<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
-						<Image x:Name="AdOfferImage" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="preencher"/>
-					</StackLayout>
-				</ListView.Header>
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<ViewCell>
-							<Grid Padding="5,0,0,0">
-								<Grid.RowDefinitions>
-									<RowDefinition Height="Auto">
-									</RowDefinition>
-								</Grid.RowDefinitions>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="200">
-									</ColumnDefinition>
-									<ColumnDefinition Width="Auto">
-									</ColumnDefinition>
-									<ColumnDefinition Width="*">
-									</ColumnDefinition>
-								</Grid.ColumnDefinitions>
-								<StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
-									<Label Text="{Binding ProductName}" VerticalOptions="FillAndExpand">
-										<Label.LineBreakMode>
-											<OnPlatform x:TypeArguments="LineBreakMode" Android="WordWrap" iOS="WordWrap" />
-										</Label.LineBreakMode>
-									</Label>
-									<Label Text="{Binding CollectDate, StringFormat='Data da Coleta: {0:dd/MM/yyyy}'}"/>
-								</StackLayout>
-								<StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
-									<Label Text="R$" VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" />
-									<Label VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" Text="{Binding PriceCollected, StringFormat='{0:###0.00}'}" FontSize="17" FontAttributes="Bold" TextColor="Red" />
-								</StackLayout>
-								<StackLayout Grid.Column="2" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
-									<Image Source="{Binding ImageProduct}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFit" />
-								</StackLayout>
-							</Grid>
-						</ViewCell>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-		</StackLayout>
-	</ScrollView>
-</ContentPage.Content>    
+<ContentPage
+    x:Class="PriceCollector.View.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PriceCollector.Controls;assembly=PriceCollector"
+    Title="Produtos Coletados"
+    BackgroundColor="White">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Clicked="OnStartScann"
+            IsDestructive="true"
+            Order="Primary"
+            Text="Pesquisar">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_24dp.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout Padding="15">
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="Lista de produtos já coletados:" />
+                </StackLayout>
+                <ActivityIndicator
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    IsRunning="True"
+                    IsVisible="{Binding IsBusy, Mode=TwoWay}"
+                    VerticalOptions="Center"
+                    WidthRequest="50" />
+                <Image
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsEmpty, Mode=TwoWay}"
+                    Source="empty.png"
+                    VerticalOptions="Center" />
+                <ListView
+                    x:Name="list"
+                    HasUnevenRows="True"
+                    ItemTapped="OnItemSelected"
+                    ItemsSource="{Binding Products, Mode=TwoWay}"
+                    SeparatorColor="Transparent">
+                    <!--  GroupShortNameBinding="{Binding Key}"  -->
+                    <ListView.Header>
+                        <StackLayout
+                            BackgroundColor="White"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand">
+                            <Image
+                                x:Name="AdOfferImage"
+                                Aspect="AspectFit"
+                                HorizontalOptions="FillAndExpand"
+                                Source="preencher"
+                                VerticalOptions="FillAndExpand" />
+                        </StackLayout>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="{DynamicResource CardPadding}" Spacing="{DynamicResource CardSpacing}">
+                                    <controls:CardView>
+                                        <Grid Padding="5,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout
+                                                Grid.Column="0"
+                                                HorizontalOptions="FillAndExpand"
+                                                VerticalOptions="Fill">
+                                                <Label Text="{Binding ProductName}" VerticalOptions="FillAndExpand">
+                                                    <Label.LineBreakMode>
+                                                        <OnPlatform
+                                                            x:TypeArguments="LineBreakMode"
+                                                            Android="WordWrap"
+                                                            iOS="WordWrap" />
+                                                    </Label.LineBreakMode>
+                                                </Label>
+                                                <controls:HeaderDivider />
+                                                <Label Text="{Binding CollectDate, StringFormat='Data da Coleta: {0:dd/MM/yyyy}'}" />
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
+                                                <Label
+                                                    HorizontalOptions="EndAndExpand"
+                                                    HorizontalTextAlignment="End"
+                                                    Text="R$"
+                                                    VerticalOptions="EndAndExpand"
+                                                    VerticalTextAlignment="End" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="17"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    Text="{Binding PriceCollected, StringFormat='{0:###0.00}'}"
+                                                    TextColor="Red"
+                                                    VerticalOptions="EndAndExpand"
+                                                    VerticalTextAlignment="End" />
+                                            </StackLayout>
+                                            <StackLayout
+                                                Grid.Column="2"
+                                                BackgroundColor="Transparent"
+                                                HorizontalOptions="FillAndExpand">
+                                                <Image
+                                                    Aspect="AspectFit"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Source="{Binding ImageProduct}"
+                                                    VerticalOptions="FillAndExpand" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </controls:CardView>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

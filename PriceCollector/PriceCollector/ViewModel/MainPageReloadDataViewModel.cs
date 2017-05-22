@@ -13,11 +13,12 @@ using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Api.WebAPI.Responses;
 using PriceCollector.DB;
 using PriceCollector.Model;
+using PriceCollector.ViewModel.Interfaces;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageReloadDataViewModel : INotifyPropertyChanged,IReloadDataViewModel
     {
         #region Fields
 
@@ -36,16 +37,16 @@ namespace PriceCollector.ViewModel
         #endregion
 
 
-        public MainPageViewModel()
+        public MainPageReloadDataViewModel()
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
             _isBusy = false;
             _products = new ObservableCollection<ProductCollected>();
-            Task.Run(LoadProducts);
+            Task.Run(LoadData);
         }
 
-        public async Task LoadProducts()
+        public async Task LoadData()
         {
             try
             {

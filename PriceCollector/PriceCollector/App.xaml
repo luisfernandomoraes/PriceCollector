@@ -1,21 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PriceCollector.App">
-  <Application.Resources>
+<Application
+    x:Class="PriceCollector.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Application.Resources>
 
-    <ResourceDictionary>
-      <OnPlatform x:TypeArguments="Color" Android="#ECECEC" iOS="#C8C7CC" WinPhone="#C8C7CC" x:Key="Divider"/>
-      <OnPlatform x:TypeArguments="x:Double" Android="16" iOS="0" WinPhone="0" x:Key="CardSpacing"/>
-      <OnPlatform x:TypeArguments="Thickness" Android="8,16" iOS="0,0,0,16" WinPhone="0,0,0,16" x:Key="CardPadding"/>
-      <Style x:Key="SectionLabelTextStyle" TargetType="Label" BaseResourceKey="ListItemDetailTextStyle">
-        <Setter Property="FontSize" Value="{DynamicResource LabelSectionFontSize}" />
-        <Setter Property="TextColor" Value="{DynamicResource LabelSectionText}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource SectionLabelFontFamily}"/>
-      </Style>
-      <Thickness x:Key="StandardPadding">16</Thickness>
-      <Color x:Key="Accent">#753BE4</Color>
-    </ResourceDictionary>
+        <ResourceDictionary>
+            <OnPlatform
+                x:Key="Divider"
+                x:TypeArguments="Color"
+                Android="#ECECEC"
+                WinPhone="#C8C7CC"
+                iOS="#C8C7CC" />
+            <OnPlatform
+                x:Key="CardSpacing"
+                x:TypeArguments="x:Double"
+                Android="16"
+                WinPhone="0"
+                iOS="0" />
+            <OnPlatform
+                x:Key="CardPadding"
+                x:TypeArguments="Thickness"
+                Android="8,5"
+                WinPhone="0,0,0,16"
+                iOS="0,0,0,16" />
+            <Style
+                x:Key="SectionLabelTextStyle"
+                BaseResourceKey="ListItemDetailTextStyle"
+                TargetType="Label">
+                <Setter Property="FontSize" Value="{DynamicResource LabelSectionFontSize}" />
+                <Setter Property="TextColor" Value="{DynamicResource LabelSectionText}" />
+                <Setter Property="FontFamily" Value="{DynamicResource SectionLabelFontFamily}" />
+            </Style>
+            <Thickness x:Key="StandardPadding">16</Thickness>
+            <Color x:Key="Accent">#753BE4</Color>
+        </ResourceDictionary>
 
-  </Application.Resources>
+    </Application.Resources>
 </Application>

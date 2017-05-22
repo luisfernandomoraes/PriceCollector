@@ -57,15 +57,15 @@
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ILoginManager.cs" />
     <Compile Include="ViewModel\CreateSupermarketViewModel.cs" />
-    <Compile Include="ViewModel\IViewModel.cs" />
+    <Compile Include="ViewModel\Interfaces\IReloadDataViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\MainPageReloadDataViewModel.cs" />
     <Compile Include="ViewModel\ManageSupermarketViewModel.cs" />
     <Compile Include="ViewModel\PickSupermarketViewModel.cs" />
     <Compile Include="ViewModel\ScannerViewModel.cs" />
     <Compile Include="ViewModel\SearchResultViewModel.cs" />
     <Compile Include="ViewModel\SupermarketsCompetitorsViewModel.cs" />
-    <Compile Include="ViewModel\TargetProductsViewModel.cs" />
+    <Compile Include="ViewModel\TargetProductsReloadDataViewModel.cs" />
     <Compile Include="View\CollectedProducts.xaml.cs">
       <DependentUpon>CollectedProducts.xaml</DependentUpon>
     </Compile>

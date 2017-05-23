@@ -31,6 +31,7 @@ namespace PriceCollector.ViewModel
         private bool _canShowProductImage;
         private IToastNotificator _notificator;
         private IReloadDataViewModel _reloadDataViewModelPrevious;
+        private ProductCollected product;
 
         #endregion
 
@@ -42,6 +43,14 @@ namespace PriceCollector.ViewModel
             _notificator = DependencyService.Get<IToastNotificator>();
             _reloadDataViewModelPrevious = reloadDataViewModelPreviousPrevious;
             Task.Run(async () => await LoadProduct(barcode));
+        }
+
+        public SearchResultViewModel(ProductCollected product)
+        {
+            this.product = product;
+            _productApi = DependencyService.Get<IProductApi>();
+            _notificator = DependencyService.Get<IToastNotificator>();
+            Task.Run(async () => await LoadProduct(string.Empty, product));
         }
 
         #endregion
@@ -83,6 +92,8 @@ namespace PriceCollector.ViewModel
                     // Caso exista apenas atualizar no banco local do device.
                     productCollected.ID = productByQrcode.ID;
                     DB.DBContext.ProductCollectedDataBase.Update(productCollected);
+                    await PopupNavigation.PopAsync();
+                    MessagingCenter.Send(this, "LoadData");
                     await _notificator.Notify(ToastNotificationType.Success, Utils.Constants.AppName,
                         $"Produto \"{productCollected.ProductName}\" atualizado com sucesso!", TimeSpan.FromSeconds(3));
                 }
@@ -91,13 +102,19 @@ namespace PriceCollector.ViewModel
                     // Caso contrario, persisto dados no banco de dados.
                     var id = DB.DBContext.ProductCollectedDataBase.SaveItem(productCollected);
                     if (id > 0)
-                        await _notificator.Notify(ToastNotificationType.Success, Utils.Constants.AppName, "Coleta realizada com sucesso!", TimeSpan.FromSeconds(3));
+                    {
+                        MessagingCenter.Send(this, "LoadData");
+                        await PopupNavigation.PopAsync();
+                        await _notificator.Notify(ToastNotificationType.Success, Utils.Constants.AppName,
+                            "Coleta realizada com sucesso!", TimeSpan.FromSeconds(3));
+                    }
                     else
+                    {
+                        await PopupNavigation.PopAsync();
                         await _notificator.Notify(ToastNotificationType.Error, Utils.Constants.AppName, "Ocorreu um erro ao salvar, por favor tente novamente mais tarde.", TimeSpan.FromSeconds(3));
+                    }
                 }
 
-                await PopupNavigation.PopAsync();
-                await _reloadDataViewModelPrevious.LoadData();
 
 
             }
@@ -199,20 +216,37 @@ namespace PriceCollector.ViewModel
 
         #region Methods
 
-
-        private async Task LoadProduct(string barcode)
+        /// <summary>
+        /// Metodo responsavel por carregar informações do produto coletado.
+        /// </summary>
+        /// <param name="barcode"></param>
+        /// <param name="productCollected"></param>
+        /// <returns></returns>
+        private async Task LoadProduct(string barcode, ProductCollected productCollected = null)
         {
             try
             {
-                var productApiResponse = await _productApi.GetProduct("http://www.acats.scannprice.srv.br/api/", barcode);
-                if (!productApiResponse.Success)
-                    return;
-                var p = productApiResponse.Result;
-                Name = p.Name;
-                Barcode = p.BarCode;
-                PriceCurrent = p.PriceCurrent;
+                if (productCollected == null) // Produto ainda não coletado.
+                {
+                    var productApiResponse =
+                        await _productApi.GetProduct("http://www.acats.scannprice.srv.br/api/", barcode);
 
-                var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
+                    if (!productApiResponse.Success)
+                        return;
+                    var p = productApiResponse.Result;
+                    Name = p.Name;
+                    Barcode = p.BarCode;
+                    PriceCurrent = p.PriceCurrent;
+                    PriceCollected = 0;
+                }
+                else // Edição do produto ja coletado.
+                {
+                    Name = productCollected.ProductName;
+                    Barcode = productCollected.BarCode;
+                    PriceCurrent = productCollected.PriceCurrent;
+                    PriceCollected = productCollected.PriceCollected;
+                }
+                var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{Barcode}.jpg";
                 if (await _productApi.HasImage(urlImage))
                     ImageProduct = "NoImagemTarge.png";
                 else

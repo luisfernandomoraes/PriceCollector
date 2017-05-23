@@ -44,6 +44,10 @@ namespace PriceCollector.ViewModel
             _isBusy = false;
             _products = new ObservableCollection<ProductCollected>();
             Task.Run(LoadData);
+            MessagingCenter.Subscribe<SearchResultViewModel>(this,"LoadData", async (sender) =>
+            {
+               await LoadData();
+            });
         }
 
         public async Task LoadData()

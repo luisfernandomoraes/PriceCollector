@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using PriceCollector.Model.Properties;
+using SQLite.Net.Attributes;
 
 namespace PriceCollector.Model
 {
@@ -14,6 +15,7 @@ namespace PriceCollector.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [PrimaryKey,AutoIncrement]
         public int ID { get; set; }
         public string Name { get; set; }
         public string BarCode { get; set; }

@@ -1,57 +1,108 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PriceCollector.View.TargetProductsPage"
-             Title="Produtos Alvo"
-             BackgroundColor="White">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="PriceCollector.View.TargetProductsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PriceCollector.Controls;assembly=PriceCollector"
+    Title="Produtos Alvo"
+    BackgroundColor="White">
     <ScrollView>
-      <StackLayout>
-        <StackLayout Padding="15">
-          <Label Text="Produtos para coletar o preço" HorizontalOptions="Center" FontSize="25" TextColor="Black"/>
-        </StackLayout>
-        <ActivityIndicator IsRunning="True" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="50" HeightRequest="50" IsVisible="{Binding IsBusy,Mode=TwoWay}"/>
-        <ListView x:Name="list" ItemsSource="{Binding Products,Mode=TwoWay}"  HasUnevenRows="True" ItemTapped="OnItemSelected">
-          <!--GroupShortNameBinding="{Binding Key}"-->
-          <ListView.Header>
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
-              <Image x:Name="AdOfferImage" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="preencher"/>
+        <StackLayout>
+            <StackLayout Padding="15">
+                <Label
+                    FontSize="25"
+                    HorizontalOptions="Center"
+                    Text="Produtos para coletar o preço"
+                    TextColor="Black" />
             </StackLayout>
-          </ListView.Header>
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <Grid Padding="5,0,0,0">
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto">
-                    </RowDefinition>
-                  </Grid.RowDefinitions>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200">
-                    </ColumnDefinition>
-                    <ColumnDefinition Width="Auto">
-                    </ColumnDefinition>
-                    <ColumnDefinition Width="*">
-                    </ColumnDefinition>
-                  </Grid.ColumnDefinitions>
-                  <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
-                    <Label Text="{Binding Name}" VerticalOptions="FillAndExpand">
-                      <Label.LineBreakMode>
-                        <OnPlatform x:TypeArguments="LineBreakMode" Android="WordWrap" iOS="WordWrap" />
-                      </Label.LineBreakMode>
-                    </Label>
-                  </StackLayout>
-                  <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
-                    <Label Text="R$" VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" />
-                    <Label VerticalOptions="EndAndExpand" VerticalTextAlignment="End" HorizontalOptions="EndAndExpand" Text="{Binding PriceCurrent, StringFormat='{0:###0.00}'}" FontSize="17" FontAttributes="Bold" TextColor="Red" />
-                  </StackLayout>
-                  <StackLayout Grid.Column="2" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
-                    <Image Source="{Binding ImageProduct}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFit" />
-                  </StackLayout>
-                </Grid>
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-      </StackLayout>
+            <ActivityIndicator
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                IsRunning="True"
+                IsVisible="{Binding IsBusy, Mode=TwoWay}"
+                VerticalOptions="Center"
+                WidthRequest="50" />
+            <ListView
+                x:Name="list"
+                HasUnevenRows="True"
+                ItemTapped="OnItemSelected"
+                ItemsSource="{Binding Products, Mode=TwoWay}">
+                <!--  GroupShortNameBinding="{Binding Key}"  -->
+                <ListView.Header>
+                    <StackLayout
+                        BackgroundColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <Image
+                            x:Name="AdOfferImage"
+                            Aspect="AspectFit"
+                            HorizontalOptions="FillAndExpand"
+                            Source="preencher"
+                            VerticalOptions="FillAndExpand" />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="{DynamicResource CardPadding}" Spacing="{DynamicResource CardSpacing}">
+                                <controls:CardView>
+                                    <Grid Padding="5,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout
+                                            Grid.Column="0"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="Fill">
+                                            <Label Text="{Binding Name}" VerticalOptions="FillAndExpand">
+                                                <Label.LineBreakMode>
+                                                    <OnPlatform
+                                                        x:TypeArguments="LineBreakMode"
+                                                        Android="WordWrap"
+                                                        iOS="WordWrap" />
+                                                </Label.LineBreakMode>
+                                            </Label>
+                                            <controls:HeaderDivider />
+                                            <Label Text="Preço corrente: " />
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
+                                            <Label
+                                                HorizontalOptions="EndAndExpand"
+                                                HorizontalTextAlignment="End"
+                                                Text="R$"
+                                                VerticalOptions="EndAndExpand"
+                                                VerticalTextAlignment="End" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="17"
+                                                HorizontalOptions="EndAndExpand"
+                                                Text="{Binding PriceCurrent, StringFormat='{0:###0.00}'}"
+                                                TextColor="Red"
+                                                VerticalOptions="EndAndExpand"
+                                                VerticalTextAlignment="End" />
+                                        </StackLayout>
+                                        <StackLayout
+                                            Grid.Column="2"
+                                            BackgroundColor="Transparent"
+                                            HorizontalOptions="FillAndExpand">
+                                            <Image
+                                                Aspect="AspectFit"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding ImageProduct}"
+                                                VerticalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                    </Grid>
+                                </controls:CardView>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

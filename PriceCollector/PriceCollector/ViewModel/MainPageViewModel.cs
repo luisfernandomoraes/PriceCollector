@@ -18,7 +18,7 @@ using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
 {
-    public class MainPageReloadDataViewModel : INotifyPropertyChanged,IReloadDataViewModel
+    public class MainPageViewModel : INotifyPropertyChanged,IReloadDataViewModel
     {
         #region Fields
 
@@ -37,7 +37,7 @@ namespace PriceCollector.ViewModel
         #endregion
 
 
-        public MainPageReloadDataViewModel()
+        public MainPageViewModel()
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();

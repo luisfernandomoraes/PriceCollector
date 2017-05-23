@@ -24,7 +24,8 @@
                     <Label
                         FontSize="20"
                         HorizontalOptions="Center"
-                        Text="Lista de produtos já coletados:" />
+                        Text="Lista de produtos já coletados:"
+                        TextColor="Black" />
                 </StackLayout>
                 <ActivityIndicator
                     HeightRequest="50"

@@ -14,7 +14,7 @@ namespace PriceCollector.View
 {
     public partial class MainPage : ContentPage
     {
-        private MainPageReloadDataViewModel _mainPageReloadDataViewModel;
+        private MainPageViewModel _mainPageViewModel;
         private readonly IToastNotificator _notificator;
         private ScannerPage _scannerPage;
         private bool _isToShowScanner;
@@ -22,9 +22,9 @@ namespace PriceCollector.View
 
         public MainPage()
         {
-            _mainPageReloadDataViewModel = new MainPageReloadDataViewModel();
+            _mainPageViewModel = new MainPageViewModel();
             InitializeComponent();
-            BindingContext = _mainPageReloadDataViewModel;
+            BindingContext = _mainPageViewModel;
             _notificator = DependencyService.Get<IToastNotificator>();
 
         }
@@ -42,7 +42,7 @@ namespace PriceCollector.View
             // Primeira verificação,
 
             // Verificamos se o codigo de barras bate com o codigo de barras informado.
-            var barcode = await _mainPageReloadDataViewModel.StartBarCodeScannerAsync();
+            var barcode = await _mainPageViewModel.StartBarCodeScannerAsync();
 
             //Caso sim, prosseguimos com a coleta de preço.
             if (barcode == product.BarCode)
@@ -120,7 +120,7 @@ namespace PriceCollector.View
                     Device.BeginInvokeOnMainThread(async () =>
                     {
 
-                        var searchResultPage = new SearchResultPage(barcode,_mainPageReloadDataViewModel);
+                        var searchResultPage = new SearchResultPage(barcode,_mainPageViewModel);
                         await PopupNavigation.PushAsync(searchResultPage);
                     });
                 }
@@ -149,7 +149,7 @@ namespace PriceCollector.View
         {
             var searchResultPage = sender as SearchResultPage;
             if (searchResultPage?.SearchResultViewModel.ProductCollected != null)
-                await _mainPageReloadDataViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
+                await _mainPageViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
         }
     }
 }

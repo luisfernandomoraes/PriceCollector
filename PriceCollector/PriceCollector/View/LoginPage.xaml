@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PriceCollector.View.LoginPage"
-             >
+<ContentPage
+    x:Class="PriceCollector.View.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="FillAndExpand" Padding="15">
-            <Entry Placeholder="Usuário" Text="{Binding UserName}"/>
-            <Entry Placeholder="Senha" Text="{Binding Password}" IsPassword="True"/>
-            <Button Command="{Binding LoginCommand}" Text="Login" Margin="0,15,0,0"  BackgroundColor="#FF6ED526" TextColor="White"/>
+        <StackLayout Padding="15" HorizontalOptions="FillAndExpand">
+            <Entry Placeholder="Usuário" Text="{Binding UserName}" />
+            <Entry
+                IsPassword="True"
+                Placeholder="Senha"
+                Text="{Binding Password}" />
+            <Button
+                Margin="0,15,0,0"
+                BackgroundColor="#FF6ED526"
+                Command="{Binding LoginCommand}"
+                Text="Login"
+                TextColor="White" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

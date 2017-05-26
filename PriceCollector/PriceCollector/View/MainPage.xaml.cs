@@ -14,7 +14,7 @@ namespace PriceCollector.View
 {
     public partial class MainPage : ContentPage
     {
-        private MainPageReloadDataViewModel _mainPageReloadDataViewModel;
+        private MainPageViewModel _mainPageViewModel;
         private readonly IToastNotificator _notificator;
         private ScannerPage _scannerPage;
         private bool _isToShowScanner;
@@ -22,9 +22,9 @@ namespace PriceCollector.View
 
         public MainPage()
         {
-            _mainPageReloadDataViewModel = new MainPageReloadDataViewModel();
+            _mainPageViewModel = new MainPageViewModel();
             InitializeComponent();
-            BindingContext = _mainPageReloadDataViewModel;
+            BindingContext = _mainPageViewModel;
             _notificator = DependencyService.Get<IToastNotificator>();
 
         }
@@ -32,28 +32,14 @@ namespace PriceCollector.View
 
         private async void OnItemSelected(object sender, ItemTappedEventArgs args)
         {
-            var product = args.Item as Model.Product;
+            var product = args.Item as Model.ProductCollected;
             if (product == null)
+            {
+                list.SelectedItem = null;
                 return;
-
-            _notificator.HideAll();
-
-            list.SelectedItem = null;
-            // Primeira verificação,
-
-            // Verificamos se o codigo de barras bate com o codigo de barras informado.
-            var barcode = await _mainPageReloadDataViewModel.StartBarCodeScannerAsync();
-
-            //Caso sim, prosseguimos com a coleta de preço.
-            if (barcode == product.BarCode)
-            {
-                await _notificator.Notify(ToastNotificationType.Success, nameof(PriceCollector), $"Produto {product.Name} coletado", TimeSpan.FromSeconds(3));
             }
-            else if (!string.IsNullOrEmpty(barcode))
-            {
-                await _notificator.Notify(ToastNotificationType.Warning, nameof(PriceCollector), "O código de barras não bate com o produto selecionado.", TimeSpan.FromSeconds(3));
-            }
-
+            SearchResultPage searchResultPage = new SearchResultPage(product);
+            await PopupNavigation.PushAsync(searchResultPage);
         }
 
 
@@ -120,7 +106,7 @@ namespace PriceCollector.View
                     Device.BeginInvokeOnMainThread(async () =>
                     {
 
-                        var searchResultPage = new SearchResultPage(barcode,_mainPageReloadDataViewModel);
+                        var searchResultPage = new SearchResultPage(barcode,_mainPageViewModel);
                         await PopupNavigation.PushAsync(searchResultPage);
                     });
                 }
@@ -149,7 +135,7 @@ namespace PriceCollector.View
         {
             var searchResultPage = sender as SearchResultPage;
             if (searchResultPage?.SearchResultViewModel.ProductCollected != null)
-                await _mainPageReloadDataViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
+                await _mainPageViewModel.AddProductCollected(searchResultPage?.SearchResultViewModel.ProductCollected);
         }
     }
 }

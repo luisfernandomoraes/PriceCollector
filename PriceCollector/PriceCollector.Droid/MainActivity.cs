@@ -37,6 +37,8 @@ namespace PriceCollector.Droid
 
             BarcodeScannerRenderer.Init(configBarcodeScanner);
 
+            FAB.Droid.FloatingActionButtonRenderer.InitControl();
+
             LoadApplication(new App());
         }
     }

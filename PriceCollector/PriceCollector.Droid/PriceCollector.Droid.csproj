@@ -238,6 +238,10 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Users\Luis_\Downloads\Xamarin.Plugin.FAB-master\Xamarin.Plugin.FAB-master\Library\FloatingActionButton.Droid\FAB.Droid.csproj">
+      <Project>{49ce4944-f3ec-4241-9ac2-617f42624cfe}</Project>
+      <Name>FAB.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PriceCollector\PriceCollector.csproj">
       <Project>{2428F76B-3D7F-4EFC-B586-1ED8AEF17D3D}</Project>
       <Name>PriceCollector</Name>

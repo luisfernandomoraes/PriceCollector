@@ -9,6 +9,7 @@ using Android.OS;
 using Plugin.Toasts;
 using Rb.Forms.Barcode.Droid;
 using Xamarin.Forms;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 namespace PriceCollector.Droid
 {
@@ -36,6 +37,8 @@ namespace PriceCollector.Droid
             };
 
             BarcodeScannerRenderer.Init(configBarcodeScanner);
+
+            FAB.Droid.FloatingActionButtonRenderer.InitControl();
 
             LoadApplication(new App());
         }

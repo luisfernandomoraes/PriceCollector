@@ -171,6 +171,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Users\Luis_\Downloads\Xamarin.Plugin.FAB-master\Xamarin.Plugin.FAB-master\Library\FloatingActionButton.Forms\Profile78\FAB.Forms.Profile78.csproj">
+      <Project>{78b00f76-5fb4-4429-abf6-42a80a6e967e}</Project>
+      <Name>FAB.Forms.Profile78</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PriceCollector.Api\PriceCollector.Api.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>PriceCollector.Api</Name>

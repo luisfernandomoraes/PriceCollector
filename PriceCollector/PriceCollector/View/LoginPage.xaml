@@ -5,6 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Content>
         <StackLayout Padding="15" HorizontalOptions="FillAndExpand">
+            <Image
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                Source="price_collector_login.png" />
             <Entry Placeholder="Usuário" Text="{Binding UserName}" />
             <Entry
                 IsPassword="True"

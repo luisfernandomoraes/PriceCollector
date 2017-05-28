@@ -90,6 +90,8 @@ namespace PriceCollector.ViewModel
 
 
 
+
+
         #region Properties
         public bool IsEmpty
         {

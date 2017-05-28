@@ -26,7 +26,11 @@ namespace PriceCollector.View
             InitializeComponent();
             BindingContext = _mainPageViewModel;
             _notificator = DependencyService.Get<IToastNotificator>();
-
+            Task.Run(() =>
+            {
+                _scannerPage = _scannerPage ?? ScannerPageControl.Instance.CreateScannerPage();
+                _scannerPage.BarcodeScannerPage.BarcodeChanged += BarcodeScannerPageOnBarcodeChanged;
+            });
         }
 
 
@@ -47,8 +51,7 @@ namespace PriceCollector.View
         {
             try
             {
-                _scannerPage = ScannerPageControl.Instance.CreateScannerPage();
-                _scannerPage.BarcodeScannerPage.BarcodeChanged += BarcodeScannerPageOnBarcodeChanged;
+
                 await Navigation.PushAsync(_scannerPage);
 
                 await StartTimeout();
@@ -106,7 +109,7 @@ namespace PriceCollector.View
                     Device.BeginInvokeOnMainThread(async () =>
                     {
 
-                        var searchResultPage = new SearchResultPage(barcode,_mainPageViewModel);
+                        var searchResultPage = new SearchResultPage(barcode, _mainPageViewModel);
                         await PopupNavigation.PushAsync(searchResultPage);
                     });
                 }

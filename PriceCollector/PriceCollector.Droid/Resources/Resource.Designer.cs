@@ -6280,11 +6280,11 @@ namespace PriceCollector.Droid
 			// aapt resource value: 0x7f020125
 			public const int notification_icon_background = 2130837797;
 			
-			// aapt resource value: 0x7f02012b
-			public const int notification_template_icon_bg = 2130837803;
-			
 			// aapt resource value: 0x7f02012c
-			public const int notification_template_icon_low_bg = 2130837804;
+			public const int notification_template_icon_bg = 2130837804;
+			
+			// aapt resource value: 0x7f02012d
+			public const int notification_template_icon_low_bg = 2130837805;
 			
 			// aapt resource value: 0x7f020126
 			public const int notification_tile_bg = 2130837798;
@@ -6293,13 +6293,16 @@ namespace PriceCollector.Droid
 			public const int notify_panel_notification_icon_bg = 2130837799;
 			
 			// aapt resource value: 0x7f020128
-			public const int splash_screen = 2130837800;
+			public const int price_collector_login = 2130837800;
 			
 			// aapt resource value: 0x7f020129
-			public const int success = 2130837801;
+			public const int splash_screen = 2130837801;
 			
 			// aapt resource value: 0x7f02012a
-			public const int warning = 2130837802;
+			public const int success = 2130837802;
+			
+			// aapt resource value: 0x7f02012b
+			public const int warning = 2130837803;
 			
 			static Drawable()
 			{

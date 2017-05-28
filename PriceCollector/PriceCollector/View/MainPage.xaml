@@ -7,7 +7,7 @@
     xmlns:forms="clr-namespace:FAB.Forms;assembly=FAB.Forms"
     Title="Produtos Coletados"
     BackgroundColor="White">
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem
             Clicked="OnStartScann"
             IsDestructive="true"
@@ -17,7 +17,7 @@
                 <OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_24dp.png" />
             </ToolbarItem.Icon>
         </ToolbarItem>
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>-->
     <ContentPage.Content>
         <RelativeLayout>
             <ContentView RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
@@ -129,7 +129,8 @@
             </ContentView>
             <forms:FloatingActionButton
                 x:Name="fabBtn"
-                NormalColor="Green"
+                Clicked="OnStartScann"
+                NormalColor="#16648d"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
                                                                   Property=Width,
                                                                   Factor=1,
@@ -138,7 +139,7 @@
                                                                   Property=Height,
                                                                   Factor=1,
                                                                   Constant=-75}"
-                RippleColor="Red"
+                RippleColor="Gray"
                 Size="Normal"
                 Source="ic_search_white_24dp.png" />
         </RelativeLayout>

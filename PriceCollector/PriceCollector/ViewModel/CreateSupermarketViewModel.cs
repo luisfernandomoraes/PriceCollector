@@ -123,9 +123,11 @@ namespace PriceCollector.ViewModel
                     var resultDb = DB.DBContext.SupermarketsCompetitorsDataBase.SaveItem(supermarket);
                     if (resultDb > 0)
                     {
-                       await  _notificator.Notify(ToastNotificationType.Success, "PriceCollector",
-                            "Supermercado concorrente adicionado com sucesso!",TimeSpan.FromSeconds(3));
                         await _createSupermarketPage.Navigation.PopAsync();
+
+                        await  _notificator.Notify(ToastNotificationType.Success, "PriceCollector",
+                            "Supermercado concorrente adicionado com sucesso!",TimeSpan.FromSeconds(3));
+                        
                     }
                         
                 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace PriceCollector.ViewModel.Interfaces
+namespace PriceCollector.ViewModel.Services
 {
     public interface IReloadDataViewModel:INotifyPropertyChanged
     {

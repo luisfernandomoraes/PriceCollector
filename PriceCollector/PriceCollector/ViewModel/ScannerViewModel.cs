@@ -110,6 +110,9 @@ namespace PriceCollector.ViewModel
         private void logBarcode(Barcode barcode)
         {
             Debug.WriteLine("Decoded barcode [{0} - {1}]", barcode?.Result, barcode?.Format);
+            if (barcode?.Result != null)
+                MessagingCenter.Send<ScannerViewModel, Barcode>(this, "BarcodeChanged", barcode);
+            IsEnable = false;
         }
 
         private void UpdateBarcode(Barcode barcode)

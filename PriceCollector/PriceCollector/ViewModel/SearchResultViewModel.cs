@@ -11,7 +11,7 @@ using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Model;
-using PriceCollector.ViewModel.Interfaces;
+using PriceCollector.ViewModel.Services;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 

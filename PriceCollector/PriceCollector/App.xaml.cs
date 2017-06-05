@@ -7,8 +7,9 @@ using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Api.WebAPI.SupermarketCompetitors;
 using PriceCollector.Api.WebAPI.User;
 using PriceCollector.Utils;
+using PriceCollector.View.Services;
 using PriceCollector.View.SliderMenu;
-
+using PriceCollector.ViewModel.Services;
 using Xamarin.Forms;
 
 namespace PriceCollector
@@ -29,6 +30,7 @@ namespace PriceCollector
             DependencyService.Register<IUserApi, UserApi>();
             DependencyService.Register<IProductApi, ProductApi>();
             DependencyService.Register<ISupermarketCompetitorApi, SupermarketCompetitorApi>();
+            DependencyService.Register<INavigationService,NavigationService>();
 
             #endregion
 

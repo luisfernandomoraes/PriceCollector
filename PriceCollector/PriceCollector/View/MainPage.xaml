@@ -129,7 +129,7 @@
             </ContentView>
             <forms:FloatingActionButton
                 x:Name="fabBtn"
-                Clicked="OnStartScann"
+                Command="{Binding StartScannerCommand}"
                 NormalColor="#16648d"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
                                                                   Property=Width,

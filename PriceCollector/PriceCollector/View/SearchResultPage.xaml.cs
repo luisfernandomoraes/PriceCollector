@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PriceCollector.Model;
 using PriceCollector.ViewModel;
-using PriceCollector.ViewModel.Interfaces;
+using PriceCollector.ViewModel.Services;
 using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms;
 

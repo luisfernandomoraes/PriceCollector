@@ -1,37 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PriceCollector.View.SearchResultPage"
-             xmlns:local="clr-namespace:PriceCollector.Converts;assembly=PriceCollector"
-             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
-  <pages:PopupPage.Resources>
-    <ResourceDictionary>
-      <local:DoubleToStringConvert x:Key="ConverterZeroToStrEpt"></local:DoubleToStringConvert>
-    </ResourceDictionary>
-  </pages:PopupPage.Resources>
+<pages:PopupPage
+    x:Class="PriceCollector.View.SearchResultPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PriceCollector.Converts;assembly=PriceCollector"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    CloseWhenBackgroundIsClicked="False">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <local:DoubleToStringConvert x:Key="ConverterZeroToStrEpt" />
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
 
-  <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" BackgroundColor="White" WidthRequest="300" HeightRequest="250">
-    <StackLayout BackgroundColor="#2196F3">
-      <Label Text="{Binding Name,Mode=TwoWay}" TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalTextAlignment="Center"/>
-    </StackLayout>
-    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-      <Label Text="Código de barras: "/>
-      <Label Text="{Binding Barcode,Mode=TwoWay}" FontSize="15" HorizontalTextAlignment="Center"/>
-    </StackLayout>
-    <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
-
-      <StackLayout ClassId="DivEsquerda"  HorizontalOptions="FillAndExpand" >
-        <Image Aspect="AspectFill" Source="{Binding ImageProduct,Mode=TwoWay}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-      </StackLayout>
-
-      <StackLayout ClassId="DivDireita" HorizontalOptions="FillAndExpand" WidthRequest="150" VerticalOptions="FillAndExpand">
-        <Label HorizontalTextAlignment="Center" Text="{Binding PriceCurrent, StringFormat='Preço: {0:N}'}"/>
-        <Label Text="Preço Coletado:" FontSize="15" HorizontalTextAlignment="Center" VerticalOptions="Center" TextColor="Black"/>
-        <StackLayout WidthRequest="50" VerticalOptions="End">
-          <Entry Placeholder="0.000,00" Text="{Binding PriceCollected,Mode=TwoWay, Converter={StaticResource ConverterZeroToStrEpt}}" Keyboard="Numeric" HorizontalOptions="Center" TextColor="Black" HorizontalTextAlignment="Center"/>
+    <StackLayout
+        BackgroundColor="White"
+        HeightRequest="250"
+        HorizontalOptions="CenterAndExpand"
+        VerticalOptions="Center"
+        WidthRequest="300">
+        <StackLayout BackgroundColor="#2196F3">
+            <Label
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Name, Mode=TwoWay}"
+                TextColor="White" />
         </StackLayout>
-      </StackLayout>
+        <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+            <Label Text="Código de barras: " />
+            <Label
+                FontSize="15"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Barcode, Mode=TwoWay}" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+
+            <StackLayout ClassId="DivEsquerda" HorizontalOptions="FillAndExpand">
+                <Image
+                    Aspect="AspectFill"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{Binding ImageProduct, Mode=TwoWay}"
+                    VerticalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <StackLayout
+                ClassId="DivDireita"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                WidthRequest="150">
+                <Label HorizontalTextAlignment="Center" Text="{Binding PriceCurrent, StringFormat='Preço: {0:N}'}" />
+                <Label
+                    FontSize="15"
+                    HorizontalTextAlignment="Center"
+                    Text="Preço Coletado:"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <StackLayout VerticalOptions="End" WidthRequest="50">
+                    <Entry
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        Placeholder="0.000,00"
+                        Text="{Binding PriceCollected, Mode=TwoWay, Converter={StaticResource ConverterZeroToStrEpt}}"
+                        TextColor="Black" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        <Button
+            BackgroundColor="#5EC65E"
+            Command="{Binding SaveCommand}"
+            Text="Salvar"
+            TextColor="White"
+            VerticalOptions="EndAndExpand" />
     </StackLayout>
-    <Button Text="Salvar" TextColor="White" BackgroundColor="#5EC65E" Command="{Binding SaveCommand}" VerticalOptions="EndAndExpand"/>
-  </StackLayout>
 </pages:PopupPage>

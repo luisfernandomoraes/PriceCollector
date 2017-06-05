@@ -30,7 +30,7 @@ namespace PriceCollector
             DependencyService.Register<IUserApi, UserApi>();
             DependencyService.Register<IProductApi, ProductApi>();
             DependencyService.Register<ISupermarketCompetitorApi, SupermarketCompetitorApi>();
-            DependencyService.Register<INavigationService,NavigationService>();
+            DependencyService.Register<INavigationService, NavigationService>();
 
             #endregion
 
@@ -44,7 +44,38 @@ namespace PriceCollector
 
         private void InitializeConfigurations()
         {
+
             App.Current.Properties["IsLoggedIn"] = false;
+#if DEMO
+            // Carregar dados de demonstração
+            if (!DB.DBContext.SupermarketsCompetitorsDataBase.GetItems().Any())
+            {
+
+
+                var imperatriz = new Model.SupermarketsCompetitors()
+                {
+                    Name = "Supermercados Imperatriz",
+                    Street = "Rod. Jornalista Maurício Sirotsky",
+                    Neighborhood = "Jurerê Internacional",
+                    Number = "7475",
+                    City = "Florianópolis"
+                };
+
+                var hippo = new Model.SupermarketsCompetitors()
+                {
+                    Name = "Hippo Supermercados",
+                    Street = "R Almirante Alvim",
+                    Neighborhood = "Centro",
+                    Number = "555",
+                    City = "Florianópolis"
+                };
+
+
+                DB.DBContext.SupermarketsCompetitorsDataBase.SaveItem(imperatriz);
+                DB.DBContext.SupermarketsCompetitorsDataBase.SaveItem(hippo);
+
+            }
+#endif
         }
 
 

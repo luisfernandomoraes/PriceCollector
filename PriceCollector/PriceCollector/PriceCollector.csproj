@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DEMO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -173,7 +173,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\Luis_\Downloads\Xamarin.Plugin.FAB-master\Xamarin.Plugin.FAB-master\Library\FloatingActionButton.Forms\Profile78\FAB.Forms.Profile78.csproj">
+    <ProjectReference Include="..\..\..\Xamarin.Plugin.FAB\Library\FloatingActionButton.Forms\Profile78\FAB.Forms.Profile78.csproj">
       <Project>{78b00f76-5fb4-4429-abf6-42a80a6e967e}</Project>
       <Name>FAB.Forms.Profile78</Name>
     </ProjectReference>

@@ -6254,7 +6254,7 @@ namespace PriceCollector.Droid
 			public const int navigation_empty_icon = 2130837788;
 			
 			// aapt resource value: 0x7f02011d
-			public const int NoImagemTarge = 2130837789;
+			public const int NoImagemTarget = 2130837789;
 			
 			// aapt resource value: 0x7f02011e
 			public const int notification_action_background = 2130837790;

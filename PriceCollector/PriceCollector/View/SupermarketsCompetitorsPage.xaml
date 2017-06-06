@@ -1,46 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-						 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-						 Title="Supermercados Concorrentes"
-						 xmlns:controls="clr-namespace:PriceCollector.Controls;assembly=PriceCollector"
-						 x:Class="PriceCollector.View.SupermarketsCompetitorsPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Pesquisar" Command="{Binding AddSupermarketCommand}" Order="Primary" IsDestructive="true">
+<ContentPage
+    x:Class="PriceCollector.View.SupermarketsCompetitorsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PriceCollector.Controls;assembly=PriceCollector"
+    xmlns:forms="clr-namespace:FAB.Forms;assembly=FAB.Forms"
+    Title="Supermercados Concorrentes">
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding AddSupermarketCommand}"
+            IsDestructive="true"
+            Order="Primary"
+            Text="Pesquisar">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource" Android="ic_add_white_24dp.png" />
             </ToolbarItem.Icon>
         </ToolbarItem>
-    </ContentPage.ToolbarItems>
-    <ScrollView>
-        <ListView x:Name="list" ItemsSource="{Binding SupermarketsCompetitorses,Mode=TwoWay}" SeparatorColor="Transparent" ItemTapped="OnItemSelected" HasUnevenRows="True" BackgroundColor="{DynamicResource WindowBackgroundTable}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Spacing="{DynamicResource CardSpacing}" Padding="{DynamicResource CardPadding}">
-                            <controls:CardView>
-                                <Grid Padding="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
-                                        <Label Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="FillAndExpand" FontAttributes="Bold" FontSize="Large">
-                                            <Label.LineBreakMode>
-                                                <OnPlatform x:TypeArguments="LineBreakMode" Android="WordWrap" iOS="WordWrap" />
-                                            </Label.LineBreakMode>
-                                        </Label>
-                                        <controls:HeaderDivider />
-                                        <Label Text="{Binding Neighborhood,StringFormat='Bairro: {0:N}'}" HorizontalOptions="Center" FontSize="16" VerticalOptions="EndAndExpand" />
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
-                                            <Label Text="{Binding Street,StringFormat='Rua: {0:N}'}" HorizontalOptions="Center" FontSize="16" VerticalOptions="EndAndExpand"/>
-                                            <Label Text="{Binding Number,StringFormat=', {0:N}'}" FontSize="16" HorizontalOptions="Center" VerticalOptions="EndAndExpand" />
-                                        </StackLayout>
+    </ContentPage.ToolbarItems>-->
+    <ContentPage.Content>
+        <RelativeLayout>
+            <ContentView>
+                <ScrollView>
+                    <ListView
+                        x:Name="list"
+                        BackgroundColor="{DynamicResource WindowBackgroundTable}"
+                        HasUnevenRows="True"
+                        ItemTapped="OnItemSelected"
+                        ItemsSource="{Binding SupermarketsCompetitorses, Mode=TwoWay}"
+                        SeparatorColor="Transparent">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Padding="{DynamicResource CardPadding}" Spacing="{DynamicResource CardSpacing}">
+                                        <controls:CardView>
+                                            <Grid Padding="5">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    VerticalOptions="Fill">
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        FontSize="Large"
+                                                        HorizontalOptions="Center"
+                                                        Text="{Binding Name}"
+                                                        VerticalOptions="FillAndExpand">
+                                                        <Label.LineBreakMode>
+                                                            <OnPlatform
+                                                                x:TypeArguments="LineBreakMode"
+                                                                Android="WordWrap"
+                                                                iOS="WordWrap" />
+                                                        </Label.LineBreakMode>
+                                                    </Label>
+                                                    <controls:HeaderDivider />
+                                                    <Label
+                                                        FontSize="16"
+                                                        HorizontalOptions="Center"
+                                                        Text="{Binding Neighborhood, StringFormat='Bairro: {0:N}'}"
+                                                        VerticalOptions="EndAndExpand" />
+                                                    <StackLayout
+                                                        HorizontalOptions="CenterAndExpand"
+                                                        Orientation="Horizontal"
+                                                        Spacing="0">
+                                                        <Label
+                                                            FontSize="16"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding Street, StringFormat='Rua: {0:N}'}"
+                                                            VerticalOptions="EndAndExpand" />
+                                                        <Label
+                                                            FontSize="16"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding Number, StringFormat=', {0:N}'}"
+                                                            VerticalOptions="EndAndExpand" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </Grid>
+                                        </controls:CardView>
                                     </StackLayout>
-                                </Grid>
-                            </controls:CardView>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </ScrollView>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+            </ContentView>
+            <forms:FloatingActionButton
+                Command="{Binding AddSupermarketCommand}"
+                NormalColor="#16648d"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                  Property=Width,
+                                                                  Factor=1,
+                                                                  Constant=-75}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                  Property=Height,
+                                                                  Factor=1,
+                                                                  Constant=-75}"
+                RippleColor="Gray"
+                Size="Normal"
+                Source="ic_add_white_24dp.png" />
+        </RelativeLayout>
+    </ContentPage.Content>
 </ContentPage>

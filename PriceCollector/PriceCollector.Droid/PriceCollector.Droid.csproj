@@ -242,7 +242,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NoImagemTarge.png" />
+    <AndroidResource Include="Resources\drawable\NoImagemTarget.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_search_white_24dp.png" />

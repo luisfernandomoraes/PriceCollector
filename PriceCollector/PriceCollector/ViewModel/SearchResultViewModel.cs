@@ -230,9 +230,13 @@ namespace PriceCollector.ViewModel
                 {
                     var productApiResponse =
                         await _productApi.GetProduct("http://www.acats.scannprice.srv.br/api/", barcode);
-
+                    Barcode = barcode;
                     if (!productApiResponse.Success)
+                    {
+                        // Caso o código de barras não exista nos registros da api.
+                        ImageProduct = "NoImagemTarget.png";
                         return;
+                    }
                     var p = productApiResponse.Result;
                     Name = p.Name;
                     Barcode = p.BarCode;
@@ -248,7 +252,7 @@ namespace PriceCollector.ViewModel
                 }
                 var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{Barcode}.jpg";
                 if (await _productApi.HasImage(urlImage))
-                    ImageProduct = "NoImagemTarge.png";
+                    ImageProduct = "NoImagemTarget.png";
                 else
                     ImageProduct = urlImage;
 

@@ -168,8 +168,9 @@ namespace PriceCollector.ViewModel
                 foreach (var p in productCollecteds)
                 {
                     var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
-                    if (await _productApi.HasImage(urlImage))
-                        p.ImageProduct = "NoImagemTarge.png";
+                    bool haveImage = await _productApi.HasImage(urlImage);
+                    if (haveImage)
+                        p.ImageProduct = "NoImagemTarget.png";
                     else
                         p.ImageProduct = urlImage;
                 }

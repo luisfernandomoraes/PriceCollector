@@ -36,8 +36,10 @@ namespace PriceCollector.View
                 list.SelectedItem = null;
                 return;
             }
+            list.SelectedItem = null;
             SearchResultPage searchResultPage = new SearchResultPage(product);
             await PopupNavigation.PushAsync(searchResultPage);
+
         }
 
 

@@ -114,7 +114,7 @@
                                                         <Image
                                                             Aspect="AspectFit"
                                                             HorizontalOptions="FillAndExpand"
-                                                            Source="{Binding ImageProduct}"
+                                                            Source="{Binding ImageProduct, Mode=TwoWay}"
                                                             VerticalOptions="FillAndExpand" />
                                                     </StackLayout>
                                                 </Grid>

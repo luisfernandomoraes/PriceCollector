@@ -80,7 +80,7 @@
                                                         Grid.Column="0"
                                                         HorizontalOptions="FillAndExpand"
                                                         VerticalOptions="Fill">
-                                                        <Label Text="{Binding ProductName}" VerticalOptions="FillAndExpand">
+                                                        <Label Text="{Binding ProductNameDisplayed}" VerticalOptions="FillAndExpand">
                                                             <Label.LineBreakMode>
                                                                 <OnPlatform
                                                                     x:TypeArguments="LineBreakMode"

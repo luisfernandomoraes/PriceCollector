@@ -7,28 +7,19 @@
     xmlns:forms="clr-namespace:FAB.Forms;assembly=FAB.Forms"
     Title="Produtos Coletados"
     BackgroundColor="White">
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem
-            Clicked="OnStartScann"
-            IsDestructive="true"
-            Order="Primary"
-            Text="Pesquisar">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource" Android="ic_search_white_24dp.png" />
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>-->
     <ContentPage.Content>
         <RelativeLayout>
             <ContentView RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
                 <ScrollView>
                     <StackLayout>
-                        <StackLayout Padding="15">
-                            <Label
-                                FontSize="20"
-                                HorizontalOptions="Center"
-                                Text="Lista de produtos já coletados:"
-                                TextColor="Black" />
+                        <StackLayout Padding="5">
+                            <Frame Padding="8">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Text="Lista de produtos já coletados:"
+                                    TextColor="Black" />
+                            </Frame>
                         </StackLayout>
                         <ActivityIndicator
                             HeightRequest="50"

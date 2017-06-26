@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage
-    x:Class="PriceCollector.View.SearchResultPage"
+    x:Class="PriceCollector.View.SearchResultEditPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:PriceCollector.Converts;assembly=PriceCollector"
-    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-    CloseWhenBackgroundIsClicked="False">
+    xmlns:converts="clr-namespace:PriceCollector.Converts;assembly=PriceCollector"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
     <pages:PopupPage.Resources>
         <ResourceDictionary>
-            <local:DoubleToStringConvert x:Key="ConverterZeroToStrEpt" />
+            <converts:DoubleToStringConvert x:Key="ConverterZeroToStrEpt" />
         </ResourceDictionary>
     </pages:PopupPage.Resources>
 
     <Frame
         Padding="0"
         BackgroundColor="White"
-        HeightRequest="250"
-        HorizontalOptions="CenterAndExpand"
+        HeightRequest="300"
+        HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="300">
         <StackLayout>
@@ -73,6 +72,13 @@
                 BackgroundColor="#5EC65E"
                 Command="{Binding SaveCommand}"
                 Text="Salvar"
+                TextColor="White"
+                VerticalOptions="EndAndExpand" />
+            <Button
+                Margin="5,0"
+                BackgroundColor="Red"
+                Command="{Binding DeleteCommand}"
+                Text="Excluir"
                 TextColor="White"
                 VerticalOptions="EndAndExpand" />
         </StackLayout>

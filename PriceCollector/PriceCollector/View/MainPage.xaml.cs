@@ -37,7 +37,7 @@ namespace PriceCollector.View
                 return;
             }
             list.SelectedItem = null;
-            SearchResultPage searchResultPage = new SearchResultPage(product);
+            var searchResultPage = new SearchResultEditPage(product);
             await PopupNavigation.PushAsync(searchResultPage);
 
         }

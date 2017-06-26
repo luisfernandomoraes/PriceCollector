@@ -30,24 +30,30 @@ namespace PriceCollector.ViewModel
         private string _imageProduct;
         private bool _canShowProductImage;
         private IToastNotificator _notificator;
-        private IReloadDataViewModel _reloadDataViewModelPrevious;
-        private ProductCollected product;
+        private ProductCollected _product;
 
         #endregion
 
         #region Ctor
-
-        public SearchResultViewModel(string barcode, IReloadDataViewModel reloadDataViewModelPreviousPrevious)
+        
+        /// <summary>
+        /// Constructor used for creation of object.
+        /// </summary>
+        /// <param name="barcode"></param>
+        public SearchResultViewModel(string barcode)
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
-            _reloadDataViewModelPrevious = reloadDataViewModelPreviousPrevious;
             Task.Run(async () => await LoadProduct(barcode));
         }
 
+        /// <summary>
+        /// Constructor used in edition of object.
+        /// </summary>
+        /// <param name="product">The product that want it to edit</param>
         public SearchResultViewModel(ProductCollected product)
         {
-            this.product = product;
+            this._product = product;
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
             Task.Run(async () => await LoadProduct(string.Empty, product));
@@ -70,7 +76,8 @@ namespace PriceCollector.ViewModel
                     return;
                 }
 
-                // Montando obj do produto coletado
+                
+                // Making the collected product object.
                 var productCollected = new ProductCollected
                 {
                     PriceCurrent = PriceCurrent,
@@ -81,15 +88,16 @@ namespace PriceCollector.ViewModel
                     ProductName = Name
                 };
 
-                // Setando obj de produto coletado
+               
                 ProductCollected = productCollected;
 
-                // Verificando se já existe esse prod (CodBarras) cadastrado no banco.
+                
+                // Checking if already exists a product with the same bar code in database.
                 var productsCollected = DB.DBContext.ProductCollectedDataBase.GetItems();
                 var productByQrcode = productsCollected.FirstOrDefault(x => x.BarCode == Barcode);
                 if (productByQrcode != null)
                 {
-                    // Caso exista apenas atualizar no banco local do device.
+                    // If yes, just update in local database.
                     productCollected.ID = productByQrcode.ID;
                     DB.DBContext.ProductCollectedDataBase.Update(productCollected);
                     await PopupNavigation.PopAsync();
@@ -99,11 +107,11 @@ namespace PriceCollector.ViewModel
                 }
                 else
                 {
-                    // Caso contrario, persisto dados no banco de dados.
+                    // Otherwise, I persist in local database's device. 
                     var id = DB.DBContext.ProductCollectedDataBase.SaveItem(productCollected);
                     if (id > 0)
                     {
-                        MessagingCenter.Send(this, "LoadData");
+                        UpdateCollectedProdutcList();
                         await PopupNavigation.PopAsync();
                         await _notificator.Notify(ToastNotificationType.Success, Utils.Constants.AppName,
                             "Coleta realizada com sucesso!", TimeSpan.FromSeconds(3));
@@ -125,7 +133,10 @@ namespace PriceCollector.ViewModel
             }
         }
 
-
+        protected void UpdateCollectedProdutcList()
+        {
+            MessagingCenter.Send(this, "LoadData");
+        }
 
         #endregion
 
@@ -211,7 +222,12 @@ namespace PriceCollector.ViewModel
             }
         }
 
-        public ProductCollected ProductCollected { get; private set; }
+        public ProductCollected ProductCollected
+        {
+            get => _product;
+            set => _product = value;
+        }
+
         #endregion
 
         #region Methods

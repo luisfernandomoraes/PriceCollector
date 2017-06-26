@@ -23,23 +23,13 @@ namespace PriceCollector.View
         /// </summary>
         /// <param name="barcode"></param>
         /// <param name="mainPageReloadDataViewModel"></param>
-        public SearchResultPage(string barcode, IReloadDataViewModel mainPageReloadDataViewModel)
+        public SearchResultPage(string barcode)
         {
             InitializeComponent();
-            SearchResultViewModel = new SearchResultViewModel(barcode,mainPageReloadDataViewModel);
+            SearchResultViewModel = new SearchResultViewModel(barcode);
             BindingContext = SearchResultViewModel;
         }
 
-        /// <summary>
-        /// Ctor utilizado para edição do produto coletado.
-        /// </summary>
-        /// <param name="product"></param>
-        public SearchResultPage(ProductCollected product)
-        {
-            InitializeComponent();
-            SearchResultViewModel = new SearchResultViewModel(product);
-            BindingContext = SearchResultViewModel;
-            
-        }
+       
     }
 }

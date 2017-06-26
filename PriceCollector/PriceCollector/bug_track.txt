@@ -1,1 +1,0 @@
-﻿# Qaundo o aplicativo coletar um produto sem registro no banco de dados ou no caso de não ter rede pra pesquisar nome e demais informações, deve ser deixado o codigo de barras explicito no lugar do nome, nos cardviwes da tela inicial.

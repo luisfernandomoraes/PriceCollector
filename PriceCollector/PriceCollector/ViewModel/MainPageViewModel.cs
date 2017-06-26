@@ -97,7 +97,7 @@ namespace PriceCollector.ViewModel
                     Device.BeginInvokeOnMainThread(async () =>
                     {
 
-                        var searchResultPage = new SearchResultPage(barcode, this);
+                        var searchResultPage = new SearchResultPage(barcode);
                         await PopupNavigation.PushAsync(searchResultPage);
                     });
                 }

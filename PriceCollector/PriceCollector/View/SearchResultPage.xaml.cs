@@ -15,8 +15,8 @@ namespace PriceCollector.View
     public partial class SearchResultPage: PopupPage
     {
         private ProductCollected product;
+        private SearchResultViewModel _searchResultViewModel;
 
-        public SearchResultViewModel SearchResultViewModel { get; }
 
         /// <summary>
         /// Ctor utilizado para cadastrar o produto coletado.
@@ -26,10 +26,14 @@ namespace PriceCollector.View
         public SearchResultPage(string barcode)
         {
             InitializeComponent();
-            SearchResultViewModel = new SearchResultViewModel(barcode);
-            BindingContext = SearchResultViewModel;
+            _searchResultViewModel = new SearchResultViewModel(barcode);
+            BindingContext = _searchResultViewModel;
         }
 
-       
+        protected override async void OnAppearing()
+        {
+            await _searchResultViewModel.LoadAsync();
+            base.OnAppearing();
+        }
     }
 }

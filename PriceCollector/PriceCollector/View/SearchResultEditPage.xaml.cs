@@ -14,12 +14,19 @@ namespace PriceCollector.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchResultEditPage : PopupPage
     {
-        
+        ViewModel.SearchResultEditViewModel  _viewModel;
+
         public SearchResultEditPage(ProductCollected product)
         {
             InitializeComponent();
-            ViewModel.SearchResultEditViewModel  viewModel= new ViewModel.SearchResultEditViewModel(product);
-            BindingContext = viewModel;
+            _viewModel = new ViewModel.SearchResultEditViewModel(product);
+            BindingContext = _viewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            await _viewModel.LoadAsync();
+            base.OnAppearing();
         }
     }
 }

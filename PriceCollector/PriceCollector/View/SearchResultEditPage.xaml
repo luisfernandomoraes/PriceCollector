@@ -23,6 +23,7 @@
                 <Label
                     FontAttributes="Bold"
                     FontSize="18"
+                    HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Text="{Binding Name, Mode=TwoWay}"
                     TextColor="White" />
@@ -36,9 +37,12 @@
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
 
-                <StackLayout ClassId="DivEsquerda" HorizontalOptions="FillAndExpand">
+                <StackLayout
+                    ClassId="DivEsquerda"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
                     <Image
-                        Aspect="AspectFill"
+                        Aspect="Fill"
                         HorizontalOptions="FillAndExpand"
                         Source="{Binding ImageProduct, Mode=TwoWay}"
                         VerticalOptions="FillAndExpand" />
@@ -47,8 +51,7 @@
                 <StackLayout
                     ClassId="DivDireita"
                     HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand"
-                    WidthRequest="150">
+                    VerticalOptions="FillAndExpand">
                     <Label HorizontalTextAlignment="Center" Text="{Binding PriceCurrent, StringFormat='Preço: {0:N}'}" />
                     <Label
                         FontSize="15"
@@ -62,25 +65,27 @@
                             HorizontalTextAlignment="Center"
                             Keyboard="Numeric"
                             Placeholder="0.000,00"
-                            Text="{Binding PriceCollected, Mode=TwoWay, Converter={StaticResource ConverterZeroToStrEpt}}"
+                            Text="{Binding PriceCollected, Mode=TwoWay, StringFormat='{0:N}'}"
                             TextColor="Black" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-            <Button
-                Margin="5,0"
-                BackgroundColor="#5EC65E"
-                Command="{Binding SaveCommand}"
-                Text="Salvar"
-                TextColor="White"
-                VerticalOptions="EndAndExpand" />
-            <Button
-                Margin="5,0"
-                BackgroundColor="Red"
-                Command="{Binding DeleteCommand}"
-                Text="Excluir"
-                TextColor="White"
-                VerticalOptions="EndAndExpand" />
+            <StackLayout Spacing="2">
+                <Button
+                    Margin="5,0"
+                    BackgroundColor="#5EC65E"
+                    Command="{Binding SaveCommand}"
+                    Text="Salvar"
+                    TextColor="White"
+                    VerticalOptions="EndAndExpand" />
+                <Button
+                    Margin="5,0,2,5"
+                    BackgroundColor="Red"
+                    Command="{Binding DeleteCommand}"
+                    Text="Excluir"
+                    TextColor="White"
+                    VerticalOptions="EndAndExpand" />
+            </StackLayout>
         </StackLayout>
     </Frame>
 </pages:PopupPage>

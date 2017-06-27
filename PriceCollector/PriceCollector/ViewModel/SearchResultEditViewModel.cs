@@ -32,6 +32,7 @@ namespace PriceCollector.ViewModel
         public SearchResultEditViewModel(ProductCollected product) : base(product)
         {
             _toastNotificator = DependencyService.Get<IToastNotificator>();
+            
         }
 
         #endregion
@@ -58,7 +59,6 @@ namespace PriceCollector.ViewModel
                 _toastNotificator.Notify(ToastNotificationType.Error, "Erro :(", e.ToString(), TimeSpan.FromSeconds(3));
             }
         }
-
-
+        
     }
 }

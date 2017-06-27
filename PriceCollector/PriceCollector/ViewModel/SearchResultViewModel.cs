@@ -35,7 +35,7 @@ namespace PriceCollector.ViewModel
         #endregion
 
         #region Ctor
-        
+
         /// <summary>
         /// Constructor used for creation of object.
         /// </summary>
@@ -44,7 +44,7 @@ namespace PriceCollector.ViewModel
         {
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
-            Task.Run(async () => await LoadProduct(barcode));
+            _barcode = barcode;
         }
 
         /// <summary>
@@ -56,7 +56,6 @@ namespace PriceCollector.ViewModel
             this._product = product;
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
-            Task.Run(async () => await LoadProduct(string.Empty, product));
         }
 
         #endregion
@@ -76,7 +75,7 @@ namespace PriceCollector.ViewModel
                     return;
                 }
 
-                
+
                 // Making the collected product object.
                 var productCollected = new ProductCollected
                 {
@@ -88,10 +87,10 @@ namespace PriceCollector.ViewModel
                     ProductName = Name
                 };
 
-               
+
                 ProductCollected = productCollected;
 
-                
+
                 // Checking if already exists a product with the same bar code in database.
                 var productsCollected = DB.DBContext.ProductCollectedDataBase.GetItems();
                 var productByQrcode = productsCollected.FirstOrDefault(x => x.BarCode == Barcode);
@@ -280,6 +279,17 @@ namespace PriceCollector.ViewModel
             }
         }
 
+        public async Task LoadAsync()
+        {
+            if (_product != null)
+            {
+                await LoadProduct(string.Empty, _product);
+            }
+            else
+            {
+                await LoadProduct(_barcode, null);
+            }
+        }
         private bool IsValid()
         {
             if (PriceCollected == 0)

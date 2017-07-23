@@ -33,6 +33,7 @@ namespace PriceCollector.View
         protected override async void OnAppearing()
         {
             await _searchResultViewModel.LoadAsync();
+            PriceEntry.Focus();
             base.OnAppearing();
         }
     }

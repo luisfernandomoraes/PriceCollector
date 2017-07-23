@@ -59,6 +59,7 @@
                         VerticalOptions="Center" />
                     <StackLayout VerticalOptions="End" WidthRequest="50">
                         <Entry
+                            x:Name="PriceEntry"
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Keyboard="Numeric"

@@ -16,9 +16,10 @@ using PriceCollector.DB;
 using PriceCollector.Model;
 using PriceCollector.View;
 using PriceCollector.ViewModel.Services;
-using Rb.Forms.Barcode.Pcl;
 using Xamarin.Forms;
 using Rg.Plugins.Popup.Services;
+using Scandit.BarcodePicker.Unified;
+using Barcode = Rb.Forms.Barcode.Pcl.Barcode;
 
 namespace PriceCollector.ViewModel
 {
@@ -44,72 +45,9 @@ namespace PriceCollector.ViewModel
 
         private async void StartScanner(object obj)
         {
-            try
-            {
-                _scannerPage = ScannerPageControl.Instance.CreateScannerPage();
-                bool isAlreadyRead = false;
-                MessagingCenter.Subscribe<ScannerViewModel, Barcode>(this, "BarcodeChanged", (arg1, arg2) =>
-                {
-                    if (!isAlreadyRead)
-                    {
-                        isAlreadyRead = true;
-                        _cancellationTokenSourceTask.Cancel();
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            if (_scannerPage.IsEnabled)
-                            {
-                                await _mainPage.Navigation.PopAsync();
-                                OnBarcodeChanged(arg2);
-                            }
-                        });
-                    }
-                });
-
-                await _mainPage.Navigation.PushAsync(_scannerPage);
-
-                await StartTimeout();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-                await _notificator.Notify(ToastNotificationType.Error, ":(",
-                    "Ocorreu um erro ao inicializar o leitor de códigos de barra.", TimeSpan.FromSeconds(3));
-                //throw;
-            }
+            await ScanditService.BarcodePicker.StartScanningAsync(true);
         }
 
-        private async void OnBarcodeChanged(Barcode barcodeResult)
-        {
-            try
-            {
-
-                var barcode = barcodeResult.Result;
-
-                if (string.IsNullOrEmpty(barcode))
-                {
-                    await _notificator.Notify(ToastNotificationType.Error, nameof(PriceCollector), "Ocorreu um erro ao ralizar o scanneamento.", TimeSpan.FromSeconds(3));
-
-                }
-                else
-                {
-                    _cancellationTokenSourceTask.Cancel();
-
-                    Device.BeginInvokeOnMainThread(async () =>
-                    {
-
-                        var searchResultPage = new SearchResultPage(barcode);
-                        await PopupNavigation.PushAsync(searchResultPage);
-                    });
-                }
-
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception);
-                await _notificator.Notify(ToastNotificationType.Error, ":(", "Ocorreu um erro ao realizar o scanneamento",
-                    TimeSpan.FromSeconds(3));
-            }
-        }
 
         #endregion
 
@@ -126,29 +64,24 @@ namespace PriceCollector.ViewModel
                 await LoadData();
                 _scannerPage = ScannerPageControl.Instance.CreateScannerPage();
             });
-
+            ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
             MessagingCenter.Subscribe<SearchResultViewModel>(this, "LoadData", async (sender) =>
              {
                  await LoadData();
              });
         }
-        private async Task StartTimeout()
+        private async void BarcodePickerOnDidScan(ScanSession session)
         {
-            _cancellationTokenSourceTask = new CancellationTokenSource();
-
-            var cancellationToken = _cancellationTokenSourceTask.Token;
-            await Task.Factory.StartNew(async () =>
+            await ScanditService.BarcodePicker.StopScanningAsync();
+            var recognizedCode = session.NewlyRecognizedCodes.LastOrDefault()?.Data;
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                // Were we already canceled?
-                cancellationToken.ThrowIfCancellationRequested();
 
-                await Task.Delay(TimeSpan.FromSeconds(15), cancellationToken); // Timeout
+                var searchResultPage = new SearchResultPage(recognizedCode);
+                if (PopupNavigation.PopupStack.Count < 1)
+                    await PopupNavigation.PushAsync(searchResultPage);
+            });
 
-                if (!cancellationToken.IsCancellationRequested && _scannerPage.BarcodeScannerPage.IsEnabled)
-                {
-                    //BarcodeScannerPageOnBarcodeChanged(new BarcodeScanner { Barcode = null }, null); //Not found or cant read the barcode.
-                }
-            }, _cancellationTokenSourceTask.Token);
         }
 
         public async Task LoadData()
@@ -189,10 +122,6 @@ namespace PriceCollector.ViewModel
                 IsBusy = false;
             }
         }
-
-
-
-
 
         #region Properties
         public bool IsEmpty
@@ -235,10 +164,6 @@ namespace PriceCollector.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async Task<string> StartBarCodeScannerAsync()
-        {
-            return string.Empty;
-        }
 
         public async Task AddProductCollected(ProductCollected productCollected)
         {

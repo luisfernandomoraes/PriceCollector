@@ -10,6 +10,8 @@ using PriceCollector.Utils;
 using PriceCollector.View.Services;
 using PriceCollector.View.SliderMenu;
 using PriceCollector.ViewModel.Services;
+using Scandit.BarcodePicker.Unified;
+using Scandit.BarcodePicker.Unified.Abstractions;
 using Xamarin.Forms;
 
 namespace PriceCollector
@@ -19,6 +21,7 @@ namespace PriceCollector
         public const string MessageOnStart = "OnStart";
         public const string MessageOnSleep = "OnSleep";
         public const string MessageOnResume = "OnResume";
+        private static string _appKey = "xbENFiLaEeSCn/KdTNpva0lad8WlMjCpK89rxosdty4";
 
 
         public static App CurrentApp;
@@ -36,18 +39,39 @@ namespace PriceCollector
 
             InitializeComponent();
             InitializeConfigurations();
+            InitScannerSettings();
+
             CurrentApp = this;
 
             MainPage = new NavigationPage(new LoginModalPage(this) { Title = "Autenticação de Usuário" });
         }
 
+        async void InitScannerSettings()
+        {
+            ScanditService.ScanditLicense.AppKey = _appKey;
 
+            IBarcodePicker picker = ScanditService.BarcodePicker;
+
+            // The scanning behavior of the barcode picker is configured through scan
+            // settings. We start with empty scan settings and enable a very generous
+            // set of symbolizes. In your own apps, only enable the symbolizes you
+            // actually need.
+            var settings = picker.GetDefaultScanSettings();
+            var symbologiesToEnable = new Symbology[] {
+                Symbology.Ean13,
+                Symbology.Ean8,
+            };
+            foreach (var sym in symbologiesToEnable)
+                settings.EnableSymbology(sym, true);
+            await picker.ApplySettingsAsync(settings);
+            // This will open the scanner in full-screen mode. 
+        }
         private void InitializeConfigurations()
         {
 
             App.Current.Properties["IsLoggedIn"] = false;
 #if DEMO
-            // Carregar dados de demonstração
+            // Load demonstration data.
             if (!DB.DBContext.SupermarketsCompetitorsDataBase.GetItems().Any())
             {
 

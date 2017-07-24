@@ -8,6 +8,7 @@ using PriceCollector.Model;
 using PriceCollector.ViewModel;
 using PriceCollector.ViewModel.Services;
 using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace PriceCollector.View
@@ -35,6 +36,12 @@ namespace PriceCollector.View
             await _searchResultViewModel.LoadAsync();
             PriceEntry.Focus();
             base.OnAppearing();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            Task.Run(async ()=> await PopupNavigation.PopAsync());
+            return base.OnBackButtonPressed();
         }
     }
 }

@@ -13,3 +13,7 @@ e das informações fornecidas pelo cliente.
 
 //TODO:
 -> Pesquisar mais video de coletores de dados, compreender funcionamento mais a fundo.
+
+Ideias:
+-> http://www.sm.com.br/detalhe/gestao/seis-passos-para-uma-pesquisa-de-precos-eficiente
+"a recomendação é definir em quais produtos de alto giro o varejista quer ser mais competitivo."

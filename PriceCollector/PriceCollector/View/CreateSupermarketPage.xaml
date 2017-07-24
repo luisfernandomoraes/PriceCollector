@@ -1,19 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PriceCollector.View.CreateSupermarketPage"
-             Title="Cadastrar Supermercado"
-             >
+<ContentPage
+    x:Class="PriceCollector.View.CreateSupermarketPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Cadastrar Supermercado">
     <ContentPage.Content>
         <StackLayout Padding="10,20,10,10">
-            <Label Text="Preencha corretamente as informações abaixo para cadastrar um supermercado concorrente." HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-            <Entry Placeholder="Nome" Text="{Binding Name,Mode=TwoWay}"/>
-            <Entry Placeholder="Rua" Text="{Binding Street,Mode=TwoWay}"/>
-            <Entry Placeholder="Número" Text="{Binding Number,Mode=TwoWay}" Keyboard="Numeric"/>
-            <Entry Placeholder="Bairro" Text="{Binding Neighborhood,Mode=TwoWay}"/>
-            <Entry Placeholder="Cidade" Text="{Binding City,Mode=TwoWay}"/>
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Preencha corretamente as informações abaixo para cadastrar um supermercado concorrente." />
+            <Entry Placeholder="Nome" Text="{Binding Name, Mode=TwoWay}" />
+            <Entry Placeholder="Rua" Text="{Binding Street, Mode=TwoWay}" />
+            <Entry
+                Keyboard="Numeric"
+                Placeholder="Número"
+                Text="{Binding Number, Mode=TwoWay}" />
+            <Entry Placeholder="Bairro" Text="{Binding Neighborhood, Mode=TwoWay}" />
+            <Entry Placeholder="Cidade" Text="{Binding City, Mode=TwoWay}" />
             <StackLayout Padding="10">
-                <Button Text="Adicionar" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" TextColor="White" BackgroundColor="#26A726"/></StackLayout>
+                <Button
+                    BackgroundColor="#26A726"
+                    Command="{Binding SaveCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Adicionar"
+                    TextColor="White" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -57,6 +57,7 @@
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ILoginManager.cs" />
     <Compile Include="ViewModel\CreateSupermarketViewModel.cs" />
+    <Compile Include="ViewModel\SearchResultEditViewModel.cs" />
     <Compile Include="ViewModel\Services\INavigationService.cs" />
     <Compile Include="ViewModel\Services\IReloadDataViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -87,6 +88,9 @@
     </Compile>
     <Compile Include="View\ScannerPage.xaml.cs">
       <DependentUpon>ScannerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchResultEditPage.xaml.cs">
+      <DependentUpon>SearchResultEditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SearchResultPage.xaml.cs">
       <DependentUpon>SearchResultPage.xaml</DependentUpon>
@@ -246,7 +250,15 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="bug_track_and_future_implementations.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\SearchResultEditPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -8,12 +8,14 @@
     BackgroundColor="White">
     <ScrollView>
         <StackLayout>
-            <StackLayout Padding="15">
-                <Label
-                    FontSize="25"
-                    HorizontalOptions="Center"
-                    Text="Produtos para coletar o preço"
-                    TextColor="Black" />
+            <StackLayout Padding="5">
+                <Frame Padding="8">
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="Produtos para coletar o preço:"
+                        TextColor="Black" />
+                </Frame>
             </StackLayout>
             <ActivityIndicator
                 HeightRequest="50"

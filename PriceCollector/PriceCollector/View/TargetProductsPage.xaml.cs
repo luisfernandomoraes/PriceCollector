@@ -34,17 +34,19 @@ namespace PriceCollector.View
             _notificator.HideAll();
 
             list.SelectedItem = null;
-            // Primeira verificação,
+            // First check,
 
-            // Verificamos se o codigo de barras bate com o codigo de barras informado.
+            
+            // Check if bar code's collected is equal with the passed bar code. 
             var barcode = await _targetProductsViewModel.StartBarCodeScannerAsync();
             if (barcode != product.BarCode)
             {
                 await _notificator.Notify(ToastNotificationType.Error, Utils.Constants.AppName,
                         $"O código de barras lido {barcode}, não confere com o produto {product.Name}, por favor tente novamente", TimeSpan.FromSeconds(5));
             }
-            //Caso sim, prosseguimos com a coleta de preço.
-            var searchResultPage = new SearchResultPage(barcode,_targetProductsViewModel);
+
+            //If yes, continue with price collect.
+            var searchResultPage = new SearchResultPage(barcode);
             await PopupNavigation.PushAsync(searchResultPage);
         }
         

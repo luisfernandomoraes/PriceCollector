@@ -1,1 +1,6 @@
 ﻿# Perform login with Facebook for improve more security.
+# Fix the Price value on edit collected product.
+# Improve the design of menu lateral. 
+# Get GPS location position of data collected.
+# Test without Internet connection. 
+# Fix the "no image" on a product without image.

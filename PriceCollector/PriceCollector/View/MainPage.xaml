@@ -7,132 +7,134 @@
     xmlns:forms="clr-namespace:FAB.Forms;assembly=FAB.Forms"
     Title="Produtos Coletados"
     BackgroundColor="White">
-    <ContentPage.Content>
-        <RelativeLayout>
-            <ContentView RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
-                <ScrollView>
-                    <StackLayout>
-                        <StackLayout Padding="5">
-                            <Frame Padding="8">
-                                <Label
-                                    FontSize="20"
-                                    HorizontalOptions="Center"
-                                    Text="Lista de produtos já coletados:"
-                                    TextColor="Black" />
-                            </Frame>
-                        </StackLayout>
-                        <ActivityIndicator
-                            HeightRequest="50"
-                            HorizontalOptions="Center"
-                            IsRunning="True"
-                            IsVisible="{Binding IsBusy, Mode=TwoWay}"
-                            VerticalOptions="Center"
-                            WidthRequest="50" />
-                        <Image
-                            HorizontalOptions="Center"
-                            IsVisible="{Binding IsEmpty, Mode=TwoWay}"
-                            Source="empty.png"
-                            VerticalOptions="Center" />
-                        <ListView
-                            x:Name="list"
-                            HasUnevenRows="True"
-                            ItemTapped="OnItemSelected"
-                            ItemsSource="{Binding Products, Mode=TwoWay}"
-                            SeparatorColor="Transparent">
-                            <!--  GroupShortNameBinding="{Binding Key}"  -->
-                            <ListView.Header>
-                                <StackLayout
-                                    BackgroundColor="White"
-                                    HorizontalOptions="FillAndExpand"
-                                    VerticalOptions="FillAndExpand">
-                                    <Image
-                                        x:Name="AdOfferImage"
-                                        Aspect="AspectFit"
-                                        HorizontalOptions="FillAndExpand"
-                                        Source="preencher"
-                                        VerticalOptions="FillAndExpand" />
-                                </StackLayout>
-                            </ListView.Header>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <StackLayout Padding="{DynamicResource CardPadding}" Spacing="{DynamicResource CardSpacing}">
-                                            <controls:CardView>
-                                                <Grid Padding="5,0,0,0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="200" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <StackLayout
-                                                        Grid.Column="0"
-                                                        HorizontalOptions="FillAndExpand"
-                                                        VerticalOptions="Fill">
-                                                        <Label Text="{Binding ProductNameDisplayed}" VerticalOptions="FillAndExpand">
-                                                            <Label.LineBreakMode>
-                                                                <OnPlatform
-                                                                    x:TypeArguments="LineBreakMode"
-                                                                    Android="WordWrap"
-                                                                    iOS="WordWrap" />
-                                                            </Label.LineBreakMode>
-                                                        </Label>
-                                                        <controls:HeaderDivider />
-                                                        <Label Text="{Binding CollectDate, StringFormat='Data da Coleta: {0:dd/MM/yyyy}'}" />
-                                                    </StackLayout>
-                                                    <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
-                                                        <Label
-                                                            HorizontalOptions="EndAndExpand"
-                                                            HorizontalTextAlignment="End"
-                                                            Text="R$"
-                                                            VerticalOptions="EndAndExpand"
-                                                            VerticalTextAlignment="End" />
-                                                        <Label
-                                                            FontAttributes="Bold"
-                                                            FontSize="17"
-                                                            HorizontalOptions="EndAndExpand"
-                                                            Text="{Binding PriceCollected, StringFormat='{0:###0.00}'}"
-                                                            TextColor="Red"
-                                                            VerticalOptions="EndAndExpand"
-                                                            VerticalTextAlignment="End" />
-                                                    </StackLayout>
-                                                    <StackLayout
-                                                        Grid.Column="2"
-                                                        BackgroundColor="Transparent"
-                                                        HorizontalOptions="FillAndExpand">
-                                                        <Image
-                                                            Aspect="AspectFit"
-                                                            HorizontalOptions="FillAndExpand"
-                                                            Source="{Binding ImageProduct, Mode=TwoWay}"
-                                                            VerticalOptions="FillAndExpand" />
-                                                    </StackLayout>
-                                                </Grid>
-                                            </controls:CardView>
-                                        </StackLayout>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="sync_white_24dp.png" Command="SyncCollectedProductsCommand"/>
+    </ContentPage.ToolbarItems>
+    <RelativeLayout>
+        <ContentView RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout Padding="5">
+                        <Frame Padding="8">
+                            <Label
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Text="Lista de produtos já coletados:"
+                                TextColor="Black" />
+                        </Frame>
                     </StackLayout>
-                </ScrollView>
-            </ContentView>
-            <forms:FloatingActionButton
-                x:Name="fabBtn"
-                Command="{Binding StartScannerCommand}"
-                NormalColor="#16648d"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
-                                                                  Property=Width,
-                                                                  Factor=1,
-                                                                  Constant=-75}"
-                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-                                                                  Property=Height,
-                                                                  Factor=1,
-                                                                  Constant=-75}"
-                RippleColor="Gray"
-                Size="Normal"
-                Source="ic_search_white_24dp.png" />
-        </RelativeLayout>
-    </ContentPage.Content>
+                    <ActivityIndicator
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        IsRunning="True"
+                        IsVisible="{Binding IsBusy, Mode=TwoWay}"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+                    <Image
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsEmpty, Mode=TwoWay}"
+                        Source="empty.png"
+                        VerticalOptions="Center" />
+                    <ListView
+                        x:Name="list"
+                        HasUnevenRows="True"
+                        ItemTapped="OnItemSelected"
+                        ItemsSource="{Binding Products, Mode=TwoWay}"
+                        SeparatorColor="Transparent">
+                        <!--  GroupShortNameBinding="{Binding Key}"  -->
+                        <ListView.Header>
+                            <StackLayout
+                                BackgroundColor="White"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+                                <Image
+                                    x:Name="AdOfferImage"
+                                    Aspect="AspectFit"
+                                    HorizontalOptions="FillAndExpand"
+                                    Source="preencher"
+                                    VerticalOptions="FillAndExpand" />
+                            </StackLayout>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Padding="{DynamicResource CardPadding}" Spacing="{DynamicResource CardSpacing}">
+                                        <controls:CardView>
+                                            <Grid Padding="5,0,0,0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="200" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    VerticalOptions="Fill">
+                                                    <Label Text="{Binding ProductNameDisplayed}" VerticalOptions="FillAndExpand">
+                                                        <Label.LineBreakMode>
+                                                            <OnPlatform
+                                                                x:TypeArguments="LineBreakMode"
+                                                                Android="WordWrap"
+                                                                iOS="WordWrap" />
+                                                        </Label.LineBreakMode>
+                                                    </Label>
+                                                    <controls:HeaderDivider />
+                                                    <Label Text="{Binding CollectDate, StringFormat='Data da Coleta: {0:dd/MM/yyyy}'}" />
+                                                </StackLayout>
+                                                <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
+                                                    <Label
+                                                        HorizontalOptions="EndAndExpand"
+                                                        HorizontalTextAlignment="End"
+                                                        Text="R$"
+                                                        VerticalOptions="EndAndExpand"
+                                                        VerticalTextAlignment="End" />
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        FontSize="17"
+                                                        HorizontalOptions="EndAndExpand"
+                                                        Text="{Binding PriceCollected, StringFormat='{0:###0.00}'}"
+                                                        TextColor="Red"
+                                                        VerticalOptions="EndAndExpand"
+                                                        VerticalTextAlignment="End" />
+                                                </StackLayout>
+                                                <StackLayout
+                                                    Grid.Column="2"
+                                                    BackgroundColor="Transparent"
+                                                    HorizontalOptions="FillAndExpand">
+                                                    <Image
+                                                        Aspect="AspectFit"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Source="{Binding ImageProduct, Mode=TwoWay}"
+                                                        VerticalOptions="FillAndExpand" />
+                                                </StackLayout>
+                                            </Grid>
+                                        </controls:CardView>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+        </ContentView>
+        <forms:FloatingActionButton
+            x:Name="fabBtn"
+            Command="{Binding StartScannerCommand}"
+            NormalColor="#16648d"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                              Property=Width,
+                                                              Factor=1,
+                                                              Constant=-75}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                              Property=Height,
+                                                              Factor=1,
+                                                              Constant=-75}"
+            RippleColor="Gray"
+            Size="Normal"
+            Source="ic_search_white_24dp.png" />
+    </RelativeLayout>
 </ContentPage>

@@ -28,5 +28,13 @@ namespace PriceCollector.Api.WebAPI.Products
         /// <param name="url"></param>
         /// <returns></returns>
         Task<bool> HasImage(string url);
+
+        /// <summary>
+        /// Envia ao servidor os registros coletados.
+        /// </summary>
+        /// <param name="url">url base do endpoint de syncronização.</param>
+        /// <param name="productCollecteds"></param>
+        /// <returns></returns>
+        Task<bool> PostCollectedProducts(string url, List<Model.ProductCollected> productCollecteds);
     }
 }

@@ -82,7 +82,7 @@ namespace PriceCollector.ViewModel
                     PriceCurrent = PriceCurrent,
                     BarCode = Barcode,
                     CollectDate = DateTime.Now,
-                    IDSupermarket = 0, //TODO: Rever
+                    IDSupermarket = 0, //TODO: Review later.
                     PriceCollected = PriceCollected,
                     ProductName = Name
                 };

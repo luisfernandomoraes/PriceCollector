@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,7 +14,7 @@ using PriceCollector.Model;
 
 namespace PriceCollector.Api.WebAPI.Products
 {
-    public class ProductApi:IProductApi
+    public class ProductApi : IProductApi
     {
         HttpClient _client;
         private List<string> _barCodeListDemo;
@@ -46,37 +47,36 @@ namespace PriceCollector.Api.WebAPI.Products
 
             var result = new ProductResponse();
             var products = new List<Product>();
-            var qrcode = "Acats01_36256202000146";
-            var matrixdb = "Acats01";
+            //var qrcode = "Acats01_36256202000146";
+            //var matrixdb = "Acats01";
 
             try
             {
 
-                foreach (var barcode in _barCodeListDemo)
+                var resourcePath = @"/price-collector/api.php/produtos_alvo/";
+                var uri = new Uri(string.Concat(url, resourcePath));
+
+                var response = await _client.GetAsync(uri);
+
+                result.Success = response.IsSuccessStatusCode;
+                if (!response.IsSuccessStatusCode) return result;
+
+
+                var content = await response.Content.ReadAsStringAsync();
+                result.HttpStatusCode = HttpStatusCode.OK;
+                var objs = JArray.Parse(content);
+                foreach (var obj in objs)
                 {
-                    
-                    var resourcePath = $"products/{barcode}/{qrcode}/{matrixdb}";
-                    var uri = new Uri(string.Concat(url, resourcePath));
-
-                    var response = await _client.GetAsync(uri);
-
-                    result.Success = response.IsSuccessStatusCode;
-                    if (!response.IsSuccessStatusCode) continue;
-
-
-                    var content = await response.Content.ReadAsStringAsync();
-                    result.HttpStatusCode = HttpStatusCode.OK;
-                    var obj = JObject.Parse(content);
                     var product = new Product
                     {
-                        ID = Convert.ToInt32(obj["IDProduct"].ToString()),
+                        ID = Convert.ToInt32(obj["id"].ToString()),
                         Name = obj["ProductName"].ToString(),
                         BarCode = obj["Barcod"].ToString(),
-                        PriceCurrent = Convert.ToDecimal(obj["Value"].ToString())
-                        
+                        //PriceCurrent = Convert.ToDecimal(obj["Value"].ToString())
                     };
 
                     products.Add(product);
+
                 }
 
                 result.CollectionResult = products;
@@ -147,6 +147,16 @@ namespace PriceCollector.Api.WebAPI.Products
             {
                 Debug.WriteLine(e.ToString());
                 return failResult;
+            }
+        }
+
+        public async Task<bool> PostCollectedProducts(string url, List<ProductCollected> productCollecteds)
+        {
+            var json = JsonConvert.SerializeObject(productCollecteds, Formatting.None);
+            using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
+            {
+                var result = await _client.PostAsync($"{url}", content);
+                return result.IsSuccessStatusCode;
             }
         }
     }

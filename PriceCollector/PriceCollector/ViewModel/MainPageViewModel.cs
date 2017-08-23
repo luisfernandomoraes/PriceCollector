@@ -48,6 +48,20 @@ namespace PriceCollector.ViewModel
             await ScanditService.BarcodePicker.StartScanningAsync(true);
         }
 
+        public ICommand SyncCollectedProductsCommand => new Command(SyncCollectedProducts);
+
+        private async void SyncCollectedProducts(object obj)
+        {
+            try
+            {
+                await _productApi.PostCollectedProducts(String.Empty, DBContext.ProductCollectedDataBase.GetItems().ToList());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                await _notificator.Notify(ToastNotificationType.Error, ":(", "Ocorreu um erro no processo de syncronização, porfavor tente mais tarde.", TimeSpan.FromSeconds(3));
+            }
+        }
 
         #endregion
 

@@ -59,6 +59,5 @@ namespace PriceCollector.ViewModel
                 _toastNotificator.Notify(ToastNotificationType.Error, "Erro :(", e.ToString(), TimeSpan.FromSeconds(3));
             }
         }
-        
     }
 }

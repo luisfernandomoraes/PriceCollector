@@ -69,13 +69,14 @@ namespace PriceCollector.ViewModel
             try
             {
                 IsBusy = true;
-                var result = await _productApi.GetProductsToCollect("http://www.acats.scannprice.srv.br/api/");
+                var result = await _productApi.GetProductsToCollect("https://blogmachine.club");
                 if (result.Success)
                 {
 
                     foreach (var p in result.CollectionResult)
                     {
                         var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
+
                         if (await _productApi.HasImage(urlImage))
                             p.ImageProduct = "NoImagemTarge.png";
                         else

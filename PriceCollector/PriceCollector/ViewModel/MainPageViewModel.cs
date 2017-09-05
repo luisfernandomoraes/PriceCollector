@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using Plugin.Toasts;
 using PriceCollector.Annotations;
 using PriceCollector.Api.WebAPI.Products;
@@ -54,12 +55,31 @@ namespace PriceCollector.ViewModel
         {
             try
             {
-                await _productApi.PostCollectedProducts(String.Empty, DBContext.ProductCollectedDataBase.GetItems().ToList());
+                var result = await App.Current.MainPage.DisplayAlert("PriceCollector", "Deseja sincronizar os produtos coletados?","Sim", "Não");
+
+
+                using (var dlg = UserDialogs.Instance.Progress("Progress (No Cancel)"))
+                {
+                    while (dlg.PercentComplete < 100)
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(500));
+                        dlg.PercentComplete += 25;
+                    }
+                }
+
+                if (result)
+                {
+                    await _productApi.PostCollectedProducts(String.Empty, DBContext.ProductCollectedDataBase.GetItems().ToList());
+
+                    await _notificator.Notify(ToastNotificationType.Success, nameof(PriceCollector),
+                        "Sincronizado com sucesso!", TimeSpan.FromSeconds(3));
+                }
+                
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                await _notificator.Notify(ToastNotificationType.Error, ":(", "Ocorreu um erro no processo de syncronização, porfavor tente mais tarde.", TimeSpan.FromSeconds(3));
+                await _notificator.Notify(ToastNotificationType.Error, ":(", "Ocorreu um erro no processo de sincronização, porfavor tente mais tarde.", TimeSpan.FromSeconds(3));
             }
         }
 

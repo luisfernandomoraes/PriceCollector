@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -39,6 +39,8 @@ namespace PriceCollector.Droid
             BarcodeScannerRenderer.Init(configBarcodeScanner);
 
             FAB.Droid.FloatingActionButtonRenderer.InitControl();
+
+            UserDialogs.Init(this);
 
             LoadApplication(new App());
         }

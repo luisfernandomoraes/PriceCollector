@@ -152,6 +152,7 @@ namespace PriceCollector.Api.WebAPI.Products
 
         public async Task<bool> PostCollectedProducts(string url, List<ProductCollected> productCollecteds)
         {
+            return true;
             var json = JsonConvert.SerializeObject(productCollecteds, Formatting.None);
             using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
             {

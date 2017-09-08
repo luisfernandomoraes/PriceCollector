@@ -70,7 +70,7 @@ namespace PriceCollector
         {
 
             App.Current.Properties["IsLoggedIn"] = false;
-#if DEMO
+
             // Load demonstration data.
             if (!DB.DBContext.SupermarketsCompetitorsDataBase.GetItems().Any())
             {
@@ -99,7 +99,6 @@ namespace PriceCollector
                 DB.DBContext.SupermarketsCompetitorsDataBase.SaveItem(hippo);
 
             }
-#endif
         }
 
 

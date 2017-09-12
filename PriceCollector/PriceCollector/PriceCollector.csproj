@@ -121,6 +121,9 @@
       <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FAB.Forms, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FAB.Forms.2.1.1\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FAB.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="Plugin.Connectivity, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Connectivity.2.3.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Connectivity.dll</HintPath>
       <Private>True</Private>
@@ -177,10 +180,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\Luis_\Downloads\Xamarin.Plugin.FAB-master\Xamarin.Plugin.FAB-master\Library\FloatingActionButton.Forms\Profile78\FAB.Forms.Profile78.csproj">
-      <Project>{78b00f76-5fb4-4429-abf6-42a80a6e967e}</Project>
-      <Name>FAB.Forms.Profile78</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\PriceCollector.Api\PriceCollector.Api.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>PriceCollector.Api</Name>

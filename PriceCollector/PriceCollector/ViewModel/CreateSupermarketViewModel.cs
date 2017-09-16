@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Plugin.Toasts;
-using PriceCollector.Annotations;
-using PriceCollector.Api.WebAPI.SupermarketCompetitors;
+using PriceCollector.Properties;
 using PriceCollector.View;
+using PriceCollector.WebAPI.SupermarketCompetitors;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel

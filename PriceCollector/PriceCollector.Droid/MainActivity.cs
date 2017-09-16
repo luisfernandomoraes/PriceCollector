@@ -10,6 +10,7 @@ using Plugin.Toasts;
 using Rb.Forms.Barcode.Droid;
 using Xamarin.Forms;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
+using Resource = PriceCollector.Droid.Resource;
 
 namespace PriceCollector.Droid
 {

@@ -8,11 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PriceCollector.Api.WebAPI.Responses;
 using PriceCollector.Model;
+using PriceCollector.WebAPI.Responses;
 
-
-namespace PriceCollector.Api.WebAPI.Products
+namespace PriceCollector.WebAPI.Products
 {
     public class ProductApi : IProductApi
     {

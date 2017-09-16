@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PriceCollector.Api.WebAPI.SupermarketCompetitors
+namespace PriceCollector.WebAPI.SupermarketCompetitors
 {
     public interface ISupermarketCompetitorApi
     {

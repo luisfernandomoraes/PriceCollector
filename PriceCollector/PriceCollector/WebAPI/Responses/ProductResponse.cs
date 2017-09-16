@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using PriceCollector.Model;
 
-namespace PriceCollector.Api.WebAPI.Responses
+namespace PriceCollector.WebAPI.Responses
 {
     public class ProductResponse:ApiResponse<Product>
     {

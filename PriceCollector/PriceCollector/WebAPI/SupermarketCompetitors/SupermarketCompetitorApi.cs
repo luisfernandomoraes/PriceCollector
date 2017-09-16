@@ -6,10 +6,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using PriceCollector.Api.WebAPI.Responses;
 using PriceCollector.Model;
+using PriceCollector.WebAPI.Responses;
 
-namespace PriceCollector.Api.WebAPI.SupermarketCompetitors
+namespace PriceCollector.WebAPI.SupermarketCompetitors
 {
     public class SupermarketCompetitorApi : ISupermarketCompetitorApi
     {

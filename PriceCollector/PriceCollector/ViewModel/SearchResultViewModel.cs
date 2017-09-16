@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.Toasts;
-using PriceCollector.Annotations;
-using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Model;
+using PriceCollector.Properties;
 using PriceCollector.ViewModel.Services;
+using PriceCollector.WebAPI.Products;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 

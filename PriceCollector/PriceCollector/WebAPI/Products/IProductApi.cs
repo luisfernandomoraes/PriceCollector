@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PriceCollector.Api.WebAPI.Responses;
-using PriceCollector.Model;
+using PriceCollector.WebAPI.Responses;
 
-namespace PriceCollector.Api.WebAPI.Products
+namespace PriceCollector.WebAPI.Products
 {
     public interface IProductApi
     {

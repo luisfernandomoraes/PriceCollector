@@ -1,4 +1,26 @@
-﻿using System;
+﻿/* MIT License
+
+Copyright (c) 2016 JetBrains http://www.jetbrains.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+using System;
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
@@ -24,7 +46,8 @@ namespace PriceCollector.Properties
   /// </code></example>
   [AttributeUsage(
     AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-    AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
+    AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
+    AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
   public sealed class CanBeNullAttribute : Attribute { }
 
   /// <summary>
@@ -37,7 +60,8 @@ namespace PriceCollector.Properties
   /// </code></example>
   [AttributeUsage(
     AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-    AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
+    AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
+    AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
   public sealed class NotNullAttribute : Attribute { }
 
   /// <summary>
@@ -61,6 +85,14 @@ namespace PriceCollector.Properties
   public sealed class ItemCanBeNullAttribute : Attribute { }
 
   /// <summary>
+  /// Implicitly apply [NotNull]/[ItemNotNull] annotation to all the of type members and parameters
+  /// in particular scope where this annotation is used (type declaration or whole assembly).
+  /// </summary>
+  [AttributeUsage(
+    AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Assembly)]
+  public sealed class ImplicitNotNullAttribute : Attribute { }
+
+  /// <summary>
   /// Indicates that the marked method builds string by format pattern and (optional) arguments.
   /// Parameter, which contains format string, should be given in constructor. The format string
   /// should be in <see cref="string.Format(IFormatProvider,string,object[])"/>-like form.
@@ -81,12 +113,12 @@ namespace PriceCollector.Properties
     /// <param name="formatParameterName">
     /// Specifies which parameter of an annotated method should be treated as format-string
     /// </param>
-    public StringFormatMethodAttribute(string formatParameterName)
+    public StringFormatMethodAttribute([NotNull] string formatParameterName)
     {
       FormatParameterName = formatParameterName;
     }
 
-    public string FormatParameterName { get; private set; }
+    [NotNull] public string FormatParameterName { get; private set; }
   }
 
   /// <summary>
@@ -96,7 +128,7 @@ namespace PriceCollector.Properties
   [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
   public sealed class ValueProviderAttribute : Attribute
   {
-    public ValueProviderAttribute(string name)
+    public ValueProviderAttribute([NotNull] string name)
     {
       Name = name;
     }
@@ -160,12 +192,12 @@ namespace PriceCollector.Properties
   public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
   {
     public NotifyPropertyChangedInvocatorAttribute() { }
-    public NotifyPropertyChangedInvocatorAttribute(string parameterName)
+    public NotifyPropertyChangedInvocatorAttribute([NotNull] string parameterName)
     {
       ParameterName = parameterName;
     }
 
-    public string ParameterName { get; private set; }
+    [CanBeNull] public string ParameterName { get; private set; }
   }
 
   /// <summary>
@@ -223,7 +255,7 @@ namespace PriceCollector.Properties
       ForceFullStates = forceFullStates;
     }
 
-    public string Contract { get; private set; }
+    [NotNull] public string Contract { get; private set; }
     public bool ForceFullStates { get; private set; }
   }
 
@@ -365,7 +397,7 @@ namespace PriceCollector.Properties
 
   /// <summary>
   /// Specify what is considered used implicitly when marked
-  /// with <see cref="MeansImplicitUseAttribute"/> or <see cref="UsedImplicitlyAttribute"/>.
+  /// with <see cref="PriceCollector.Properties.MeansImplicitUseAttribute"/> or <see cref="PriceCollector.Properties.UsedImplicitlyAttribute"/>.
   /// </summary>
   [Flags]
   public enum ImplicitUseTargetFlags
@@ -391,7 +423,7 @@ namespace PriceCollector.Properties
       Comment = comment;
     }
 
-    public string Comment { get; private set; }
+    [CanBeNull] public string Comment { get; private set; }
   }
 
   /// <summary>
@@ -428,7 +460,7 @@ namespace PriceCollector.Properties
       Justification = justification;
     }
 
-    public string Justification { get; private set; }
+    [CanBeNull] public string Justification { get; private set; }
   }
 
   /// <summary>
@@ -447,8 +479,8 @@ namespace PriceCollector.Properties
   /// }
   /// </code></example>
   [AttributeUsage(
-    AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter |
-    AttributeTargets.Method)]
+    AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Method |
+    AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.GenericParameter)]
   public sealed class ProvidesContextAttribute : Attribute { }
 
   /// <summary>
@@ -459,12 +491,12 @@ namespace PriceCollector.Properties
   public sealed class PathReferenceAttribute : Attribute
   {
     public PathReferenceAttribute() { }
-    public PathReferenceAttribute([PathReference] string basePath)
+    public PathReferenceAttribute([NotNull, PathReference] string basePath)
     {
       BasePath = basePath;
     }
 
-    public string BasePath { get; private set; }
+    [CanBeNull] public string BasePath { get; private set; }
   }
 
   /// <summary>
@@ -476,7 +508,7 @@ namespace PriceCollector.Properties
   /// Template method body can contain valid source code and/or special comments starting with '$'.
   /// Text inside these comments is added as source code when the template is applied. Template parameters
   /// can be used either as additional method parameters or as identifiers wrapped in two '$' signs.
-  /// Use the <see cref="MacroAttribute"/> attribute to specify macros for parameters.
+  /// Use the <see cref="PriceCollector.Properties.MacroAttribute"/> attribute to specify macros for parameters.
   /// </remarks>
   /// <example>
   /// In this example, the 'forEach' method is a source template available over all values
@@ -494,13 +526,13 @@ namespace PriceCollector.Properties
   public sealed class SourceTemplateAttribute : Attribute { }
 
   /// <summary>
-  /// Allows specifying a macro for a parameter of a <see cref="SourceTemplateAttribute">source template</see>.
+  /// Allows specifying a macro for a parameter of a <see cref="PriceCollector.Properties.SourceTemplateAttribute">source template</see>.
   /// </summary>
   /// <remarks>
   /// You can apply the attribute on the whole method or on any of its additional parameters. The macro expression
-  /// is defined in the <see cref="MacroAttribute.Expression"/> property. When applied on a method, the target
-  /// template parameter is defined in the <see cref="MacroAttribute.Target"/> property. To apply the macro silently
-  /// for the parameter, set the <see cref="MacroAttribute.Editable"/> property value = -1.
+  /// is defined in the <see cref="Expression"/> property. When applied on a method, the target
+  /// template parameter is defined in the <see cref="Target"/> property. To apply the macro silently
+  /// for the parameter, set the <see cref="Editable"/> property value = -1.
   /// </remarks>
   /// <example>
   /// Applying the attribute on a source template method:
@@ -525,7 +557,7 @@ namespace PriceCollector.Properties
   public sealed class MacroAttribute : Attribute
   {
     /// <summary>
-    /// Allows specifying a macro that will be executed for a <see cref="SourceTemplateAttribute">source template</see>
+    /// Allows specifying a macro that will be executed for a <see cref="PriceCollector.Properties.SourceTemplateAttribute">source template</see>
     /// parameter when the template is expanded.
     /// </summary>
     public string Expression { get; set; }
@@ -541,8 +573,8 @@ namespace PriceCollector.Properties
     public int Editable { get; set; }
 
     /// <summary>
-    /// Identifies the target parameter of a <see cref="SourceTemplateAttribute">source template</see> if the
-    /// <see cref="MacroAttribute"/> is applied on a template method.
+    /// Identifies the target parameter of a <see cref="PriceCollector.Properties.SourceTemplateAttribute">source template</see> if the
+    /// <see cref="PriceCollector.Properties.MacroAttribute"/> is applied on a template method.
     /// </summary>
     public string Target { get; set; }
   }
@@ -550,34 +582,34 @@ namespace PriceCollector.Properties
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
   {
-    public AspMvcAreaMasterLocationFormatAttribute(string format)
+    public AspMvcAreaMasterLocationFormatAttribute([NotNull] string format)
     {
       Format = format;
     }
 
-    public string Format { get; private set; }
+    [NotNull] public string Format { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
   {
-    public AspMvcAreaPartialViewLocationFormatAttribute(string format)
+    public AspMvcAreaPartialViewLocationFormatAttribute([NotNull] string format)
     {
       Format = format;
     }
 
-    public string Format { get; private set; }
+    [NotNull] public string Format { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
   {
-    public AspMvcAreaViewLocationFormatAttribute(string format)
+    public AspMvcAreaViewLocationFormatAttribute([NotNull] string format)
     {
       Format = format;
     }
 
-    public string Format { get; private set; }
+    [NotNull] public string Format { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
@@ -594,23 +626,23 @@ namespace PriceCollector.Properties
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
   {
-    public AspMvcPartialViewLocationFormatAttribute(string format)
+    public AspMvcPartialViewLocationFormatAttribute([NotNull] string format)
     {
       Format = format;
     }
 
-    public string Format { get; private set; }
+    [NotNull] public string Format { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class AspMvcViewLocationFormatAttribute : Attribute
   {
-    public AspMvcViewLocationFormatAttribute(string format)
+    public AspMvcViewLocationFormatAttribute([NotNull] string format)
     {
       Format = format;
     }
 
-    public string Format { get; private set; }
+    [NotNull] public string Format { get; private set; }
   }
 
   /// <summary>
@@ -623,12 +655,12 @@ namespace PriceCollector.Properties
   public sealed class AspMvcActionAttribute : Attribute
   {
     public AspMvcActionAttribute() { }
-    public AspMvcActionAttribute(string anonymousProperty)
+    public AspMvcActionAttribute([NotNull] string anonymousProperty)
     {
       AnonymousProperty = anonymousProperty;
     }
 
-    public string AnonymousProperty { get; private set; }
+    [CanBeNull] public string AnonymousProperty { get; private set; }
   }
 
   /// <summary>
@@ -640,12 +672,12 @@ namespace PriceCollector.Properties
   public sealed class AspMvcAreaAttribute : Attribute
   {
     public AspMvcAreaAttribute() { }
-    public AspMvcAreaAttribute(string anonymousProperty)
+    public AspMvcAreaAttribute([NotNull] string anonymousProperty)
     {
       AnonymousProperty = anonymousProperty;
     }
 
-    public string AnonymousProperty { get; private set; }
+    [CanBeNull] public string AnonymousProperty { get; private set; }
   }
 
   /// <summary>
@@ -658,12 +690,12 @@ namespace PriceCollector.Properties
   public sealed class AspMvcControllerAttribute : Attribute
   {
     public AspMvcControllerAttribute() { }
-    public AspMvcControllerAttribute(string anonymousProperty)
+    public AspMvcControllerAttribute([NotNull] string anonymousProperty)
     {
       AnonymousProperty = anonymousProperty;
     }
 
-    public string AnonymousProperty { get; private set; }
+    [CanBeNull] public string AnonymousProperty { get; private set; }
   }
 
   /// <summary>
@@ -760,12 +792,12 @@ namespace PriceCollector.Properties
   public sealed class HtmlElementAttributesAttribute : Attribute
   {
     public HtmlElementAttributesAttribute() { }
-    public HtmlElementAttributesAttribute(string name)
+    public HtmlElementAttributesAttribute([NotNull] string name)
     {
       Name = name;
     }
 
-    public string Name { get; private set; }
+    [CanBeNull] public string Name { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
@@ -818,14 +850,14 @@ namespace PriceCollector.Properties
   /// <summary>
   /// Indicates that the marked method is assertion method, i.e. it halts control flow if
   /// one of the conditions is satisfied. To set the condition, mark one of the parameters with 
-  /// <see cref="AssertionConditionAttribute"/> attribute.
+  /// <see cref="PriceCollector.Properties.AssertionConditionAttribute"/> attribute.
   /// </summary>
   [AttributeUsage(AttributeTargets.Method)]
   public sealed class AssertionMethodAttribute : Attribute { }
 
   /// <summary>
   /// Indicates the condition parameter of the assertion method. The method itself should be
-  /// marked by <see cref="AssertionMethodAttribute"/> attribute. The mandatory argument of
+  /// marked by <see cref="PriceCollector.Properties.AssertionMethodAttribute"/> attribute. The mandatory argument of
   /// the attribute is the assertion type.
   /// </summary>
   [AttributeUsage(AttributeTargets.Parameter)]
@@ -897,7 +929,7 @@ namespace PriceCollector.Properties
   /// </summary>
   /// <remarks>
   /// Property should have the tree ancestor of the <c>ItemsControl</c> type or
-  /// marked with the <see cref="XamlItemsControlAttribute"/> attribute.
+  /// marked with the <see cref="PriceCollector.Properties.XamlItemsControlAttribute"/> attribute.
   /// </remarks>
   [AttributeUsage(AttributeTargets.Property)]
   public sealed class XamlItemBindingOfItemsControlAttribute : Attribute { }
@@ -905,14 +937,14 @@ namespace PriceCollector.Properties
   [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
   public sealed class AspChildControlTypeAttribute : Attribute
   {
-    public AspChildControlTypeAttribute(string tagName, Type controlType)
+    public AspChildControlTypeAttribute([NotNull] string tagName, [NotNull] Type controlType)
     {
       TagName = tagName;
       ControlType = controlType;
     }
 
-    public string TagName { get; private set; }
-    public Type ControlType { get; private set; }
+    [NotNull] public string TagName { get; private set; }
+    [NotNull] public Type ControlType { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
@@ -932,7 +964,7 @@ namespace PriceCollector.Properties
       Attribute = attribute;
     }
 
-    public string Attribute { get; private set; }
+    [NotNull] public string Attribute { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Property)]
@@ -949,25 +981,36 @@ namespace PriceCollector.Properties
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class RazorImportNamespaceAttribute : Attribute
   {
-    public RazorImportNamespaceAttribute(string name)
+    public RazorImportNamespaceAttribute([NotNull] string name)
     {
       Name = name;
     }
 
-    public string Name { get; private set; }
+    [NotNull] public string Name { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
   public sealed class RazorInjectionAttribute : Attribute
   {
-    public RazorInjectionAttribute(string type, string fieldName)
+    public RazorInjectionAttribute([NotNull] string type, [NotNull] string fieldName)
     {
       Type = type;
       FieldName = fieldName;
     }
 
-    public string Type { get; private set; }
-    public string FieldName { get; private set; }
+    [NotNull] public string Type { get; private set; }
+    [NotNull] public string FieldName { get; private set; }
+  }
+
+  [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+  public sealed class RazorDirectiveAttribute : Attribute
+  {
+    public RazorDirectiveAttribute([NotNull] string directive)
+    {
+      Directive = directive;
+    }
+
+    [NotNull] public string Directive { get; private set; }
   }
 
   [AttributeUsage(AttributeTargets.Method)]

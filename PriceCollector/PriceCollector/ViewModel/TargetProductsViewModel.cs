@@ -6,10 +6,10 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Plugin.Toasts;
-using PriceCollector.Annotations;
-using PriceCollector.Api.WebAPI.Products;
 using PriceCollector.Model;
+using PriceCollector.Properties;
 using PriceCollector.ViewModel.Services;
+using PriceCollector.WebAPI.Products;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel

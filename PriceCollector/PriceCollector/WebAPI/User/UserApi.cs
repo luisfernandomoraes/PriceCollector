@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using PriceCollector.Api.WebAPI.Responses;
+using PriceCollector.WebAPI.Responses;
 
-namespace PriceCollector.Api.WebAPI.User
+namespace PriceCollector.WebAPI.User
 {
     public class UserApi:IUserApi
     {

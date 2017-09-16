@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace PriceCollector.Api.WebAPI.Responses
+namespace PriceCollector.WebAPI.Responses
 {
     public class ApiResponse<T> where T : class
     {

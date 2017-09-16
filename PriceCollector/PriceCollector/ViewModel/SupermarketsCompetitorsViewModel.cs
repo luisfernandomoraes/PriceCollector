@@ -7,8 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.Toasts;
-using PriceCollector.Annotations;
 using PriceCollector.Model;
+using PriceCollector.Properties;
 using PriceCollector.View;
 using Xamarin.Forms;
 

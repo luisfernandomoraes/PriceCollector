@@ -51,6 +51,13 @@
     <Compile Include="DB\DatabaseSQLite.cs" />
     <Compile Include="DB\DBContext.cs" />
     <Compile Include="DB\ISQLite.cs" />
+    <Compile Include="Model\AppConfig.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\ProductCollected.cs" />
+    <Compile Include="Model\SupermarketsCompetitors.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +116,16 @@
     <Compile Include="View\TargetProductsPage.xaml.cs">
       <DependentUpon>TargetProductsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebAPI\Products\IProductApi.cs" />
+    <Compile Include="WebAPI\Products\ProductApi.cs" />
+    <Compile Include="WebAPI\Responses\ApiResponse.cs" />
+    <Compile Include="WebAPI\Responses\ProductResponse.cs" />
+    <Compile Include="WebAPI\Responses\SupermarketResponse.cs" />
+    <Compile Include="WebAPI\Responses\UserResponse.cs" />
+    <Compile Include="WebAPI\SupermarketCompetitors\ISupermarketCompetitorApi.cs" />
+    <Compile Include="WebAPI\SupermarketCompetitors\SupermarketCompetitorApi.cs" />
+    <Compile Include="WebAPI\User\IUserApi.cs" />
+    <Compile Include="WebAPI\User\UserApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
@@ -129,6 +146,9 @@
     </Reference>
     <Reference Include="FAB.Forms">
       <HintPath>..\..\Libs\FAB.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Connectivity, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Connectivity.2.3.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Connectivity.dll</HintPath>
@@ -159,6 +179,15 @@
     </Reference>
     <Reference Include="SQLite.Net, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLite.Net-PCL.3.1.1\lib\portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1\SQLite.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Toasts.Forms.Plugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Toasts.Forms.Plugin.2.0.4\lib\portable-net45+wp8+win8+wpa81+netcore451+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Toasts.Forms.Plugin.Abstractions.dll</HintPath>
@@ -192,16 +221,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\PriceCollector.Api\PriceCollector.Api.csproj">
-      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
-      <Name>PriceCollector.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\PriceCollector.Model\PriceCollector.Model.csproj">
-      <Project>{76d4b5f9-4be4-4b82-8e20-86af0fcf4dad}</Project>
-      <Name>PriceCollector.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\SearchResultPage.xaml">
@@ -272,6 +291,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

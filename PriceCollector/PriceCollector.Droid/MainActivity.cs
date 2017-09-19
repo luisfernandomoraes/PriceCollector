@@ -9,6 +9,7 @@ using Android.OS;
 using Plugin.Toasts;
 using Rb.Forms.Barcode.Droid;
 using Xamarin.Forms;
+using Debug = System.Diagnostics.Debug;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using Resource = PriceCollector.Droid.Resource;
 
@@ -43,7 +44,14 @@ namespace PriceCollector.Droid
 
             UserDialogs.Init(this);
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            
             LoadApplication(new App());
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Debug.WriteLine(e.ToString());
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.Toasts;
+using PriceCollector.Enum;
 using PriceCollector.Model;
 using PriceCollector.Properties;
 using PriceCollector.ViewModel.Services;
@@ -22,6 +23,7 @@ namespace PriceCollector.ViewModel
         #region Fields
 
         private string _barcode;
+        private readonly ResultActionType _actionType;
         private IProductApi _productApi;
         private int _id;
         private string _name;

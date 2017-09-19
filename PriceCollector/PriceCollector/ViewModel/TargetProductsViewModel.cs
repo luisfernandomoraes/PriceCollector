@@ -1,27 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Plugin.Toasts;
 using PriceCollector.Model;
 using PriceCollector.Properties;
+using PriceCollector.View;
 using PriceCollector.ViewModel.Services;
 using PriceCollector.WebAPI.Products;
+using Rg.Plugins.Popup.Services;
+using Scandit.BarcodePicker.Unified;
 using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
 {
     public class TargetProductsViewModel:INotifyPropertyChanged,IReloadDataViewModel
     {
+
         #region Fields
         private IProductApi _productApi;
         private readonly IToastNotificator _notificator;
         private bool _isBusy;
         private ObservableCollection<Product> _products;
-
+        private Product _product;
         #endregion
 
         #region Properties
@@ -57,6 +63,12 @@ namespace PriceCollector.ViewModel
             _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
             _isBusy = false;
+            ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
+            MessagingCenter.Subscribe<SearchResultViewModel>(this, "LoadData", async (sender) =>
+            {
+                await LoadData();
+            });
+
             Task.Run(LoadData);
         }
 
@@ -72,18 +84,24 @@ namespace PriceCollector.ViewModel
                 var result = await _productApi.GetProductsToCollect("https://blogmachine.club");
                 if (result.Success)
                 {
-
+                    var productList = new List<Product>();
+                    var productsInDb = DB.DBContext.ProductCollectedDataBase.GetItems().ToList();
                     foreach (var p in result.CollectionResult)
                     {
+                        if(productsInDb.Any(x=>x.BarCode == p.BarCode))
+                            continue;
+
                         var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
 
                         if (await _productApi.HasImage(urlImage))
                             p.ImageProduct = "NoImagemTarge.png";
                         else
                             p.ImageProduct = urlImage;
+
+                        productList.Add(p);
                     }
 
-                    Products = new ObservableCollection<Product>(result.CollectionResult);
+                    Products = new ObservableCollection<Product>(productList);
                     IsBusy = false;
                 }
             }
@@ -98,12 +116,36 @@ namespace PriceCollector.ViewModel
             }
         }
 
-        public async Task<string> StartBarCodeScannerAsync()
+        public async Task StartBarCodeScannerAsync(Product product)
         {
-            return string.Empty;
+            
+            _product = product;
+            await ScanditService.BarcodePicker.StartScanningAsync(true);
         }
 
+        private async void BarcodePickerOnDidScan(ScanSession session)
+        {
+            await ScanditService.BarcodePicker.StopScanningAsync();
+            var recognizedCode = session.NewlyRecognizedCodes.LastOrDefault()?.Data;
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var searchResultPage = new SearchResultPage(recognizedCode);
+                if (_product == null)
+                    return;
+                else if (recognizedCode == _product.BarCode)
+                {
+                    if (PopupNavigation.PopupStack.Count < 1)
+                        await PopupNavigation.PushAsync(searchResultPage);
+                }
+                else
+                {
+                    await _notificator.Notify(ToastNotificationType.Error, Utils.Constants.AppName,
+                        $"O código de barras lido {recognizedCode}, não confere com o produto {_product.Name}, por favor tente novamente",
+                        TimeSpan.FromSeconds(5));
+                }
+            });
 
+        }
         #endregion
 
         #region PropertyChanged
@@ -117,5 +159,9 @@ namespace PriceCollector.ViewModel
         }
 
         #endregion
+        public async Task RemoveBarcodeEventHandler()
+        {
+            ScanditService.BarcodePicker.DidScan -= BarcodePickerOnDidScan;
+        }
     }
 }

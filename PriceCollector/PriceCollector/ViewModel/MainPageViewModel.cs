@@ -97,11 +97,12 @@ namespace PriceCollector.ViewModel
                 await LoadData();
                 _scannerPage = ScannerPageControl.Instance.CreateScannerPage();
             });
+
             ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
             MessagingCenter.Subscribe<SearchResultViewModel>(this, "LoadData", async (sender) =>
-             {
-                 await LoadData();
-             });
+            {
+                await LoadData();
+            });
         }
         private async void BarcodePickerOnDidScan(ScanSession session)
         {
@@ -209,5 +210,11 @@ namespace PriceCollector.ViewModel
             Products.Add(productCollected);
             IsEmpty = false;
         }
+
+        public async Task RemoveBarcodeEventHandler()
+        {
+            ScanditService.BarcodePicker.DidScan -= BarcodePickerOnDidScan;
+        }
+
     }
 }

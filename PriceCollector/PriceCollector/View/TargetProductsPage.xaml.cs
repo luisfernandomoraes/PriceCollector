@@ -5,6 +5,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using Plugin.Toasts;
+using PriceCollector.Model;
 using PriceCollector.ViewModel;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
@@ -19,7 +20,7 @@ namespace PriceCollector.View
         public TargetProductsPage()
         {
             InitializeComponent();
-            _targetProductsViewModel = new TargetProductsViewModel();
+            _targetProductsViewModel = new TargetProductsViewModel(this);
             BindingContext = _targetProductsViewModel;
             _notificator = DependencyService.Get<IToastNotificator>();
 
@@ -27,8 +28,7 @@ namespace PriceCollector.View
 
         private async void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
-            var product = e.Item as Model.Product;
-            if (product == null)
+	        if (!(e.Item is Product product))
                 return;
 
             _notificator.HideAll();
@@ -38,11 +38,11 @@ namespace PriceCollector.View
             await _targetProductsViewModel.StartBarCodeScannerAsync(product);
             
         }
-        protected override async void OnDisappearing()
-        {
-            base.OnDisappearing();
-            await _targetProductsViewModel.RemoveBarcodeEventHandler();
-        }
 
+	    protected override void OnDisappearing()
+	    {
+		    base.OnDisappearing();
+		    IsVisible = false;
+	    }
     }
 }

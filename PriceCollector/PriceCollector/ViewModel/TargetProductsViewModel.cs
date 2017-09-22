@@ -22,17 +22,18 @@ namespace PriceCollector.ViewModel
     public class TargetProductsViewModel:INotifyPropertyChanged,IReloadDataViewModel
     {
 
-        #region Fields
+	    #region Fields
         private IProductApi _productApi;
         private readonly IToastNotificator _notificator;
         private bool _isBusy;
         private ObservableCollection<Product> _products;
         private Product _product;
-        #endregion
+	    private readonly TargetProductsPage _targetProductsPage;
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        public ObservableCollection<Product> Products
+		public ObservableCollection<Product> Products
         {
             get { return _products; }
             set
@@ -58,9 +59,10 @@ namespace PriceCollector.ViewModel
 
         #region Ctor
 
-        public TargetProductsViewModel()
+        public TargetProductsViewModel(TargetProductsPage targetProductsPage)
         {
-            _productApi = DependencyService.Get<IProductApi>();
+	        _targetProductsPage = targetProductsPage;
+	        _productApi = DependencyService.Get<IProductApi>();
             _notificator = DependencyService.Get<IToastNotificator>();
             _isBusy = false;
             ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
@@ -125,7 +127,8 @@ namespace PriceCollector.ViewModel
 
         private async void BarcodePickerOnDidScan(ScanSession session)
         {
-            await ScanditService.BarcodePicker.StopScanningAsync();
+	        if (!_targetProductsPage.IsVisible) return;
+			await ScanditService.BarcodePicker.StopScanningAsync();
             var recognizedCode = session.NewlyRecognizedCodes.LastOrDefault()?.Data;
             Device.BeginInvokeOnMainThread(async () =>
             {
@@ -159,9 +162,6 @@ namespace PriceCollector.ViewModel
         }
 
         #endregion
-        public async Task RemoveBarcodeEventHandler()
-        {
-            ScanditService.BarcodePicker.DidScan -= BarcodePickerOnDidScan;
-        }
+      
     }
 }

@@ -42,10 +42,16 @@ namespace PriceCollector.View
 
         }
 
-        protected override async void OnDisappearing()
-        {
-            base.OnDisappearing();
-            await _mainPageViewModel.RemoveBarcodeEventHandler();
-        }
+	    protected override void OnAppearing()
+	    {
+		    base.OnAppearing();
+		    IsVisible = true;
+	    }
+
+	    protected override void OnDisappearing()
+	    {
+		    base.OnDisappearing();
+		    IsVisible = false;
+	    }
     }
 }

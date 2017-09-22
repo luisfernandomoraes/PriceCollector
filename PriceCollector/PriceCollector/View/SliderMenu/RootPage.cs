@@ -44,7 +44,7 @@ namespace PriceCollector.View.SliderMenu
 
                 Page displayPage = (Page)Activator.CreateInstance(menu.TargetType);
 
-                Detail = new NavigationPage(displayPage) { /*BarBackgroundColor = Color.FromHex(Utils.Constants.BarBackgroundColor)*/ };
+	            Detail = new NavigationPage(displayPage);
 
                 _menuPage.Menu.SelectedItem = null;
                 IsPresented = false;

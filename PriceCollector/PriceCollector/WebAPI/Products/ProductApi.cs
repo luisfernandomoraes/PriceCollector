@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -63,16 +64,18 @@ namespace PriceCollector.WebAPI.Products
 
                 var content = await response.Content.ReadAsStringAsync();
                 result.HttpStatusCode = HttpStatusCode.OK;
-                var objs = JArray.Parse(content);
+                var setting  = new JsonLoadSettings();
+                var objs = JArray.Parse(content,setting);
                 foreach (var obj in objs)
                 {
+                    var value = obj["Value"].ToString();
                     var product = new Product
                     {
                         ID = Convert.ToInt32(obj["id"].ToString()),
                         Name = obj["ProductName"].ToString(),
                         BarCode = obj["Barcod"].ToString(),
-                        PriceCurrent = Convert.ToDecimal(obj["Value"].ToString())
                     };
+                    product.PriceCurrent = Convert.ToDecimal(value.Replace('.',','));
 
                     products.Add(product);
 

@@ -1,8 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using PriceCollector.Controls;
+using Xamarin.Forms;
 
 namespace PriceCollector.View.SliderMenu
 {
-    public class MenuCell : ImageCell
+    public class MenuCell : CustomImageCell
     {
         public MenuCell() : base()
         {

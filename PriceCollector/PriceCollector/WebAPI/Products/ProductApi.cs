@@ -71,7 +71,7 @@ namespace PriceCollector.WebAPI.Products
                         ID = Convert.ToInt32(obj["id"].ToString()),
                         Name = obj["ProductName"].ToString(),
                         BarCode = obj["Barcod"].ToString(),
-                        //PriceCurrent = Convert.ToDecimal(obj["Value"].ToString())
+                        PriceCurrent = Convert.ToDecimal(obj["Value"].ToString())
                     };
 
                     products.Add(product);

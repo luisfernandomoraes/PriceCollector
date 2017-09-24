@@ -20,7 +20,7 @@ namespace PriceCollector.View
         public TargetProductsPage()
         {
             InitializeComponent();
-            _targetProductsViewModel = new TargetProductsViewModel(this);
+            _targetProductsViewModel = _targetProductsViewModel ?? new TargetProductsViewModel(this);
             BindingContext = _targetProductsViewModel;
             _notificator = DependencyService.Get<IToastNotificator>();
 
@@ -39,10 +39,5 @@ namespace PriceCollector.View
             
         }
 
-	    protected override void OnDisappearing()
-	    {
-		    base.OnDisappearing();
-		    IsVisible = false;
-	    }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enum\ResultActionType.cs" />
+    <Compile Include="Services\ScannditManagerService.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ILoginManager.cs" />
     <Compile Include="ViewModel\CreateSupermarketViewModel.cs" />

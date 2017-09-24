@@ -12,46 +12,35 @@ using Rg.Plugins.Popup.Services;
 
 namespace PriceCollector.View
 {
-    public partial class MainPage : ContentPage
-    {
-        private MainPageViewModel _mainPageViewModel;
-        private readonly IToastNotificator _notificator;
-        private CancellationTokenSource _cancellationTokenSourceTask;
+	public partial class MainPage : ContentPage
+	{
+		private MainPageViewModel _mainPageViewModel;
+		private readonly IToastNotificator _notificator;
+		private CancellationTokenSource _cancellationTokenSourceTask;
 
-        public MainPage()
-        {
-            _mainPageViewModel = new MainPageViewModel(this);
-            InitializeComponent();
-            BindingContext = _mainPageViewModel;
-            _notificator = DependencyService.Get<IToastNotificator>();
-           
-        }
+		public MainPage()
+		{
+			_mainPageViewModel = new MainPageViewModel(this);
+			InitializeComponent();
+			BindingContext = _mainPageViewModel;
+			_notificator = DependencyService.Get<IToastNotificator>();
+		   
+		}
 
 
-        private async void OnItemSelected(object sender, ItemTappedEventArgs args)
-        {
-            var product = args.Item as Model.ProductCollected;
-            if (product == null)
-            {
-                list.SelectedItem = null;
-                return;
-            }
-            list.SelectedItem = null;
-            var searchResultPage = new SearchResultEditPage(product);
-            await PopupNavigation.PushAsync(searchResultPage);
+		private async void OnItemSelected(object sender, ItemTappedEventArgs args)
+		{
+			var product = args.Item as Model.ProductCollected;
+			if (product == null)
+			{
+				list.SelectedItem = null;
+				return;
+			}
+			list.SelectedItem = null;
+			var searchResultPage = new SearchResultEditPage(product);
+			await PopupNavigation.PushAsync(searchResultPage);
 
-        }
+		}
 
-	    protected override void OnAppearing()
-	    {
-		    base.OnAppearing();
-		    IsVisible = true;
-	    }
-
-	    protected override void OnDisappearing()
-	    {
-		    base.OnDisappearing();
-		    IsVisible = false;
-	    }
-    }
+	}
 }

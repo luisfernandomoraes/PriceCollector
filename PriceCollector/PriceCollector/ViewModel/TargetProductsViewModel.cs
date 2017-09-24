@@ -19,149 +19,151 @@ using Xamarin.Forms;
 
 namespace PriceCollector.ViewModel
 {
-    public class TargetProductsViewModel:INotifyPropertyChanged,IReloadDataViewModel
-    {
+	public class TargetProductsViewModel:INotifyPropertyChanged,IReloadDataViewModel
+	{
 
-	    #region Fields
-        private IProductApi _productApi;
-        private readonly IToastNotificator _notificator;
-        private bool _isBusy;
-        private ObservableCollection<Product> _products;
-        private Product _product;
-	    private readonly TargetProductsPage _targetProductsPage;
+		#region Fields
+		private IProductApi _productApi;
+		private static IToastNotificator _notificator = DependencyService.Get<IToastNotificator>();
+		private bool _isBusy;
+		private ObservableCollection<Product> _products;
+		private static Product _product;
+		private readonly TargetProductsPage _targetProductsPage;
 		#endregion
 
 		#region Properties
 
 		public ObservableCollection<Product> Products
-        {
-            get { return _products; }
-            set
-            {
-                if (Equals(value, _products)) return;
-                _products = value;
-                OnPropertyChanged();
-            }
-        }
+		{
+			get { return _products; }
+			set
+			{
+				if (Equals(value, _products)) return;
+				_products = value;
+				OnPropertyChanged();
+			}
+		}
 
-        public bool IsBusy
-        {
-            get { return _isBusy; }
-            set
-            {
-                if (Equals(value, _isBusy)) return;
-                _isBusy = value;
-                OnPropertyChanged();
-            }
-        }
+		public bool IsBusy
+		{
+			get { return _isBusy; }
+			set
+			{
+				if (Equals(value, _isBusy)) return;
+				_isBusy = value;
+				OnPropertyChanged();
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Ctor
+		#region Ctor
 
-        public TargetProductsViewModel(TargetProductsPage targetProductsPage)
-        {
-	        _targetProductsPage = targetProductsPage;
-	        _productApi = DependencyService.Get<IProductApi>();
-            _notificator = DependencyService.Get<IToastNotificator>();
-            _isBusy = false;
-            ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
-            MessagingCenter.Subscribe<SearchResultViewModel>(this, "LoadData", async (sender) =>
-            {
-                await LoadData();
-            });
+		public TargetProductsViewModel(TargetProductsPage targetProductsPage)
+		{
+			_targetProductsPage = targetProductsPage;
+			_productApi = DependencyService.Get<IProductApi>();
+			
+			_isBusy = false;
+		    ScanditService.BarcodePicker.DidScan -= MainPageViewModel.BarcodePickerOnDidScan;
+			ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
+			MessagingCenter.Subscribe<SearchResultViewModel>(this, "LoadData", async (sender) =>
+			{
+				await LoadData();
+			});
 
-            Task.Run(LoadData);
-        }
+			Task.Run(LoadData);
+		}
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        public async Task LoadData()
-        {
-            try
-            {
-                IsBusy = true;
-                var result = await _productApi.GetProductsToCollect("https://blogmachine.club");
-                if (result.Success)
-                {
-                    var productList = new List<Product>();
-                    var productsInDb = DB.DBContext.ProductCollectedDataBase.GetItems().ToList();
-                    foreach (var p in result.CollectionResult)
-                    {
-                        if(productsInDb.Any(x=>x.BarCode == p.BarCode))
-                            continue;
+		public async Task LoadData()
+		{
+			try
+			{
+				IsBusy = true;
+				var result = await _productApi.GetProductsToCollect("https://blogmachine.club");
+				if (result.Success)
+				{
+					var productList = new List<Product>();
+					var productsInDb = DB.DBContext.ProductCollectedDataBase.GetItems().ToList();
+					foreach (var p in result.CollectionResult)
+					{
+						if(productsInDb.Any(x=>x.BarCode == p.BarCode))
+							continue;
 
-                        var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
+						var urlImage = $@"http://imagens.scannprice.com.br/Produtos/{p.BarCode}.jpg";
 
-                        if (await _productApi.HasImage(urlImage))
-                            p.ImageProduct = "NoImagemTarge.png";
-                        else
-                            p.ImageProduct = urlImage;
+						if (await _productApi.HasImage(urlImage))
+							p.ImageProduct = "NoImagemTarge.png";
+						else
+							p.ImageProduct = urlImage;
 
-                        productList.Add(p);
-                    }
+						productList.Add(p);
+					}
 
-                    Products = new ObservableCollection<Product>(productList);
-                    IsBusy = false;
-                }
-            }
-            catch (Exception e)
-            {
-                await _notificator.Notify(ToastNotificationType.Error, @"PriceCollector", "Houve um erro ao carregar os produtos", TimeSpan.FromSeconds(3));
-                Debug.WriteLine(e);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
+					Products = new ObservableCollection<Product>(productList);
+					IsBusy = false;
+				}
+			}
+			catch (Exception e)
+			{
+				await _notificator.Notify(ToastNotificationType.Error, @"PriceCollector", "Houve um erro ao carregar os produtos", TimeSpan.FromSeconds(3));
+				Debug.WriteLine(e);
+			}
+			finally
+			{
+				IsBusy = false;
+			}
+		}
 
-        public async Task StartBarCodeScannerAsync(Product product)
-        {
-            
-            _product = product;
-            await ScanditService.BarcodePicker.StartScanningAsync(true);
-        }
+		public async Task StartBarCodeScannerAsync(Product product)
+		{
+			
+			_product = product;
+			await ScanditService.BarcodePicker.StartScanningAsync(true);
+		}
 
-        private async void BarcodePickerOnDidScan(ScanSession session)
-        {
-	        if (!_targetProductsPage.IsVisible) return;
+	    public static async void BarcodePickerOnDidScan(ScanSession session)
+		{
+			
 			await ScanditService.BarcodePicker.StopScanningAsync();
-            var recognizedCode = session.NewlyRecognizedCodes.LastOrDefault()?.Data;
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                var searchResultPage = new SearchResultPage(recognizedCode);
-                if (_product == null)
-                    return;
-                else if (recognizedCode == _product.BarCode)
-                {
-                    if (PopupNavigation.PopupStack.Count < 1)
-                        await PopupNavigation.PushAsync(searchResultPage);
-                }
-                else
-                {
-                    await _notificator.Notify(ToastNotificationType.Error, Utils.Constants.AppName,
-                        $"O código de barras lido {recognizedCode}, não confere com o produto {_product.Name}, por favor tente novamente",
-                        TimeSpan.FromSeconds(5));
-                }
-            });
+			string recognizedCode = session.NewlyRecognizedCodes.LastOrDefault()?.Data;
+			Device.BeginInvokeOnMainThread(async () =>
+			{
+				var searchResultPage = new SearchResultPage(recognizedCode);
+				if (_product == null)
+					return;
+				else if (recognizedCode == _product.BarCode)
+				{
+					if (PopupNavigation.PopupStack.Count < 1)
+						await PopupNavigation.PushAsync(searchResultPage);
+				}
+				else
+				{
+					await _notificator.Notify(ToastNotificationType.Error, Utils.Constants.AppName,
+						$"O código de barras lido {recognizedCode}, não confere com o produto {_product.Name}, por favor tente novamente",
+						TimeSpan.FromSeconds(5));
+				}
+			});
 
-        }
-        #endregion
+		}
+	   
+		#endregion
 
-        #region PropertyChanged
+		#region PropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
-        #endregion
-      
-    }
+		#endregion
+	  
+	}
 }

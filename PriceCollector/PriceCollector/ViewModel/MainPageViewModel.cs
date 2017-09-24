@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -36,7 +37,6 @@ namespace PriceCollector.ViewModel
 		private bool _isEmpty;
 		private INavigationService _navigation;
 		private MainPage _mainPage;
-
 		#endregion
 
 		#region Commands
@@ -95,17 +95,18 @@ namespace PriceCollector.ViewModel
 			{
 				await LoadData();
 			});
+		    ScanditService.BarcodePicker.DidScan -= TargetProductsViewModel.BarcodePickerOnDidScan;
 
-			ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
+            ScanditService.BarcodePicker.DidScan += BarcodePickerOnDidScan;
+            
 			MessagingCenter.Subscribe<SearchResultViewModel>(this, "LoadData", async (sender) =>
 			{
 				await LoadData();
 			});
 		}
-		private async void BarcodePickerOnDidScan(ScanSession session)
-		{
-			if(!_mainPage.IsVisible) return;
 
+	    public static async void BarcodePickerOnDidScan(ScanSession session)
+		{
 			await ScanditService.BarcodePicker.StopScanningAsync();
 			var recognizedCode = session.NewlyRecognizedCodes.LastOrDefault()?.Data;
 			Device.BeginInvokeOnMainThread(async () =>
@@ -210,6 +211,10 @@ namespace PriceCollector.ViewModel
 			Products.Add(productCollected);
 			IsEmpty = false;
 		}
-		
+
+		public void RemoveBarcodePickerOnDidScan()
+		{
+			ScanditService.BarcodePicker.DidScan -= BarcodePickerOnDidScan;
+		}
 	}
 }
